@@ -1,0 +1,51 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import LookGrid from '@/components/LookGrid.astro';
+import ArrowIcon from '@/components/ArrowIcon.astro';
+import Cta from '@/components/Cta.astro';
+import { looks, productCategories } from '@/data/products';
+
+const trail = [{ name: 'Lookbook', href: '/lookbook/' }];
+const allSlugs = Object.keys(looks);
+---
+<Base
+  title="Lookbook"
+  description="Garments produced by Saroz Threadz in Jaipur — dresses, blouses, tunics and jumpsuits in cotton, rayon and viscose with in-house embroidery and partner-printed bases."
+  path="/lookbook/"
+  breadcrumbs={trail}
+  image="/og/default.jpg"
+>
+  <PageHeader
+    eyebrow="Lookbook"
+    title="Garments that have come off this floor."
+    lede="Every piece here started as a tech pack or a reference sample. We develop to brand specification rather than selling a fixed catalogue, so treat this as evidence of capability, not a range to order from."
+    trail={trail}
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <LookGrid slugs={allSlugs} eagerCount={4} />
+    </div>
+  </section>
+
+  <section class="section-tight border-t border-line">
+    <div class="wrap">
+      <h2 class="text-h3">Browse by category</h2>
+      <ul class="mt-7 flex flex-wrap gap-3">
+        {productCategories.map((p) => (
+          <li>
+            <a href={`/products/${p.slug}/`} class="chip no-underline transition-colors hover:border-accent hover:text-ink">
+              {p.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-9">
+        <a class="link-arrow" href="/products/">All product categories <ArrowIcon /></a>
+      </p>
+    </div>
+  </section>
+
+  <Cta />
+</Base>

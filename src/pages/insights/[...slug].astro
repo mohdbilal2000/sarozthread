@@ -1,0 +1,105 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import AnswerBlock from '@/components/AnswerBlock.astro';
+import ArrowIcon from '@/components/ArrowIcon.astro';
+import Cta from '@/components/Cta.astro';
+import { articleSchema, faqSchema } from '@/lib/schema';
+
+export const getStaticPaths = (async () => {
+  const articles = await getCollection('insights', ({ data }) => !data.draft);
+  return articles.map((article) => ({ params: { slug: article.id }, props: { article } }));
+}) satisfies GetStaticPaths;
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+const site = Astro.site!.origin;
+const url = `/insights/${article.id}/`;
+const d = article.data;
+
+const trail = [
+  { name: 'Insights', href: '/insights/' },
+  { name: d.title, href: url },
+];
+
+const fmt = (date: Date) =>
+  date.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const others = (await getCollection('insights', ({ data }) => !data.draft)).filter(
+  (a) => a.id !== article.id,
+);
+---
+<Base
+  title={d.title}
+  description={d.description}
+  path={url}
+  breadcrumbs={trail}
+  type="article"
+  publishedTime={d.published.toISOString()}
+  schema={[
+    articleSchema(site, {
+      title: d.title,
+      description: d.description,
+      url,
+      published: d.published,
+      updated: d.updated,
+    }),
+    faqSchema([{ q: d.question, a: d.answer, topic: 'working-with-us' }]),
+  ]}
+>
+  <article>
+    <header class="border-b border-line pb-[clamp(2.5rem,5vw,4rem)] pt-[clamp(2rem,4vw,3rem)]">
+      <div class="wrap wrap-narrow">
+        <Breadcrumbs trail={trail} />
+        <p class="eyebrow mt-8">{d.topic}</p>
+        <h1 class="text-h1 mt-5">{d.title}</h1>
+        <p class="mt-6 text-[0.8125rem] uppercase tracking-[0.14em] text-muted">
+          <time datetime={d.published.toISOString()}>{fmt(d.published)}</time>
+          {' · '}{d.readingMinutes} min read
+        </p>
+      </div>
+    </header>
+
+    <div class="wrap wrap-narrow py-[clamp(2.5rem,5vw,4rem)]">
+      <!-- The quotable summary, above the article body. Self-contained on
+           purpose: it is the passage most likely to be lifted whole. -->
+      <AnswerBlock question={d.question} answer={d.answer} as="h2" class="mb-14" />
+
+      <div class="prose-block">
+        <Content />
+      </div>
+
+      <footer class="mt-16 border-t border-line pt-10">
+        <p class="text-ink-2">
+          Written by the team at Saroz Threadz, a third-generation womenswear manufacturer in
+          Jaipur, India.
+        </p>
+        <p class="mt-6">
+          <a class="link-arrow" href="/contact/">Ask us about your programme <ArrowIcon /></a>
+        </p>
+      </footer>
+    </div>
+  </article>
+
+  {others.length > 0 && (
+    <section class="section-tight border-t border-line">
+      <div class="wrap wrap-narrow">
+        <h2 class="text-h3">More from the floor</h2>
+        <ul class="mt-7 space-y-5">
+          {others.map((o) => (
+            <li>
+              <a href={`/insights/${o.id}/`} class="group no-underline">
+                <span class="font-serif text-[1.2rem] transition-colors group-hover:text-accent">{o.data.title}</span>
+                <span class="mt-1.5 block text-[0.9375rem] text-ink-2">{o.data.description}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <Cta />
+</Base>

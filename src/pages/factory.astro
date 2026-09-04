@@ -1,0 +1,144 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import AnswerBlock from '@/components/AnswerBlock.astro';
+import SpecTable from '@/components/SpecTable.astro';
+import SiteImage from '@/components/SiteImage.astro';
+import Stat from '@/components/Stat.astro';
+import FaqList from '@/components/FaqList.astro';
+import ArrowIcon from '@/components/ArrowIcon.astro';
+import Cta from '@/components/Cta.astro';
+import { company, facility, formattedAddress, mapsUrl } from '@/data/company';
+import { faqsForPage } from '@/data/faq';
+import { faqSchema } from '@/lib/schema';
+
+const trail = [{ name: 'Factory', href: '/factory/' }];
+const pageFaqs = faqsForPage('factory');
+
+const machineRows = facility.machines.map((m) => ({
+  label: m.type,
+  value: String(m.count),
+}));
+---
+<Base
+  title="Factory and machinery"
+  description="Saroz Threadz operates a 200,000 sq. ft. facility in Sitapura Industrial Area, Jaipur, with 655 sewing machines: 600 single-needle lockstitch UBT, 45 overlock and 10 flatlock, plus in-house embroidery and CAD."
+  path="/factory/"
+  breadcrumbs={trail}
+  schema={[faqSchema(pageFaqs)]}
+>
+  <PageHeader
+    eyebrow="The factory"
+    title="200,000 square feet, and a machine list we will put in writing."
+    lede="The machine mix tells a buyer what a factory is genuinely built for. Ours is weighted heavily to single-needle lockstitch, because light-to-mid-weight woven womenswear with handwork is what we do."
+    trail={trail}
+  />
+
+  <section class="border-b border-line bg-paper-2" aria-label="Factory at a glance">
+    <div class="grid grid-cols-2 md:grid-cols-4">
+      <Stat value={facility.floorAreaSqFt.toLocaleString('en-US')} label="Sq. ft. production floor" />
+      <Stat value={String(facility.totalMachines)} label="Sewing machines" />
+      <Stat value="600" label="Single-needle lockstitch UBT" />
+      <Stat value="1" label="Site, all processes" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+      <div data-reveal>
+        <AnswerBlock
+          question="What is your production capacity?"
+          answer={`Saroz Threadz runs ${facility.totalMachines} machines across a ${facility.floorAreaSqFt.toLocaleString('en-US')} square foot facility in Jaipur: 600 single-needle lockstitch UBT machines, 45 four-thread and five-thread overlock machines, and 10 flatlock machines. Lines are arranged for flexible changeovers on short and mid-size runs.`}
+          as="h2"
+        />
+        <p class="prose-block mt-10">
+          Monthly output depends entirely on the style mix. A heavily embroidered tiered dress and a
+          plain blouse consume very different line time, so a single "pieces per month" figure would
+          be misleading for one of them. We give a capacity figure against your actual styles and
+          season instead.
+        </p>
+        <p class="mt-8">
+          <a class="link-arrow" href="/contact/">Ask for a capacity assessment <ArrowIcon /></a>
+        </p>
+      </div>
+      <div data-reveal="80">
+        <SpecTable caption="Sewing machinery" rows={machineRows} />
+        <p class="mt-4 text-[0.8125rem] text-muted">
+          UBT: under-bed thread trimmer. Overlock counts cover both four-thread and five-thread machines.
+        </p>
+        <div class="mt-12">
+          <SpecTable
+            caption="Facility"
+            rows={[
+              { label: 'Floor area', value: `${facility.floorAreaSqFt.toLocaleString('en-US')} sq. ft. (≈${facility.floorAreaSqM.toLocaleString('en-US')} sq. m.)` },
+              { label: 'Location', value: `${company.address.locality}, ${company.address.region}, India` },
+              { label: 'Monthly capacity', value: 'On request, against your style mix' },
+              { label: 'Minimum order quantity', value: 'On request' },
+            ]}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight !pt-0">
+    <div class="wrap grid gap-4 md:grid-cols-3">
+      <div data-reveal><SiteImage name="factory-floor" alt="Machinist working at a sewing station on the Saroz Threadz production floor" ratio="4/5" caption="Sewing" /></div>
+      <div data-reveal="80"><SiteImage name="embroidery" alt="Embroidery being stitched onto patterned fabric" ratio="4/5" caption="Embroidery" /></div>
+      <div data-reveal="160"><SiteImage name="cad" alt="Pattern development work in the Saroz Threadz sampling room" ratio="4/5" caption="Pattern room" /></div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap grid gap-12 lg:grid-cols-2 lg:gap-20">
+      <div data-reveal>
+        <h2 class="text-h1">In house, or with a partner. We will always tell you which.</h2>
+        <p class="prose-block mt-6">
+          Every process on this list happens on our own floor except printing, which runs through
+          printing houses in the Jaipur region that we have worked with for decades. You still deal
+          only with us: we manage the strike-offs, the colour approval and the quality risk.
+        </p>
+      </div>
+      <div data-reveal="80">
+        <SpecTable caption="In house" rows={facility.inHouse.map((p) => ({ label: p, value: 'Own floor' }))} />
+        <div class="mt-12">
+          <SpecTable caption="With partners" rows={facility.outsourced.map((o) => ({ label: o.process, value: o.note }))} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight border-b border-line">
+    <div class="wrap grid gap-12 lg:grid-cols-2 lg:gap-20">
+      <div data-reveal>
+        <h2 class="text-h2">Where we are</h2>
+        <address class="mt-6 space-y-1 text-lede not-italic text-ink-2">
+          {formattedAddress.map((line) => <div>{line}</div>)}
+        </address>
+        <p class="prose-block mt-6">
+          Sitapura Industrial Area is Jaipur's dedicated garment zone and sits a short drive from
+          Jaipur International Airport. Buyers are welcome — give us notice and we will arrange a
+          floor walk-through and a sample review.
+        </p>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <a class="btn" href="/contact/">Arrange a visit</a>
+          <a class="btn btn-ghost" href={mapsUrl} target="_blank" rel="noopener noreferrer">Open in Maps</a>
+        </div>
+      </div>
+      <div data-reveal="80">
+        <SiteImage name="team" alt="The Saroz Threadz team at work in Jaipur" ratio="4/3" />
+      </div>
+    </div>
+  </section>
+
+  {pageFaqs.length > 0 && (
+    <section class="section-tight">
+      <div class="wrap grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
+        <h2 class="text-h2">Factory questions</h2>
+        <FaqList items={pageFaqs} />
+      </div>
+    </section>
+  )}
+
+  <Cta />
+</Base>

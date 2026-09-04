@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets';
+import bci from '@/assets/site/logo-bci.png';
+import smeta from '@/assets/site/logo-smeta.png';
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+---
+<ul class:list={['flex flex-wrap items-center gap-6 sm:gap-10', cls]}>
+  <li>
+    <Image src={smeta} alt="Sedex SMETA audited" widths={[260]} loading="lazy" class="cert-logo" />
+  </li>
+  <li>
+    <Image src={bci} alt="Better Cotton Initiative approved" widths={[260]} loading="lazy" class="cert-logo" />
+  </li>
+</ul>
+<style>
+  .cert-logo {
+    height: clamp(2.25rem, 4vw, 2.75rem);
+    width: auto;
+    background: #fff;
+    padding: 0.7rem 1rem;
+    border-radius: 3px;
+    box-sizing: content-box;
+    box-shadow: 0 1px 0 rgb(0 0 0 / 0.06);
+  }
+</style>

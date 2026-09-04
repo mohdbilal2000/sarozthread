@@ -1,0 +1,126 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import AnswerBlock from '@/components/AnswerBlock.astro';
+import SpecTable from '@/components/SpecTable.astro';
+import SiteImage from '@/components/SiteImage.astro';
+import CertLogos from '@/components/CertLogos.astro';
+import FaqList from '@/components/FaqList.astro';
+import Cta from '@/components/Cta.astro';
+import { certifications, labourStandards } from '@/data/company';
+import { faqsForPage } from '@/data/faq';
+import { faqSchema } from '@/lib/schema';
+
+const trail = [{ name: 'Compliance', href: '/compliance/' }];
+const pageFaqs = faqsForPage('compliance');
+---
+<Base
+  title="Compliance and responsibility"
+  description="Saroz Threadz is SMETA audited, Better Cotton Initiative approved, authorised for Disney-licensed programmes, and a Government of India recognised export house. Zero tolerance on child labour."
+  path="/compliance/"
+  breadcrumbs={trail}
+  schema={[faqSchema(pageFaqs)]}
+>
+  <PageHeader
+    eyebrow="Compliance"
+    title="Compliance is a floor, not a marketing claim."
+    lede="Social responsibility at Saroz Threadz is part of how the factory runs day to day. Our standards are third-party audited, and the people who own the business are the people on site."
+    trail={trail}
+  />
+
+  <section class="section">
+    <div class="wrap grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
+      <div data-reveal>
+        <AnswerBlock
+          question="What certifications does Saroz Threadz hold?"
+          answer="Saroz Threadz is SMETA audited under the Sedex Members Ethical Trade Audit, approved under the Better Cotton Initiative, authorised to manufacture for licensed programmes including Disney, and recognised as an export house by the Government of India."
+          as="h2"
+        />
+        <CertLogos class="mt-10" />
+        <dl class="mt-12 space-y-6">
+          {certifications.map((c) => (
+            <div class="border-t border-line pt-5">
+              <dt class="font-serif text-[1.2rem]">{c.name}</dt>
+              <dd class="mt-1 text-[0.75rem] uppercase tracking-[0.14em] text-muted">{c.body}</dd>
+              <dd class="mt-2.5 text-[0.9375rem] text-ink-2">{c.what}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <div class="lg:sticky lg:top-28 lg:self-start" data-reveal="80">
+        <SiteImage name="sustainability" alt="Hands holding a young plant in soil" ratio="4/5" />
+        <div class="mt-10">
+          <SpecTable
+            caption="Audit summary"
+            rows={[
+              { label: 'Ethical audit', value: 'SMETA (Sedex)' },
+              { label: 'Cotton programme', value: 'Better Cotton Initiative' },
+              { label: 'Licensed programmes', value: 'Disney authorised' },
+              { label: 'Export status', value: 'Recognised export house, Government of India' },
+              { label: 'Third-party inspection', value: 'Accommodated on request' },
+            ]}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap">
+      <div class="grid items-end gap-8 lg:grid-cols-2 lg:gap-20">
+        <div data-reveal>
+          <h2 class="text-h1">What we hold ourselves to.</h2>
+        </div>
+        <p class="prose-block" data-reveal="80">
+          These are not aspirations. They are conditions of employment and audit points we are
+          checked against, inside the scope of our SMETA audit.
+        </p>
+      </div>
+      <ul class="mt-14 grid gap-4 md:grid-cols-2">
+        {labourStandards.map((s, i) => (
+          <li class="card !bg-transparent" data-reveal={String(i * 60)}>
+            <span class="font-serif text-[0.8125rem] tracking-[0.1em] text-accent">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="text-h3 mt-4">{s.title}</h3>
+            <p class="mt-3 text-[0.9375rem] text-ink-2">{s.detail}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid gap-12 lg:grid-cols-2 lg:gap-20">
+      <div data-reveal>
+        <SiteImage name="community" alt="Students working together during a community programme supported by the family" ratio="4/3" />
+      </div>
+      <div data-reveal="80">
+        <h2 class="text-h2">A financially stable, family-owned business.</h2>
+        <div class="prose-block mt-6">
+          <p>
+            Saroz Threadz has more than forty years in the fashion and apparel industry. The family's
+            business activities span apparel manufacturing, hospitality, and logistics and storage — a
+            diversified foundation that keeps the garment business stable through the season cycle.
+          </p>
+          <p>
+            We operate with transparency, accountability and integrity, supported by internationally
+            recognised standards including SMETA and the Better Cotton Initiative. Our focus is on
+            long-term partnerships built on trust, consistency and reliability.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {pageFaqs.length > 0 && (
+    <section class="section-tight border-t border-line">
+      <div class="wrap grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
+        <h2 class="text-h2">Compliance questions</h2>
+        <FaqList items={pageFaqs} />
+      </div>
+    </section>
+  )}
+
+  <Cta />
+</Base>

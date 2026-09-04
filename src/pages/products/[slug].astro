@@ -1,0 +1,107 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '@/layouts/Base.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import AnswerBlock from '@/components/AnswerBlock.astro';
+import LookGrid from '@/components/LookGrid.astro';
+import SpecTable from '@/components/SpecTable.astro';
+import ArrowIcon from '@/components/ArrowIcon.astro';
+import Cta from '@/components/Cta.astro';
+import { productCategories } from '@/data/products';
+import { facility } from '@/data/company';
+import { serviceSchema } from '@/lib/schema';
+
+export const getStaticPaths = (() =>
+  productCategories.map((category) => ({
+    params: { slug: category.slug },
+    props: { category },
+  }))) satisfies GetStaticPaths;
+
+const { category: p } = Astro.props;
+const site = Astro.site!.origin;
+const trail = [
+  { name: 'Products', href: '/products/' },
+  { name: p.name, href: `/products/${p.slug}/` },
+];
+const others = productCategories.filter((x) => x.slug !== p.slug);
+---
+<Base
+  title={`${p.name} manufacturing in Jaipur`}
+  description={p.answer}
+  path={`/products/${p.slug}/`}
+  breadcrumbs={trail}
+  schema={[
+    serviceSchema(site, {
+      name: `${p.name} manufacturing`,
+      description: p.answer,
+      url: `/products/${p.slug}/`,
+    }),
+  ]}
+>
+  <PageHeader eyebrow="Product category" title={p.name} trail={trail} />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
+        <AnswerBlock question={p.question} answer={p.answer} as="h2" data-reveal />
+        <p class="prose-block text-lede" data-reveal="60">{p.intro}</p>
+      </div>
+
+      <div class="mt-16" data-reveal>
+        <LookGrid slugs={p.looks} eagerCount={4} />
+      </div>
+
+      <div class="mt-20 grid gap-12 md:grid-cols-3 md:gap-16" data-reveal>
+        <SpecTable caption="Constructions" rows={p.constructions.map((c) => ({ label: c, value: '' }))} />
+        <SpecTable caption="Fabric base" rows={p.fabrics.map((f) => ({ label: f, value: '' }))} />
+        <SpecTable caption="Decoration" rows={p.decoration.map((d) => ({ label: d, value: '' }))} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight band">
+    <div class="wrap grid gap-12 lg:grid-cols-2 lg:gap-20">
+      <div data-reveal>
+        <h2 class="text-h2">Made on our own machines.</h2>
+        <p class="prose-block mt-5">
+          {p.name} are produced on the same floor as everything else we make: {facility.totalMachines}
+          {' '}machines across {facility.floorAreaSqFt.toLocaleString('en-US')} square feet in Sitapura
+          Industrial Area, Jaipur, with embroidery stitched in house.
+        </p>
+        <p class="mt-8">
+          <a class="link-arrow" href="/factory/">Factory and machinery <ArrowIcon /></a>
+        </p>
+      </div>
+      <div data-reveal="80">
+        <SpecTable
+          caption="Production"
+          rows={[
+            { label: 'Floor area', value: `${facility.floorAreaSqFt.toLocaleString('en-US')} sq. ft.` },
+            { label: 'Total machines', value: String(facility.totalMachines) },
+            { label: 'Embroidery', value: 'In house' },
+            { label: 'Printing', value: 'Long-term partner houses' },
+            { label: 'Pattern making', value: 'CAD, in house' },
+            { label: 'Minimum order quantity', value: 'On request' },
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight border-t border-line">
+    <div class="wrap">
+      <h2 class="text-h3">Other categories</h2>
+      <ul class="mt-7 flex flex-wrap gap-3">
+        {others.map((o) => (
+          <li>
+            <a href={`/products/${o.slug}/`} class="chip no-underline transition-colors hover:border-accent hover:text-ink">
+              {o.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Cta />
+</Base>

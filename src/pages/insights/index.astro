@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import ArrowIcon from '@/components/ArrowIcon.astro';
+import Cta from '@/components/Cta.astro';
+
+const trail = [{ name: 'Insights', href: '/insights/' }];
+const articles = (await getCollection('insights', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.published.valueOf() - a.data.published.valueOf(),
+);
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+<Base
+  title="Insights"
+  description="Sourcing guides written from the factory floor: how MOQ and lead time are actually set, what in-house embroidery changes, and what to ask a garment supplier before you place an order."
+  path="/insights/"
+  breadcrumbs={trail}
+>
+  <PageHeader
+    eyebrow="Insights"
+    title="How this industry actually works, from the floor."
+    lede="Written by the people running the machines, not a content agency. These are the explanations we end up giving buyers on the phone, written down once."
+    trail={trail}
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <ul class="border-t border-line">
+        {articles.map((a, i) => (
+          <li class="border-b border-line" data-reveal={String(Math.min(i * 60, 240))}>
+            <a href={`/insights/${a.id}/`} class="group grid gap-4 py-10 no-underline md:grid-cols-[1fr_1.4fr] md:gap-16">
+              <div>
+                <span class="text-[0.75rem] uppercase tracking-[0.14em] text-accent">{a.data.topic}</span>
+                <p class="mt-3 text-[0.8125rem] text-muted">
+                  {fmt(a.data.published)} · {a.data.readingMinutes} min read
+                </p>
+              </div>
+              <div>
+                <h2 class="text-h2 transition-colors group-hover:text-accent">{a.data.title}</h2>
+                <p class="mt-4 max-w-[60ch] text-ink-2">{a.data.description}</p>
+                <span class="link-arrow mt-6 inline-flex border-0 !pb-0 text-accent">Read <ArrowIcon /></span>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <p class="mt-10 text-[0.9375rem] text-muted">
+        <a href="/rss.xml" class="link-arrow">Subscribe by RSS <ArrowIcon /></a>
+      </p>
+    </div>
+  </section>
+
+  <Cta />
+</Base>

@@ -1,0 +1,24 @@
+---
+import Eyebrow from './Eyebrow.astro';
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  body?: string;
+}
+const {
+  eyebrow = 'Start a programme',
+  title = 'Send us a tech pack. We will come back with a costing and a sampling plan.',
+  body = 'Tell us your category, quantities and delivery window, and we will come back with a costing, a sampling plan, and an honest view of whether we are the right factory for it.',
+} = Astro.props;
+---
+<section class="band-indigo">
+  <div class="wrap py-[clamp(4rem,8vw,7rem)] text-center">
+    <Eyebrow class="justify-center">{eyebrow}</Eyebrow>
+    <h2 class="text-h1 mx-auto mt-6 max-w-[22ch]">{title}</h2>
+    <p class="mx-auto mt-5 max-w-[54ch] text-ink-2">{body}</p>
+    <div class="mt-10 flex flex-wrap justify-center gap-3">
+      <a class="btn btn-light" href="/contact/">Request a quote</a>
+      <a class="btn btn-outline-light" href="/capabilities/">See capabilities</a>
+    </div>
+  </div>
+</section>

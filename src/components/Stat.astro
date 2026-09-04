@@ -1,0 +1,10 @@
+---
+interface Props { value: string; sup?: string; label: string }
+const { value, sup, label } = Astro.props;
+---
+<div class="border-b border-r border-line px-5 py-8 last:border-r-0 sm:py-11 md:border-b-0">
+  <div class="font-serif text-[clamp(2rem,3.4vw,3rem)] leading-none tracking-[-0.03em]">
+    {value}{sup && <span class="ml-0.5 align-super text-[0.5em] text-accent">{sup}</span>}
+  </div>
+  <div class="mt-3 text-[0.75rem] uppercase leading-snug tracking-[0.14em] text-muted">{label}</div>
+</div>

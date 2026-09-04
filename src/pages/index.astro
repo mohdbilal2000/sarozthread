@@ -1,0 +1,278 @@
+---
+import Base from '@/layouts/Base.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import ArrowIcon from '@/components/ArrowIcon.astro';
+import Stat from '@/components/Stat.astro';
+import SiteImage from '@/components/SiteImage.astro';
+import LookGrid from '@/components/LookGrid.astro';
+import CertLogos from '@/components/CertLogos.astro';
+import FaqList from '@/components/FaqList.astro';
+import Cta from '@/components/Cta.astro';
+import { company, facility, certifications } from '@/data/company';
+import { capabilities } from '@/data/capabilities';
+import { productCategories } from '@/data/products';
+import { faqs } from '@/data/faq';
+import { faqSchema } from '@/lib/schema';
+
+const homeFaqs = faqs.filter((f) =>
+  [
+    'What garments do you manufacture?',
+    'How many machines does the factory have?',
+    'Is embroidery done in house or subcontracted?',
+    'What certifications does Saroz Threadz hold?',
+    'What is your minimum order quantity?',
+    'How do I start working with Saroz Threadz?',
+  ].includes(f.q),
+);
+---
+
+<Base
+  title="Saroz Threadz — Womenswear Manufacturer in Jaipur, India"
+  description="Third-generation womenswear manufacturer in Jaipur. 200,000 sq. ft., 655 machines, embroidery in house, SMETA audited and Better Cotton approved. Tech pack to bulk production for global brands."
+  path="/"
+  schema={[faqSchema(homeFaqs)]}
+>
+  <!-- Hero ------------------------------------------------------------- -->
+  <section class="relative grid min-h-[min(92svh,54rem)] items-end overflow-hidden bg-[#0e0d11]">
+    <div class="absolute inset-0">
+      <video
+        src="/video/atelier.mp4"
+        poster="/video/atelier-poster.jpg"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-label="Embroidery being stitched in the Saroz Threadz factory in Jaipur"
+        class="h-full w-full object-cover"></video>
+      <div class="hero-scrim absolute inset-0"></div>
+    </div>
+
+    <div class="wrap relative py-[clamp(3rem,8vw,6rem)] text-white">
+      <p class="eyebrow text-white/70 [&::before]:bg-gold">Jaipur, India &middot; {company.yearsInBusiness}+ years</p>
+      <h1 class="text-display mt-6 max-w-[16ch]">Garments made the way the tech pack said they would be.</h1>
+      <p class="text-lede mt-7 max-w-[46ch] text-white/85">
+        A third-generation, family-run womenswear factory. Embroidery, printing and value-added
+        detailing, taken from first sample to shipped bulk under one roof.
+      </p>
+      <div class="mt-10 flex flex-wrap gap-3">
+        <a class="btn btn-light" href="/contact/">Request a quote</a>
+        <a class="btn btn-outline-light" href="/factory/">Factory &amp; capacity</a>
+      </div>
+      <p class="mt-12 text-[0.75rem] uppercase tracking-[0.22em] text-white/55">
+        {certifications.map((c) => c.name).join(' · ')}
+      </p>
+    </div>
+  </section>
+
+  <!-- Stat bar --------------------------------------------------------- -->
+  <section class="border-y border-line bg-paper-2" aria-label="Key facts">
+    <div class="grid grid-cols-2 md:grid-cols-4">
+      <Stat value={String(company.yearsInBusiness)} sup="+" label="Years in garment manufacturing" />
+      <Stat value={facility.floorAreaSqFt.toLocaleString('en-US')} label="Sq. ft. of production floor" />
+      <Stat value={String(facility.totalMachines)} label="Sewing machines in house" />
+      <Stat value={String(company.generation)} sup="rd" label="Generation, family owned" />
+    </div>
+  </section>
+
+  <!-- Who we are ------------------------------------------------------- -->
+  <section class="section">
+    <div class="wrap grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
+      <div data-reveal>
+        <Eyebrow>Who we are</Eyebrow>
+        <h2 class="text-h1 mt-5">Forty years of one family answering for the same factory floor.</h2>
+      </div>
+      <div class="prose-block text-lede" data-reveal="80">
+        <p>
+          {company.legalName} has manufactured fashion garments in Jaipur for over four decades, now
+          under its third generation. We specialise in womenswear with real handwork content &mdash;
+          embroidery, print, and the finishing detail that makes a garment look more expensive than
+          it costs.
+        </p>
+        <p>
+          Our factory operates in full compliance with international standards. We are SMETA audited,
+          approved under the Better Cotton Initiative, authorised to work on licensed programmes
+          including Disney, and recognised as an export house by the Government of India.
+        </p>
+        <p class="!mt-8">
+          <a class="link-arrow" href="/about/">Read our story <ArrowIcon /></a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight !pt-0">
+    <div class="wrap grid gap-4 md:grid-cols-2">
+      <div data-reveal>
+        <SiteImage name="factory-floor" alt="A machinist finishing a garment at a sewing station in the Saroz Threadz factory" caption="Production floor · Sitapura" />
+      </div>
+      <div data-reveal="120">
+        <SiteImage name="embroidery" alt="Close-up of embroidery being stitched onto patterned fabric" caption="Embroidery · in house" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Capabilities ----------------------------------------------------- -->
+  <section class="section band">
+    <div class="wrap">
+      <div class="grid items-end gap-8 lg:grid-cols-2 lg:gap-20">
+        <div data-reveal>
+          <Eyebrow>What we do</Eyebrow>
+          <h2 class="text-h1 mt-5">Six disciplines, one accountable team.</h2>
+        </div>
+        <p class="prose-block" data-reveal="80">
+          You brief one factory, not a chain of subcontractors. Cutting, sewing, embroidery, pattern
+          making, finishing and packing happen on our own floor. Printing runs through partner houses
+          we have used for decades &mdash; and we say which is which.
+        </p>
+      </div>
+
+      <ul class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          capabilities.map((c, i) => (
+            <li data-reveal={String(i * 60)}>
+              <a href={`/capabilities/${c.slug}/`} class="card group block h-full !bg-transparent no-underline">
+                <span class="font-serif text-[0.8125rem] tracking-[0.1em] text-accent">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3 class="text-h3 mt-4">{c.name}</h3>
+                <p class="mt-3 text-[0.9375rem] text-ink-2">{c.answer.split('. ').slice(0, 2).join('. ')}.</p>
+                <span class="link-arrow mt-6 inline-flex border-0 !pb-0 text-accent">
+                  Detail <ArrowIcon />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Products --------------------------------------------------------- -->
+  <section class="section">
+    <div class="wrap">
+      <div class="grid items-end gap-8 lg:grid-cols-2 lg:gap-20">
+        <div data-reveal>
+          <Eyebrow>What we make</Eyebrow>
+          <h2 class="text-h1 mt-5">Womenswear built around handwork.</h2>
+        </div>
+        <p class="prose-block" data-reveal="80">
+          Dresses, blouses and shirts, tunics and kaftans, jumpsuits and co-ord sets &mdash; in cotton,
+          rayon and viscose. Developed to your tech pack or adapted from our range.
+        </p>
+      </div>
+
+      <ul class="mt-12 grid gap-px overflow-hidden rounded-[3px] border border-line bg-line sm:grid-cols-2 lg:grid-cols-4" data-reveal>
+        {
+          productCategories.map((p) => (
+            <li class="bg-surface">
+              <a href={`/products/${p.slug}/`} class="group block h-full p-7 no-underline transition-colors hover:bg-surface-2">
+                <h3 class="font-serif text-[1.25rem] leading-snug">{p.name}</h3>
+                <p class="mt-3 text-[0.875rem] text-ink-2">{p.constructions.slice(0, 3).join(' · ')}</p>
+                <span class="mt-6 inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.13em] text-accent">
+                  View <ArrowIcon />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-4" data-reveal>
+        <LookGrid slugs={['hand-embroidered-tunic', 'printed-maxi-dress', 'oversized-poplin-shirt', 'tiered-ruffle-dress', 'embroidered-blouse', 'printed-jumpsuit', 'tiered-midi-dress', 'placket-embroidered-shirt']} />
+      </div>
+
+      <p class="mt-10" data-reveal>
+        <a class="link-arrow" href="/lookbook/">See the full lookbook <ArrowIcon /></a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Compliance ------------------------------------------------------- -->
+  <section class="section-tight border-y border-line bg-paper-2">
+    <div class="wrap grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <div data-reveal>
+        <Eyebrow>Compliance</Eyebrow>
+        <h2 class="text-h2 mt-5">Audited, not asserted.</h2>
+        <p class="prose-block mt-5">
+          Buyers should not have to take a factory's word for it. Our standards are third-party
+          audited and our certifications are current.
+        </p>
+        <CertLogos class="mt-9" />
+      </div>
+      <div data-reveal="120">
+        <dl class="space-y-5">
+          {
+            certifications.map((c) => (
+              <div class="border-t border-line pt-4">
+                <dt class="font-serif text-[1.15rem]">{c.name}</dt>
+                <dd class="mt-1.5 text-[0.9375rem] text-ink-2">{c.what}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <p class="mt-8">
+          <a class="link-arrow" href="/compliance/">How we work <ArrowIcon /></a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Markets ---------------------------------------------------------- -->
+  <section class="section">
+    <div class="wrap grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+      <div data-reveal>
+        <Eyebrow>Where we ship</Eyebrow>
+        <h2 class="text-h1 mt-5">Working with brands across four continents.</h2>
+        <p class="prose-block mt-5">
+          We export to buyers in North America, South America, Europe and Asia, handling
+          documentation, inspection and logistics coordination in house from Jaipur.
+        </p>
+      </div>
+      <div data-reveal="80">
+        <ul class="grid grid-cols-2 gap-px overflow-hidden rounded-[3px] border border-line bg-line sm:grid-cols-4">
+          {
+            company.markets.map((m) => (
+              <li class="bg-surface p-6">
+                <strong class="block font-serif text-[1.15rem] font-normal leading-snug">{m.region}</strong>
+                <span class="mt-1.5 block text-[0.75rem] uppercase tracking-[0.13em] text-muted">{m.detail}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <blockquote class="mt-12 max-w-[34ch] font-serif text-h2">
+          &ldquo;Long-term partnerships built on trust, consistency and reliability.&rdquo;
+        </blockquote>
+        <cite class="mt-6 block text-[0.75rem] uppercase not-italic tracking-[0.14em] text-muted">
+          {company.contact.primaryName} &middot; {company.contact.primaryRole}
+        </cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -------------------------------------------------------------- -->
+  <section class="section-tight border-t border-line">
+    <div class="wrap grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
+      <div data-reveal>
+        <Eyebrow>Common questions</Eyebrow>
+        <h2 class="text-h2 mt-5">The things buyers ask first.</h2>
+        <p class="mt-5">
+          <a class="link-arrow" href="/faq/">All questions <ArrowIcon /></a>
+        </p>
+      </div>
+      <div data-reveal="80">
+        <FaqList items={homeFaqs} />
+      </div>
+    </div>
+  </section>
+
+  <Cta />
+</Base>
+
+<style>
+  .hero-scrim {
+    background:
+      linear-gradient(to top, rgb(10 9 12 / 0.93) 0%, rgb(10 9 12 / 0.55) 45%, rgb(10 9 12 / 0.35) 100%),
+      linear-gradient(to right, rgb(10 9 12 / 0.6) 0%, transparent 62%);
+  }
+</style>

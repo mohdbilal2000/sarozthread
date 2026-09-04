@@ -1,0 +1,29 @@
+---
+/**
+ * A question-shaped heading with a self-contained answer directly beneath it.
+ *
+ * This is the shape that gets lifted into AI answers: the heading matches how a
+ * buyer phrases the question, and the first paragraph answers it completely
+ * without depending on surrounding context. Everything after is supporting
+ * detail for humans.
+ */
+type Level = 'h1' | 'h2' | 'h3';
+
+interface Props {
+  question: string;
+  answer: string;
+  /** Heading level — h1 on a page whose whole subject is this question. */
+  as?: Level;
+  id?: string;
+  class?: string;
+}
+
+const { question, answer, as = 'h2', id, class: cls = '' } = Astro.props as Props;
+const sizes: Record<Level, string> = { h1: 'text-h1', h2: 'text-h2', h3: 'text-h3' };
+const Tag = as;
+---
+<div class:list={['answer', cls]} id={id}>
+  <Tag class={sizes[as]}>{question}</Tag>
+  <p class="mt-5">{answer}</p>
+  <slot />
+</div>

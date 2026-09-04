@@ -1,5 +1,9 @@
-.DS_Store
-__pycache__/
-*.pyc
-.vercel
+dist/
+.astro/
 node_modules/
+.env
+.env.local
+.env.production
+.vercel
+.DS_Store
+*.log

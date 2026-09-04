@@ -1,0 +1,58 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import { company } from '@/data/company';
+
+const trail = [{ name: 'Privacy', href: '/privacy/' }];
+const updated = new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long' });
+---
+<Base
+  title="Privacy"
+  description="How Saroz Threadz handles information submitted through this website."
+  path="/privacy/"
+  breadcrumbs={trail}
+>
+  <PageHeader eyebrow="Privacy" title="What this website does with your information." trail={trail} />
+
+  <section class="section">
+    <div class="wrap wrap-narrow prose-block">
+      <p class="text-lede">Last updated {updated}.</p>
+
+      <h2>The short version</h2>
+      <p>
+        This website sets no cookies, runs no advertising trackers, and loads no third-party fonts or
+        scripts. Nothing you do on these pages is shared with an analytics vendor or an ad network.
+      </p>
+
+      <h2>The enquiry form</h2>
+      <p>
+        The quote request form on the contact page opens your own email client with the details you
+        typed already filled in. Nothing is transmitted until you press send in your mail
+        application, and the message goes directly to {company.legalName}. If a hosted form endpoint
+        is configured in future, this page will name the provider.
+      </p>
+
+      <h2>What we do with enquiries</h2>
+      <p>
+        Information you email us — your name, company, contact details, tech packs and specifications
+        — is used to quote and to run your order. We do not sell it, and we do not share it outside
+        the company except with the partner printing houses and freight forwarders needed to execute
+        an order you have placed.
+      </p>
+
+      <h2>Hosting</h2>
+      <p>
+        The site is served as static files by our hosting provider, which keeps standard server logs
+        including IP addresses for security and abuse prevention. We do not use those logs to profile
+        visitors.
+      </p>
+
+      <h2>Your rights</h2>
+      <p>
+        To ask what we hold about you, to correct it, or to have it deleted, email
+        <a href={`mailto:${company.contact.primaryEmail}`}>{company.contact.primaryEmail}</a>. We will
+        respond within 30 days.
+      </p>
+    </div>
+  </section>
+</Base>
