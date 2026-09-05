@@ -173,3 +173,63 @@ export const mapsUrl =
   encodeURIComponent(
     `${company.address.street}, ${company.address.locality} ${company.address.postalCode}`,
   );
+
+/** Leadership. Roles are inferred from the client's own contact listing; the
+ *  bios stay factual and short until the company supplies proper ones. */
+export const leadership = [
+  {
+    name: 'Arun Lashkery',
+    role: 'Business Contact',
+    focus: 'Buyer relationships, costing and order execution',
+    bio: 'Arun is the direct point of contact for buyers at Saroz Threadz, from first enquiry through to shipment. Brands deal with him rather than an account-management layer.',
+    email: 'arun@sarozthreadz.com',
+    phone: '+91 98293 14999',
+  },
+] as const;
+
+/** What the company is willing to state publicly about its client base. */
+export const clientPosition = {
+  headline: 'We manufacture for global fashion brands.',
+  detail:
+    'Most of our buyers ask us not to name them, which is normal for private-label manufacturing. Named references are available to serious enquiries under NDA.',
+  programmes: [
+    { label: 'Licensed programmes', value: 'Disney authorised' },
+    { label: 'Buyer regions', value: 'North America, South America, Europe, Asia' },
+    { label: 'Export status', value: 'Government of India recognised export house' },
+    { label: 'References', value: 'Available under NDA' },
+  ],
+};
+
+/** Documents a buyer's compliance team will ask for. */
+export const documents = [
+  {
+    name: 'Factory profile',
+    kind: 'PDF',
+    description: 'Machinery list, floor area, processes and certifications in one sheet.',
+    status: 'on-request' as const,
+  },
+  {
+    name: 'SMETA audit summary',
+    kind: 'PDF',
+    description: 'Most recent Sedex Members Ethical Trade Audit report summary.',
+    status: 'on-request' as const,
+  },
+  {
+    name: 'Better Cotton membership',
+    kind: 'PDF',
+    description: 'Proof of approval under the Better Cotton Initiative.',
+    status: 'on-request' as const,
+  },
+  {
+    name: 'Export house recognition',
+    kind: 'PDF',
+    description: 'Government of India recognised export house certificate.',
+    status: 'on-request' as const,
+  },
+  {
+    name: 'Capability deck',
+    kind: 'PDF',
+    description: 'Product range, construction capability and past programme types.',
+    status: 'on-request' as const,
+  },
+];

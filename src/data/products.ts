@@ -115,6 +115,26 @@ export const productCategories: ProductCategory[] = [
     looks: ['printed-jumpsuit', 'floral-kaftan-dress', 'ditsy-print-dress'],
     hero: 'printed-jumpsuit',
   },
+  {
+    slug: 'resort-and-vacation',
+    name: 'Resort and vacation',
+    question: 'Do you manufacture resort and vacation wear?',
+    answer:
+      'Yes. Saroz Threadz manufactures resort and vacation wear in Jaipur — kaftans, cover-ups, beach dresses and lightweight co-ords in cotton voile, rayon and viscose. Lightweight decorated wovens are the core of our floor, which is exactly what the resort category is built from.',
+    intro:
+      'Resort is not a separate capability for us, it is our default fabric weight and our default decoration. Volume, drape and something worth looking at up close.',
+    constructions: [
+      'Kaftans and cover-ups',
+      'Beach and holiday dresses',
+      'Wide-leg co-ord sets',
+      'Tie-front and drawstring details',
+      'Tasselled and fringed hems',
+    ],
+    fabrics: ['Cotton voile', 'Cotton lawn', 'Rayon', 'Viscose georgette'],
+    decoration: ['All-over prints', 'Border embroidery', 'Tassels and hand finishing'],
+    looks: ['floral-kaftan-dress', 'hand-embroidered-tunic', 'printed-maxi-dress', 'block-print-dress'],
+    hero: 'floral-kaftan-dress',
+  },
 ];
 
 export const getProductCategory = (slug: string) =>

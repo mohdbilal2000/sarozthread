@@ -1,9 +1,9 @@
-dist/
-.astro/
 node_modules/
+.next/
+out/
 .env
-.env.local
-.env.production
+.env*.local
 .vercel
+*.tsbuildinfo
+next-env.d.ts
 .DS_Store
-*.log
