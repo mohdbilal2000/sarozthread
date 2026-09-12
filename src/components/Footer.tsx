@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { company, formattedAddress, certifications } from '@/data/company';
 import { footerNav, legalNav } from '@/lib/site';
 import { ArrowRight } from './Icons';
+import { BuildCredit } from './BuildCredit';
 
 export function Footer() {
   return (
@@ -86,6 +87,8 @@ export function Footer() {
           </nav>
         </div>
       </div>
+
+      <BuildCredit />
     </footer>
   );
 }

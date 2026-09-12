@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { PageHero, Section, SpecTable } from '@/components/blocks';
 import { LookGrid } from '@/components/LookGrid';
+import { ProductCardGrid } from '@/components/ProductCard';
 import { FaqAccordion } from '@/components/FaqAccordion';
 import { ArrowRight } from '@/components/Icons';
 import { productCategories } from '@/data/products';
@@ -43,6 +44,19 @@ export default function ProductsPage() {
           />
         }
       />
+
+      {/* At a glance — every category in one screen, before the long read. */}
+      <Section tight>
+        <div className="shell">
+          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-5">
+            <h2 className="text-d2">All categories</h2>
+            <p className="font-mono text-[0.6875rem] uppercase tracking-[0.13em] text-ash">
+              {productCategories.length} categories · tap for detail
+            </p>
+          </div>
+          <ProductCardGrid products={productCategories} className="mt-8" />
+        </div>
+      </Section>
 
       <Section>
         <div className="shell space-y-24 lg:space-y-32">

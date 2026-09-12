@@ -41,12 +41,15 @@ const TRAINING_AGENTS = [
   'omgili',
 ];
 
+/** Internal surfaces. Also noindex'd at the page level and absent from the sitemap. */
+const PRIVATE = ['/admin', '/admin/'];
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      { userAgent: '*', allow: '/' },
-      { userAgent: ANSWER_AGENTS, allow: '/' },
-      { userAgent: TRAINING_AGENTS, allow: '/' },
+      { userAgent: '*', allow: '/', disallow: PRIVATE },
+      { userAgent: ANSWER_AGENTS, allow: '/', disallow: PRIVATE },
+      { userAgent: TRAINING_AGENTS, allow: '/', disallow: PRIVATE },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
     host: SITE_URL,

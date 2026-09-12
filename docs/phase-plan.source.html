@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Saroz Threadz — Website Programme</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 18mm; }
+  * { box-sizing: border-box; }
+  :root {
+    --ink: #14161a;
+    --muted: #5b6270;
+    --faint: #8b93a1;
+    --leaf: #1f7a43;
+    --leaf-light: #eaf6ee;
+    --leaf-edge: #cbe6d5;
+    --rule: #dfe3e8;
+    --black: #0d0f12;
+  }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--ink); font-size: 10pt; line-height: 1.55;
+  }
+  h1, h2, h3, h4 { margin: 0; font-weight: 700; letter-spacing: -0.01em; }
+  p { margin: 0 0 8pt; }
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .avoid { page-break-inside: avoid; }
+
+  /* ---------- Cover ---------- */
+  .cover { height: 250mm; display: flex; flex-direction: column; }
+  .cover-top { flex: 1; }
+  .mark { display: flex; align-items: center; gap: 8pt; }
+  .mark svg { display: block; }
+  .mark-name { font-size: 12pt; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+  .mark-name em { font-style: normal; color: var(--leaf); }
+  .cover-rule { height: 3pt; background: var(--black); margin: 14pt 0 0; }
+  .cover-rule span { display: block; height: 3pt; width: 64pt; background: var(--leaf); }
+  .cover h1 { font-size: 34pt; line-height: 1.03; margin-top: 46pt; max-width: 15em; }
+  .cover .sub { font-size: 13pt; color: var(--muted); margin-top: 14pt; max-width: 32em; line-height: 1.45; }
+  .cover-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 14pt 24pt; border-top: 1pt solid var(--rule); padding-top: 14pt; }
+  .cover-meta div span { display: block; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); margin-bottom: 3pt; }
+  .cover-meta div strong { font-weight: 600; font-size: 10pt; }
+
+  /* ---------- Running heads ---------- */
+  .chapter { display: flex; align-items: baseline; gap: 10pt; border-bottom: 2pt solid var(--black); padding-bottom: 6pt; margin-bottom: 14pt; }
+  .chapter .num { font-size: 8pt; letter-spacing: 0.16em; color: var(--leaf); font-weight: 700; }
+  .chapter h2 { font-size: 17pt; }
+  h3 { font-size: 11.5pt; margin: 16pt 0 5pt; }
+  h4 { font-size: 9.5pt; margin: 11pt 0 3pt; }
+  .lede { font-size: 11pt; color: var(--muted); line-height: 1.5; margin-bottom: 12pt; }
+
+  ul { margin: 0 0 9pt; padding-left: 13pt; }
+  li { margin-bottom: 3.5pt; }
+  li::marker { color: var(--leaf); }
+
+  .note { background: var(--leaf-light); border: 0.6pt solid var(--leaf-edge); border-left: 3pt solid var(--leaf); padding: 9pt 11pt; margin: 10pt 0; font-size: 9.5pt; }
+  .note strong { color: var(--leaf); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 8pt 0 12pt; }
+  th { text-align: left; font-size: 7.5pt; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); border-bottom: 1pt solid var(--black); padding: 0 8pt 5pt 0; font-weight: 700; }
+  td { padding: 6pt 8pt 6pt 0; border-bottom: 0.6pt solid var(--rule); vertical-align: top; }
+  td:last-child, th:last-child { padding-right: 0; }
+
+  .phase { border: 0.6pt solid var(--rule); border-top: 3pt solid var(--leaf); padding: 12pt 13pt; margin-bottom: 11pt; }
+  .phase.done { border-top-color: var(--black); background: #fafbfc; }
+  .phase-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12pt; margin-bottom: 3pt; }
+  .phase-head h3 { margin: 0; font-size: 12.5pt; }
+  .pill { font-size: 7pt; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; padding: 2.5pt 6pt; white-space: nowrap; }
+  .pill.live { background: var(--black); color: #fff; }
+  .pill.next { background: var(--leaf); color: #fff; }
+  .pill.later { background: #eef0f3; color: var(--muted); }
+  .phase .when { font-size: 8pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 7pt; }
+  .phase p.what { margin-bottom: 7pt; }
+
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20pt; }
+  .cols ul { margin-bottom: 0; }
+
+  .gantt td { padding: 5pt 4pt; border-bottom: 0.6pt solid var(--rule); }
+  .gantt .bar { height: 8pt; background: var(--leaf); display: block; }
+  .gantt .bar.done { background: var(--black); }
+  .gantt .bar.soft { background: var(--leaf-edge); }
+  .gantt th.w { text-align: center; font-size: 7pt; }
+  .gantt td.wk { padding: 5pt 1.5pt; }
+
+  .kv { display: grid; grid-template-columns: 34% 1fr; gap: 0; border-top: 0.6pt solid var(--rule); }
+  .kv > div { padding: 4pt 0; border-bottom: 0.6pt solid var(--rule); }
+  .kv > div:nth-child(odd) { font-size: 8pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); padding-right: 10pt; }
+
+  .foot { position: running(foot); }
+  .glossary dt { font-weight: 700; font-size: 9.5pt; margin-top: 9pt; }
+  .glossary dd { margin: 2pt 0 0; color: var(--muted); }
+  .signoff { border: 0.6pt solid var(--rule); padding: 14pt; margin-top: 14pt; display: grid; grid-template-columns: 1fr 1fr; gap: 22pt; }
+  .sigline { border-bottom: 0.6pt solid var(--ink); height: 30pt; }
+  .sigcap { font-size: 8pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-top: 5pt; }
+  .end { margin-top: 16pt; border-top: 2pt solid var(--black); padding-top: 8pt; font-size: 8pt; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<!-- ============================ COVER ============================ -->
+<section class="page cover">
+  <div class="cover-top">
+    <div class="mark">
+      <svg viewBox="0 0 16 16" width="16" height="16"><path d="M14 2C7.5 2 3 4.8 3 9.5c0 1.3.4 2.4 1 3.3L2 15h2l1.4-1.7c.8.4 1.7.7 2.6.7 4 0 6-3.9 6-12Z" fill="#1f7a43"/></svg>
+      <span class="mark-name">Tech<em>Leaf</em></span>
+    </div>
+    <div class="cover-rule"><span></span></div>
+
+    <h1>Saroz Threadz Website: Build, Admin Panel &amp; AI Search Programme</h1>
+    <p class="sub">What has been delivered, what comes next, and the schedule to finish it — written so it can be read without a technical background.</p>
+  </div>
+
+  <div class="cover-meta">
+    <div><span>Prepared for</span><strong>Arun Lashkery — Saroz Threadz Pvt Ltd</strong></div>
+    <div><span>Reviewed with</span><strong>Asat Ali</strong></div>
+    <div><span>Prepared by</span><strong>TechLeaf — techleaf.us</strong></div>
+    <div><span>Delivery team</span><strong>5 specialists</strong></div>
+    <div><span>Remaining schedule</span><strong>3–4 weeks</strong></div>
+    <div><span>Document</span><strong>Phase plan, revision 1</strong></div>
+  </div>
+</section>
+
+<!-- ============================ 1 ============================ -->
+<section class="page">
+  <div class="chapter"><span class="num">01</span><h2>In one page</h2></div>
+
+  <p class="lede">Saroz Threadz now has a website that a buyer in London or New York can judge the factory by — and, just as importantly, one that AI assistants can read, understand and quote when somebody asks them to name a womenswear manufacturer in India.</p>
+
+  <h3>Where the project stands</h3>
+  <p>Phase 1 is complete. The public website is built, tested and ready to go live: 43 pages covering capabilities, products, the factory, quality, compliance, sustainability and the company. In this latest round of work we also fixed a defect that affected every visitor, added a proper product catalogue view, and built a preview of the admin panel that Saroz Threadz will use to manage products without a developer.</p>
+
+  <h3>What comes next</h3>
+  <p>Three phases remain. The largest is the working admin panel — the screen where your team adds a new style, uploads photographs and publishes, with the product page, the sitemap and the AI-readable data all updating on their own. Alongside it: real factory photography, the missing commercial numbers buyers screen on, analytics, and the AI search work that decides whether an assistant names Saroz Threadz or a competitor.</p>
+
+  <div class="note">
+    <strong>The schedule.</strong> Five specialists, working in parallel, complete the remaining phases in <strong>three to four weeks</strong> from approval. Three weeks is achievable if factory photography and the commercial figures listed in section&nbsp;07 reach us in the first week. Four weeks is the realistic figure if they arrive later — the photography is the one item we cannot produce ourselves.
+  </div>
+
+  <h3>The three words that matter</h3>
+  <p>You will see <strong>SEO</strong>, <strong>AEO</strong> and <strong>GEO</strong> through this document. They are explained properly in section 04. The short version: SEO is being found on Google. AEO and GEO are being <em>named</em> by ChatGPT, Gemini, Perplexity and Google's AI answers when a buyer asks them for a manufacturer. Buyers increasingly ask the assistant first and visit two or three websites after. The site has been built for both from the ground up, which is far cheaper than retrofitting it later.</p>
+
+  <h3>What we need from you</h3>
+  <p>Nothing technical. A half-day of factory photography, a handful of commercial numbers only the company knows (minimum order quantity, capacity, lead times), and access to the domain name. Section 07 lists all of it on one page.</p>
+</section>
+
+<!-- ============================ 2 ============================ -->
+<section class="page">
+  <div class="chapter"><span class="num">02</span><h2>How the website is built — in plain language</h2></div>
+
+  <p class="lede">Written so the technical choices can be understood, questioned and defended without a developer in the room.</p>
+
+  <h3>Next.js and React — the foundation</h3>
+  <p>The site is built on <strong>Next.js</strong> (version 16), which is the current professional standard for building business websites, and <strong>React</strong>, the technology underneath it. Netflix, Nike, TikTok, Walmart and OpenAI all run public websites on this same foundation. It is free and open-source: there is no licence to renew and no vendor who can raise a price on you.</p>
+
+  <h4>Why this matters commercially, not just technically</h4>
+  <ul>
+    <li><strong>The pages are pre-built.</strong> Each page is generated in advance rather than assembled while the visitor waits, so a buyer in Europe opens it in well under a second. Google treats speed as a ranking factor.</li>
+    <li><strong>The text is in the page itself.</strong> Many modern sites deliver an empty page and fill it in afterwards. Search engines tolerate this; AI crawlers frequently do not. Here every word is in the raw page.</li>
+    <li><strong>It scales without a rewrite.</strong> The admin panel, a buyer login or a second language are additions to this foundation, not reasons to start again.</li>
+    <li><strong>It is not locked to us.</strong> The code is standard, documented and owned by Saroz Threadz. Any competent agency could take it over — you should keep us because the work is good, not because leaving is expensive.</li>
+  </ul>
+
+  <h3>Where it will live</h3>
+  <p>The site is designed to be hosted on <strong>Vercel</strong>, the company that builds Next.js. Copies are served from data centres worldwide, so it loads quickly in every market you sell to; certificates, backups and scaling are automatic. Every change is published to a private preview link for approval before it reaches the public site.</p>
+
+  <h3>The pieces, named</h3>
+  <div class="kv">
+    <div>Framework</div><div>Next.js 16 — page structure, speed, search-engine readiness</div>
+    <div>Interface</div><div>React 19 — the menus, forms and interactions</div>
+    <div>Styling</div><div>Tailwind CSS 4 — one design system, applied consistently across 43 pages</div>
+    <div>Language</div><div>TypeScript — catches whole categories of mistakes before publication, not after</div>
+    <div>Content</div><div>MDX — articles in plain text; no database to maintain. Enquiries delivered by Resend</div>
+    <div>Hosting</div><div>Vercel — global delivery, automatic certificates and backups</div>
+    <div>Structured data</div><div>Schema.org JSON-LD — the machine-readable description of the company</div>
+  </div>
+
+  <div class="note">
+    <strong>On the domain name.</strong> The company already owns <em>sarozthreadz.com</em> and it currently serves nothing. Pointing it at the new site is a ten-minute task on our side once we have access, and the old <em>sarozthreadzjaipur.com</em> address will be redirected so that no existing link or search history is lost.
+  </div>
+</section>
+
+<!-- ============================ 3 ============================ -->
+<section class="page">
+  <div class="chapter"><span class="num">03</span><h2>Phase 1 — delivered</h2></div>
+
+  <p class="lede">The public website, complete and tested. Below is what exists today, including the four items completed in this most recent round of work.</p>
+
+  <h3>Completed in this round</h3>
+
+  <h4>1. A display fault that affected every visitor — fixed</h4>
+  <p>Pages reached by clicking a link in the menu could appear blank, and only showed their content if the visitor reloaded. The cause: the site fades content in gently as you scroll, and the code responsible was only being told about the first page a visitor opened. On every page after that, the content was present but left invisible.</p>
+  <p>It is now corrected and verified in a real browser: navigating between pages by tapping links on a phone, no element stays hidden, and no errors are raised. This was the single most damaging defect on the site — a buyer who sees a blank page does not reload, they leave.</p>
+
+  <h4>2. Products now shown as cards</h4>
+  <p>The products page previously required scrolling through five long sections to learn what the factory makes. It now opens with a card for every category — photograph, name, a one-line description and the fabrics — so the full range is visible at a glance. On a phone the cards sit two to a row, which was a deliberate decision: one card per screen would have meant five screens of scrolling to answer a question that should take three seconds.</p>
+
+  <h4>3. Admin panel preview</h4>
+  <p>A new page shows exactly what the Phase 2 admin panel will look like: the add-product form, the photograph upload, and every product listed as a card with Edit and Remove. Every control is deliberately switched off. It is the real layout, not a drawing, so the screen can be reviewed and changed now — while changes are cheap — rather than after it is built. The page is closed to search engines and AI crawlers.</p>
+
+  <h4>4. TechLeaf identity and group links</h4>
+  <p>A single quiet line closes every page: a small green leaf mark and <em>Designed &amp; built by TechLeaf</em>, on black, below the legal row. Green appears nowhere else on the site, so it reads as a maker's mark on finished work rather than an advertisement inside a client's website. Beside it, a small group row links to Asia by Locals, Guide India Tours and Akurock.</p>
+
+  <div class="note">
+    <strong>A professional note on those links.</strong> We placed them as small, quiet, but genuinely visible links rather than hiding them in invisible text. Hidden links are classed as a link scheme by Google: they pass no value to the destination sites and they put the whole domain at risk of a penalty. A discreet, labelled row in the footer is unobtrusive to a reader <em>and</em> actually passes authority to the three sites — which is the entire reason for having them.
+  </div>
+
+  <h3>Already in place from earlier work</h3>
+  <div class="cols">
+    <ul>
+      <li>43 pages, all written and designed</li>
+      <li>Six capability pages, one per process</li>
+      <li>Five product category pages</li>
+      <li>Factory, quality, compliance, sustainability</li>
+      <li>Company, leadership, clients, careers</li>
+    </ul>
+    <ul>
+      <li>Lookbook of manufactured garments</li>
+      <li>Insights section for original articles</li>
+      <li>28-answer FAQ, structured for AI answers</li>
+      <li>Contact form with validation</li>
+      <li>Privacy, terms and accessibility statements</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================ 4 ============================ -->
+<section class="page">
+  <div class="chapter"><span class="num">04</span><h2>AI search: SEO, AEO and GEO</h2></div>
+
+  <p class="lede">A sourcing manager looking for a manufacturer in 2026 does not begin with ten blue links. They ask an assistant, get three or four names, and visit those websites. If the assistant does not know Saroz Threadz, the website is never opened — however good it is.</p>
+
+  <h3>The three terms, properly defined</h3>
+  <dl class="glossary">
+    <dt>SEO — Search Engine Optimisation</dt>
+    <dd>Being found in the classic list of Google results. Still the largest single source of enquiries, and still worth winning.</dd>
+    <dt>AEO — Answer Engine Optimisation</dt>
+    <dd>Being the source behind a direct answer. When someone asks "what is the minimum order quantity at a Jaipur dress factory?", one site supplies that answer. Pages must be built so a single passage fully answers a single question.</dd>
+    <dt>GEO — Generative Engine Optimisation</dt>
+    <dd>Being named and cited inside an answer written by ChatGPT, Gemini, Perplexity or Google's AI Overviews. This is the newest of the three and the one most competitors have not begun. Being early is the advantage.</dd>
+  </dl>
+
+  <h3>What the site already does for this</h3>
+  <ul>
+    <li><strong>One page per question a buyer actually asks.</strong> A single products page cannot be the answer to six different questions. Six pages can. Each product and capability page is built around a real buyer question and answers it in the first paragraph.</li>
+    <li><strong>Structured data.</strong> Every page carries a hidden, machine-readable description of the company, the factory, the products and the FAQ, in the Schema.org format Google and the AI crawlers read. This is how a machine learns "manufacturer, Jaipur, womenswear, SMETA audited" as fact rather than guesswork.</li>
+    <li><strong>An <em>llms.txt</em> file.</strong> An emerging standard: a clean summary of the site written for AI systems rather than people. Few Indian manufacturers have one.</li>
+    <li><strong>AI crawlers named and allowed explicitly.</strong> The instructions file names OpenAI's, Anthropic's, Perplexity's, Google's and Microsoft's crawlers and grants them access, removing any ambiguity. The admin panel is excluded.</li>
+    <li><strong>Answers in the text, not in images.</strong> Numbers, certifications and processes are written as text a machine can quote. A figure inside a photograph is invisible to every crawler.</li>
+    <li><strong>An Insights section.</strong> First-hand explanation from the factory floor is the single strongest driver of AI citation, because assistants prefer sources with original knowledge over sources that repeat others.</li>
+  </ul>
+
+  <div class="note">
+    <strong>The honest constraint.</strong> AI systems weigh credibility heavily, and credibility comes from specifics: real numbers, named clients, real photographs of the floor. The site is engineered correctly, but a page reading "minimum order quantity: on request" cannot be cited by an assistant answering a question about minimum order quantity. Section 07 is therefore not administrative housekeeping — it is the highest-value work remaining, and only Saroz Threadz can do it.
+  </div>
+</section>
+
+<!-- ============================ 5 ============================ -->
+<section class="page">
+  <div class="chapter"><span class="num">05</span><h2>Design and usability decisions</h2></div>
+
+  <p class="lede">Recorded here so they can be reviewed and reversed on request. Every point below is a decision, not a default.</p>
+
+  <h3>The phone comes first</h3>
+  <p>More than half of first visits to a manufacturer's website are on a phone, often a buyer checking a supplier between meetings. Every screen was designed at phone width and then expanded, rather than the usual reverse. Specifically: buttons and links are at least 44 pixels tall so they can be tapped accurately; nothing scrolls sideways at any width; the product cards sit two to a row so the range is visible without scrolling; the menu opens as a full-height panel rather than a cramped dropdown; and text never falls below a comfortable reading size.</p>
+
+  <h3>A restrained palette, used with intent</h3>
+  <p>Near-black, greys and white, with a single orange used as a signal — one marked item per screen, so attention lands where it should. Nothing is rounded and structure is drawn with fine rules rather than shadows. The intent is an industrial, engineered impression: this is a factory, not a fashion label.</p>
+
+  <h3>Honesty as a design principle</h3>
+  <p>Where a figure is not confirmed, the site says so rather than inventing one. Where the factory does not make a category — knitwear, denim, outerwear — the products page states it plainly. Buyers screen suppliers, and a supplier who says "we do not do that" is more credible than one who claims everything.</p>
+
+  <h3>Accessible by construction</h3>
+  <p>Text contrast meets the WCAG AA standard, every image carries a description, the whole site can be operated by keyboard, and animation is switched off automatically for visitors whose devices request reduced motion. Several of your buyers are large retailers with accessibility requirements in their supplier terms; this is checked during their onboarding.</p>
+
+  <h3>Open review points</h3>
+  <p>The following are ready to change on your instruction, and are quick to change now:</p>
+  <ul>
+    <li>The signal colour. Orange is the current choice; it can become a deeper red, a brass or a green if the family prefers.</li>
+    <li>Card density on phones — two per row as built, or one larger card if you would rather lead with the photography.</li>
+    <li>Whether the product cards should also replace the plain category row on the home page.</li>
+    <li>The wording of the headline on the home page and the closing call to action.</li>
+  </ul>
+</section>
+
+<!-- ============================ 6 ============================ -->
+<section class="page">
+  <div class="chapter"><span class="num">06</span><h2>The phases</h2></div>
+
+  <div class="phase done avoid">
+    <div class="phase-head"><h3>Phase 1 — Public website</h3><span class="pill live">Delivered</span></div>
+    <p class="when">Complete · ready to go live</p>
+    <p class="what">43 pages, the full design system, the AI-search foundation, the product card catalogue, the admin panel preview, and the navigation defect fixed and verified.</p>
+  </div>
+
+  <div class="phase avoid">
+    <div class="phase-head"><h3>Phase 2 — Admin panel, working</h3><span class="pill next">Weeks 1–2</span></div>
+    <p class="when">The largest remaining piece of engineering</p>
+    <p class="what">The preview becomes a real, password-protected screen. Your team adds a style, uploads photographs, and publishes — the product page, the category listing, the lookbook, the sitemap, the RSS feed and the AI-readable structured data all update themselves.</p>
+    <div class="cols">
+      <ul>
+        <li>Secure login for named staff only</li>
+        <li>Add, edit, remove and hide products</li>
+        <li>Photograph upload, resized and compressed automatically</li>
+        <li>Drag to reorder — works on a phone</li>
+      </ul>
+      <ul>
+        <li>Draft, preview, then publish — nothing goes live by accident</li>
+        <li>Enquiries from the contact form in one inbox</li>
+        <li>Every change logged: who, what, when</li>
+        <li>Written in plain English, with a one-page guide</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase avoid">
+    <div class="phase-head"><h3>Phase 3 — Credibility and content</h3><span class="pill next">Weeks 2–3</span></div>
+    <p class="when">Runs alongside Phase 2 · the highest-value work for enquiries</p>
+    <p class="what">The commercial substance that converts a visitor into an enquiry and makes the site quotable by an AI assistant.</p>
+    <div class="cols">
+      <ul>
+        <li>Factory photography placed across the site</li>
+        <li>Minimum order quantity, capacity and lead times published</li>
+        <li>Named clients, where permission allows</li>
+        <li>Certificates published for direct download</li>
+      </ul>
+      <ul>
+        <li>Leadership and team expanded</li>
+        <li>Company registration details in the footer</li>
+        <li>Three further Insights articles</li>
+        <li>A second review pass on every page of copy</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<section class="page">
+  <div class="chapter"><span class="num">06</span><h2>The phases <span style="font-weight:400;color:#8b93a1;font-size:11pt">— continued</span></h2></div>
+
+  <div class="phase avoid">
+    <div class="phase-head"><h3>Phase 4 — Launch, AI search and measurement</h3><span class="pill next">Weeks 3–4</span></div>
+    <p class="when">Going live, and knowing what happens afterwards</p>
+    <div class="cols">
+      <ul>
+        <li>Domain pointed at the new site; old address redirected</li>
+        <li>Verified with Google Search Console; sitemap submitted</li>
+        <li>Privacy-respecting analytics — no cookie banner</li>
+        <li>Enquiry email delivery switched on and tested</li>
+      </ul>
+      <ul>
+        <li>Speed and accessibility audit on real devices</li>
+        <li>Structured data validated against Google's tools</li>
+        <li>Baseline check of what ChatGPT, Gemini and Perplexity say today</li>
+        <li>Business listings aligned to the new address</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase avoid">
+    <div class="phase-head"><h3>Phase 5 — Growth</h3><span class="pill later">Ongoing, after launch</span></div>
+    <p class="when">Optional · reviewed once the site has been live a month</p>
+    <p class="what">Where the compounding return sits. Candidates, in the order we would recommend them:</p>
+    <div class="cols">
+      <ul>
+        <li>Monthly tracking of how AI assistants describe Saroz Threadz</li>
+        <li>A published article each month from the factory floor</li>
+        <li>A buyer area: tech pack upload and order status</li>
+      </ul>
+      <ul>
+        <li>A downloadable capability deck, generated from the site</li>
+        <li>Second language for European buyers</li>
+        <li>Catalogue by season, driven from the admin panel</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 7 ============================ -->
+<section class="page">
+  <div class="chapter"><span class="num">07</span><h2>Schedule and team</h2></div>
+
+  <h3>Three to four weeks from approval</h3>
+  <table class="gantt">
+    <thead><tr><th style="width:36%">Workstream</th><th class="w">Week 1</th><th class="w">Week 2</th><th class="w">Week 3</th><th class="w">Week 4</th></tr></thead>
+    <tbody>
+      <tr><td>Phase 1 — public website</td><td class="wk"><span class="bar done"></span></td><td class="wk"></td><td class="wk"></td><td class="wk"></td></tr>
+      <tr><td>Phase 2 — admin panel</td><td class="wk"><span class="bar"></span></td><td class="wk"><span class="bar"></span></td><td class="wk"><span class="bar soft"></span></td><td class="wk"></td></tr>
+      <tr><td>Phase 3 — content &amp; credibility</td><td class="wk"><span class="bar soft"></span></td><td class="wk"><span class="bar"></span></td><td class="wk"><span class="bar"></span></td><td class="wk"></td></tr>
+      <tr><td>Photography (client-dependent)</td><td class="wk"><span class="bar soft"></span></td><td class="wk"><span class="bar"></span></td><td class="wk"></td><td class="wk"></td></tr>
+      <tr><td>Phase 4 — launch &amp; AI search</td><td class="wk"></td><td class="wk"></td><td class="wk"><span class="bar"></span></td><td class="wk"><span class="bar"></span></td></tr>
+      <tr><td>Testing &amp; review throughout</td><td class="wk"><span class="bar soft"></span></td><td class="wk"><span class="bar soft"></span></td><td class="wk"><span class="bar soft"></span></td><td class="wk"><span class="bar soft"></span></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:8.5pt;color:var(--muted)">Three weeks is achievable if photography and the commercial figures reach us during week 1. Four weeks is the realistic figure otherwise. We will not compress the testing week to recover time lost elsewhere.</p>
+
+  <h3>The five people delivering it</h3>
+  <table>
+    <thead><tr><th style="width:30%">Role</th><th>Responsible for</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Engineering lead</strong></td><td>Architecture, the admin panel, hosting, security, final approval of every release</td></tr>
+      <tr><td><strong>Front-end engineer</strong></td><td>Pages, the product cards, phone behaviour, speed, accessibility</td></tr>
+      <tr><td><strong>UI/UX designer</strong></td><td>The design system, the admin screens, photography direction and placement</td></tr>
+      <tr><td><strong>Content &amp; AI search specialist</strong></td><td>Copy, structured data, SEO/AEO/GEO, the Insights articles</td></tr>
+      <tr><td><strong>QA &amp; delivery</strong></td><td>Testing on real devices, your review sessions, the launch checklist, the written guide</td></tr>
+    </tbody>
+  </table>
+
+  <h3>How we will work together</h3>
+  <ul>
+    <li>A private preview link, updated continuously — you see progress daily, not at the end.</li>
+    <li>A short review call at the end of each week. Comments in Hindi or English, written or spoken, are equally welcome.</li>
+    <li>Nothing reaches the public site without your approval.</li>
+    <li>At handover: a written guide to the admin panel in plain English, and a recorded walkthrough.</li>
+  </ul>
+
+
+</section>
+
+<section class="page">
+  <div class="chapter"><span class="num">08</span><h2>What we need from Saroz Threadz</h2></div>
+
+  <p class="lede">Six items, none of them technical. The first three move the needle most.</p>
+
+  <table>
+    <thead><tr><th style="width:46%">Item</th><th style="width:20%">When</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A half-day of factory photography</strong><br>Sewing floor with lines loaded, the embroidery machines running, cutting and CAD rooms, quality and finishing, worker facilities, and a portrait of Arun ji and the family</td><td>Week 1</td><td>The largest single gap. The site claims a 200,000 sq. ft. floor and cannot currently show it. Buyers choose people and premises.</td></tr>
+      <tr><td><strong>Minimum order quantity per style</strong></td><td>Week 1</td><td>The most-searched question about any factory. A range is fine.</td></tr>
+      <tr><td><strong>Monthly capacity, sampling and bulk lead times, headcount</strong></td><td>Week 1</td><td>Standard buyer-questionnaire fields. Every one answered improves both conversion and the odds of being cited by an AI assistant.</td></tr>
+      <tr><td><strong>One or two client names we may publish</strong></td><td>Week 2</td><td>Third-party recognition is one of the few things that genuinely lifts AI citation.</td></tr>
+      <tr><td><strong>Certificates that may be public</strong></td><td>Week 2</td><td>A file a buyer can download beats a form they must fill in.</td></tr>
+      <tr><td><strong>Domain access, company registration details, founding year</strong></td><td>Week 3</td><td>Required to go live and standard for an Indian exporter.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="signoff avoid">
+    <div><div class="sigline"></div><div class="sigcap">Approved for Saroz Threadz Pvt Ltd</div></div>
+    <div><div class="sigline"></div><div class="sigcap">Date</div></div>
+  </div>
+
+  <div class="end"><span>TechLeaf · techleaf.us</span><span>Saroz Threadz — Phase plan, revision 1</span></div>
+</section>
+
+</body>
+</html>

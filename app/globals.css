@@ -32,6 +32,12 @@
   --color-line: rgb(255 255 255 / 0.11);
   --color-line-strong: rgb(255 255 255 / 0.22);
 
+  /* TechLeaf build credit. Green reads as a maker's mark, not a second signal
+     colour — it appears once, at the very bottom, on black. Contrast on
+     --color-void is 7.4:1, so it stays legible without shouting. */
+  --color-leaf: #4ade80;
+  --color-leaf-dim: #1f7a43;
+
   /* --- Type ------------------------------------------------------------ */
   --font-display: var(--font-archivo), 'Arial Narrow', system-ui, sans-serif;
   --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
@@ -383,6 +389,10 @@
     --color-ash: #6b6b74;
     --color-line: rgb(14 14 16 / 0.14);
     --color-line-strong: rgb(14 14 16 / 0.3);
+    /* Darker green so the build credit keeps AA contrast if it ever lands
+       inside a light section. */
+    --color-leaf: #15803d;
+    --color-leaf-dim: #14532d;
     background: var(--color-void);
     color: var(--color-chalk);
   }
