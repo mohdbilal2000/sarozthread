@@ -41,12 +41,12 @@ export default function ContactPage() {
                 <dt className="text-label text-ash">Business contact</dt>
                 <dd className="text-lede mt-3 text-white">{company.contact.primaryName}</dd>
                 <dd className="mt-2">
-                  <a href={`tel:${company.contact.phoneE164}`} className="font-mono text-[0.9375rem] text-chalk hover:text-signal">
+                  <a href={`tel:${company.contact.phoneE164}`} className="-my-2 inline-block break-all py-2 font-mono text-[0.9375rem] text-chalk transition-colors hover:text-signal">
                     {company.contact.phoneDisplay}
                   </a>
                 </dd>
                 <dd className="mt-1">
-                  <a href={`mailto:${company.contact.primaryEmail}`} className="font-mono text-[0.9375rem] text-chalk hover:text-signal">
+                  <a href={`mailto:${company.contact.primaryEmail}`} className="-my-2 inline-block break-all py-2 font-mono text-[0.9375rem] text-chalk transition-colors hover:text-signal">
                     {company.contact.primaryEmail}
                   </a>
                 </dd>
@@ -54,7 +54,7 @@ export default function ContactPage() {
               <div className="border-b border-line py-6">
                 <dt className="text-label text-ash">Trade &amp; sampling</dt>
                 <dd className="mt-3">
-                  <a href={`mailto:${company.contact.tradeEmail}`} className="font-mono text-[0.9375rem] text-chalk hover:text-signal">
+                  <a href={`mailto:${company.contact.tradeEmail}`} className="-my-2 inline-block break-all py-2 font-mono text-[0.9375rem] text-chalk transition-colors hover:text-signal">
                     {company.contact.tradeEmail}
                   </a>
                 </dd>

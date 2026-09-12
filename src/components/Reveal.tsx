@@ -4,42 +4,38 @@ import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
 /**
- * Adds the `in` class to [data-reveal] / [data-rise] elements as they enter the
- * viewport. Mounted once in the root layout.
+ * Brings [data-reveal] blocks in as they scroll into view.
  *
- * The animation itself is gated behind `html.js` in CSS, so a visitor without
- * JavaScript — or one whose script failed — sees all content immediately rather
- * than a blank page. The 2.5s sweep is a second belt-and-braces guarantee.
+ * This is an enhancement, never a dependency. The stylesheet reveals every
+ * block on its own after --reveal-failsafe, so a bundle that fails to load, is
+ * blocked by a proxy, or breaks on a future refactor costs the visitor a short
+ * delay and nothing else. Read the Motion section of globals.css before
+ * changing either side of that contract.
  *
- * `pathname` is a dependency for a reason: the root layout does NOT remount on
- * a client-side navigation, so an effect keyed on `[]` observed only the first
- * page's elements. Every page reached by clicking a link then rendered its
- * content at `opacity: 0` and never un-hid it — the "page is blank until you
- * reload" bug. A MutationObserver covers content that arrives after the route
- * commits (streamed Suspense boundaries, accordions, client components).
+ * Two things this file gets wrong easily, both of which shipped once:
+ *
+ *  1. `pathname` is a dependency. The root layout does NOT remount on a
+ *     client-side navigation, so an effect keyed on [] observed only the first
+ *     page's elements and left every page reached by tapping a link hidden.
+ *  2. Content can arrive after the route commits — streamed boundaries,
+ *     accordions, anything client-rendered — so a MutationObserver picks up
+ *     what was not in the DOM the first time round.
+ *
+ * [data-rise] headings are deliberately absent: they are above the fold by
+ * definition and animate straight from CSS, with no script involved.
  */
 export function Reveal() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const supported = 'IntersectionObserver' in window;
+    // No observer, or the visitor asked for less motion: the CSS failsafe (or
+    // the reduced-motion rule) handles it. Doing nothing here is correct.
+    if (!('IntersectionObserver' in window)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const pending = new Set<number>();
 
     const show = (el: HTMLElement) => el.classList.add('in');
-    const pending = () =>
-      Array.from(
-        document.querySelectorAll<HTMLElement>(
-          '[data-reveal]:not(.in), [data-rise]:not(.in)',
-        ),
-      );
-
-    if (reduced || !supported) {
-      pending().forEach(show);
-      // Still needed on later DOM insertions, otherwise they stay hidden.
-      const mo = new MutationObserver(() => pending().forEach(show));
-      mo.observe(document.body, { childList: true, subtree: true });
-      return () => mo.disconnect();
-    }
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -48,26 +44,34 @@ export function Reveal() {
           const el = entry.target as HTMLElement;
           io.unobserve(el);
           const delay = Number(el.dataset.delay ?? 0);
-          if (delay > 0) window.setTimeout(() => show(el), delay);
-          else show(el);
+          if (delay > 0) {
+            const t = window.setTimeout(() => {
+              pending.delete(t);
+              show(el);
+            }, delay);
+            pending.add(t);
+          } else {
+            show(el);
+          }
         }
       },
       { rootMargin: '0px 0px -10% 0px', threshold: 0.05 },
     );
 
-    const observeAll = () => pending().forEach((el) => io.observe(el));
+    const observeAll = () =>
+      document
+        .querySelectorAll<HTMLElement>('[data-reveal]:not(.in)')
+        .forEach((el) => io.observe(el));
+
     observeAll();
 
     const mo = new MutationObserver(observeAll);
     mo.observe(document.body, { childList: true, subtree: true });
 
-    // Failsafe: whatever the observer missed becomes visible anyway.
-    const sweep = window.setTimeout(() => pending().forEach(show), 2500);
-
     return () => {
       io.disconnect();
       mo.disconnect();
-      window.clearTimeout(sweep);
+      pending.forEach((t) => window.clearTimeout(t));
     };
   }, [pathname]);
 

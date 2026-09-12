@@ -44,6 +44,9 @@
   --font-mono: var(--font-plex-mono), ui-monospace, 'SF Mono', monospace;
 
   /* --- Motion ---------------------------------------------------------- */
+  /* How long a block may stay hidden waiting for the observer before CSS
+     reveals it unaided. Mirrored by FAILSAFE_MS in src/components/Reveal.tsx. */
+  --reveal-failsafe: 1600ms;
   --ease-industrial: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-snap: cubic-bezier(0.6, 0, 0.2, 1);
 
@@ -530,15 +533,50 @@
 }
 
 /* --------------------------------------------------------------------------
-   Motion — all gated behind html.js so nothing hides when JS is off
+   Motion
+
+   The rule here: nothing on this site may depend on JavaScript to become
+   visible. An earlier version hid every block and waited for a script to put
+   it back — when that script missed a page, the page stayed blank until the
+   visitor reloaded, which is the one failure a buyer never forgives.
+
+   So the hidden state now carries its own way out. `reveal-in` is a plain CSS
+   animation on a timer: it runs whether or not a single line of script ever
+   executes. The observer in <Reveal> only makes it happen sooner, by swapping
+   the animation for a transition the moment a block scrolls into view. If the
+   bundle fails, is blocked, or has a bug, every block still appears — a beat
+   later, and that is all.
+
+   Gating on html.js keeps it instant when JS is switched off entirely.
    -------------------------------------------------------------------------- */
 
 @layer utilities {
+  @keyframes reveal-in {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes rise-in {
+    to {
+      transform: none;
+    }
+  }
+
   html.js [data-reveal] {
     opacity: 0;
     transform: translateY(24px);
+    /* The failsafe. Nothing has to call this — it reveals on its own. */
+    animation: reveal-in 0.8s var(--ease-industrial) var(--reveal-failsafe) both;
   }
+
+  /* The observer got here first. Cancelling the animation hands over to a
+     transition, which starts from whatever opacity the element is showing —
+     so this is smooth mid-animation, and a no-op if the failsafe already
+     finished. There is no arrangement of timings that can flash. */
   html.js [data-reveal].in {
+    animation: none;
     opacity: 1;
     transform: none;
     transition:
@@ -546,19 +584,20 @@
       transform 0.8s var(--ease-industrial);
   }
 
-  /* Headline mask-reveal: the line slides up from behind a clipping edge. */
+  /* Headline mask-reveal: the line slides up from behind a clipping edge.
+     Page headings are above the fold by definition, so this needs no observer
+     at all — it is a load animation, and therefore cannot strand a heading. */
   html.js [data-rise] > span {
     display: block;
     transform: translateY(105%);
-  }
-  html.js [data-rise].in > span {
-    transform: none;
-    transition: transform 0.9s var(--ease-industrial);
+    animation: rise-in 0.9s var(--ease-industrial) 0.08s both;
   }
 
   @media (prefers-reduced-motion: reduce) {
     html.js [data-reveal],
+    html.js [data-reveal].in,
     html.js [data-rise] > span {
+      animation: none !important;
       opacity: 1 !important;
       transform: none !important;
       transition: none !important;

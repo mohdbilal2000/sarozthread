@@ -38,11 +38,17 @@ export function Footer() {
                 <div key={line}>{line}</div>
               ))}
             </address>
-            <div className="mt-7 space-y-1.5 text-sm">
-              <a href={`mailto:${company.contact.tradeEmail}`} className="block text-chalk hover:text-signal">
+            <div className="mt-6 text-sm">
+              <a
+                href={`mailto:${company.contact.tradeEmail}`}
+                className="block break-all py-2 text-chalk transition-colors hover:text-signal"
+              >
                 {company.contact.tradeEmail}
               </a>
-              <a href={`tel:${company.contact.phoneE164}`} className="block text-chalk hover:text-signal">
+              <a
+                href={`tel:${company.contact.phoneE164}`}
+                className="block py-2 text-chalk transition-colors hover:text-signal"
+              >
                 {company.contact.phoneDisplay}
               </a>
             </div>
@@ -52,10 +58,15 @@ export function Footer() {
             {footerNav.map((col) => (
               <div key={col.heading}>
                 <p className="text-label border-b border-line pb-3 text-ash">{col.heading}</p>
-                <ul className="mt-4 space-y-2.5">
+                {/* py-1.5 on the link rather than spacing on the list: the
+                    gap becomes part of the tap target instead of dead space. */}
+                <ul className="mt-3 space-y-0.5">
                   {col.items.map((item) => (
                     <li key={item.href}>
-                      <Link href={item.href} className="text-sm text-smoke transition-colors hover:text-white">
+                      <Link
+                        href={item.href}
+                        className="block py-1.5 text-sm text-smoke transition-colors hover:text-white"
+                      >
                         {item.label}
                       </Link>
                     </li>
@@ -78,9 +89,13 @@ export function Footer() {
           <span>
             &copy; {new Date().getFullYear()} {company.legalName}
           </span>
-          <nav aria-label="Legal" className="flex flex-wrap gap-x-6 gap-y-2">
+          <nav aria-label="Legal" className="-my-1.5 flex flex-wrap gap-x-6">
             {legalNav.map((item) => (
-              <Link key={item.href} href={item.href} className="transition-colors hover:text-white">
+              <Link
+                key={item.href}
+                href={item.href}
+                className="inline-block py-1.5 transition-colors hover:text-white"
+              >
                 {item.label}
               </Link>
             ))}

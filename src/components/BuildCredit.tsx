@@ -47,7 +47,7 @@ export function BuildCredit() {
           target="_blank"
           rel="noopener"
           title="TechLeaf — web engineering and AI search optimisation"
-          className="group inline-flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ash transition-colors hover:text-leaf"
+          className="group -my-1.5 inline-flex items-center gap-2 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ash transition-colors hover:text-leaf"
         >
           <LeafMark className="text-leaf-dim transition-colors group-hover:text-leaf" />
           <span>
@@ -58,7 +58,7 @@ export function BuildCredit() {
 
         <nav
           aria-label="Group and partner sites"
-          className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[0.625rem] uppercase tracking-[0.1em] text-ash/70"
+          className="-my-1.5 flex flex-wrap items-center gap-x-4 font-mono text-[0.625rem] uppercase tracking-[0.1em] text-ash/70"
         >
           <span className="text-ash/60">Group</span>
           {GROUP_LINKS.map((l) => (
@@ -68,7 +68,7 @@ export function BuildCredit() {
               title={l.title}
               target="_blank"
               rel="noopener"
-              className="transition-colors hover:text-leaf"
+              className="inline-block py-1.5 transition-colors hover:text-leaf"
             >
               {l.label}
             </a>

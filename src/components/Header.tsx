@@ -62,7 +62,7 @@ export function Header() {
       onMouseLeave={scheduleClose}
     >
       <div className="shell flex min-h-[4.5rem] items-center justify-between gap-6 lg:min-h-[5rem]">
-        <Link href="/" className="group flex shrink-0 items-center gap-3" aria-label={`${company.name} — home`}>
+        <Link href="/" className="group -my-2 flex shrink-0 items-center gap-3 py-2" aria-label={`${company.name} — home`}>
           <span className="block h-6 w-[3px] bg-signal transition-all duration-300 group-hover:h-8" />
           <span className="text-d3 !text-[1.05rem] leading-none text-white sm:!text-[1.2rem]">
             Saroz&nbsp;Threadz

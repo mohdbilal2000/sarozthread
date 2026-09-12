@@ -57,10 +57,10 @@ export default function LeadershipPage() {
                   <p className="text-label mt-1 text-ash">{person.focus}</p>
                   <p className="prose mt-6">{person.bio}</p>
                   <div className="mt-7 flex flex-wrap gap-x-8 gap-y-2 font-mono text-[0.8125rem]">
-                    <a href={`mailto:${person.email}`} className="text-chalk hover:text-signal">
+                    <a href={`mailto:${person.email}`} className="-my-1.5 inline-block break-all py-1.5 text-chalk transition-colors hover:text-signal">
                       {person.email}
                     </a>
-                    <a href={`tel:${company.contact.phoneE164}`} className="text-chalk hover:text-signal">
+                    <a href={`tel:${company.contact.phoneE164}`} className="-my-1.5 inline-block break-all py-1.5 text-chalk transition-colors hover:text-signal">
                       {person.phone}
                     </a>
                   </div>

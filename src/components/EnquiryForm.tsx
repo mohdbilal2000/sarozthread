@@ -175,7 +175,7 @@ export function EnquiryForm() {
       <p className="mt-6 border-t border-line pt-5 text-[0.8125rem] text-ash">
         Submitted straight to our enquiry inbox — no third-party form service holds your tech pack.
         To attach files, email{' '}
-        <a href={`mailto:${company.contact.tradeEmail}`} className="text-chalk hover:text-signal">
+        <a href={`mailto:${company.contact.tradeEmail}`} className="-my-1.5 inline-block break-all py-1.5 text-chalk transition-colors hover:text-signal">
           {company.contact.tradeEmail}
         </a>{' '}
         directly.

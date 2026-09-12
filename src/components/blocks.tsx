@@ -26,10 +26,13 @@ export function Section({
   tight?: boolean;
 }) {
   return (
+    // Phones were inheriting close to desktop section padding, which left big
+    // empty bands between blocks on a 390px screen. Desktop rhythm is
+    // unchanged; the small end is tightened so a thumb reaches content.
     <section
       id={id}
       className={`ruled border-t border-line ${invert ? 'section-light' : ''} ${
-        tight ? 'py-16 lg:py-20' : 'py-20 lg:py-32'
+        tight ? 'py-12 sm:py-14 lg:py-20' : 'py-16 sm:py-20 lg:py-32'
       } ${className}`}
     >
       {children}
@@ -170,10 +173,12 @@ export function StatRow({
    -------------------------------------------------------------------------- */
 export function Breadcrumbs({ trail }: { trail: { name: string; href: string }[] }) {
   return (
-    <nav aria-label="Breadcrumb">
-      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ash">
+    // -my-1.5 keeps the visual position while the links themselves grow to a
+    // size a thumb can actually hit (WCAG 2.2 target size).
+    <nav aria-label="Breadcrumb" className="-my-1.5">
+      <ol className="flex flex-wrap items-center gap-x-2 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ash">
         <li>
-          <Link href="/" className="transition-colors hover:text-white">
+          <Link href="/" className="inline-block py-1.5 transition-colors hover:text-white">
             Home
           </Link>
         </li>
@@ -183,11 +188,11 @@ export function Breadcrumbs({ trail }: { trail: { name: string; href: string }[]
               /
             </span>
             {i === trail.length - 1 ? (
-              <span aria-current="page" className="text-chalk">
+              <span aria-current="page" className="py-1.5 text-chalk">
                 {item.name}
               </span>
             ) : (
-              <Link href={item.href} className="transition-colors hover:text-white">
+              <Link href={item.href} className="inline-block py-1.5 transition-colors hover:text-white">
                 {item.name}
               </Link>
             )}
@@ -214,22 +219,37 @@ export function PageHero({
   trail?: { name: string; href: string }[];
   aside?: React.ReactNode;
 }) {
+  // Pages like /capabilities/<slug> carry neither a lede nor an aside. Laying
+  // out an empty two-column grid for them left a band of dead space under the
+  // heading that read as a page that had failed to finish loading.
+  const hasBody = Boolean(lede || aside);
+
   return (
-    <section className="ruled grain relative overflow-hidden border-b border-line pb-14 pt-10 lg:pb-24 lg:pt-16">
+    <section
+      className={`ruled grain relative overflow-hidden border-b border-line pt-8 sm:pt-10 lg:pt-16 ${
+        hasBody ? 'pb-12 sm:pb-14 lg:pb-24' : 'pb-9 sm:pb-11 lg:pb-16'
+      }`}
+    >
       <div className="shell">
         {trail && <Breadcrumbs trail={trail} />}
-        <Kicker className="mt-10">{kicker}</Kicker>
-        <h1 className="text-d1 mt-6 max-w-[18ch]" data-rise>
+        <Kicker className="mt-7 sm:mt-9 lg:mt-10">{kicker}</Kicker>
+        <h1 className="text-d1 mt-4 max-w-[18ch] sm:mt-5 lg:mt-6" data-rise>
           <span>{title}</span>
         </h1>
-        <div className="mt-10 grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-end">
-          {lede && (
-            <p className="prose text-lede" data-reveal data-delay="120">
-              {lede}
-            </p>
-          )}
-          {aside && <div data-reveal data-delay="180">{aside}</div>}
-        </div>
+        {hasBody && (
+          <div className="mt-8 grid gap-8 sm:gap-10 lg:mt-10 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+            {lede && (
+              <p className="prose text-lede" data-reveal data-delay="120">
+                {lede}
+              </p>
+            )}
+            {aside && (
+              <div data-reveal data-delay="180">
+                {aside}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );
