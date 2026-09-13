@@ -4,6 +4,7 @@ import { archivo, inter, plexMono } from '@/lib/fonts';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Reveal } from '@/components/Reveal';
+import { HashScroll } from '@/components/HashScroll';
 import { SITE_URL } from '@/lib/site';
 import { company } from '@/data/company';
 import { graph, organization, place, website } from '@/lib/schema';
@@ -80,6 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <Footer />
         <Reveal />
+        <HashScroll />
       </body>
     </html>
   );

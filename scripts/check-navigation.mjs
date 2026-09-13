@@ -1,6 +1,7 @@
 /**
- * Guards the one rule that matters most on this site: no page may ever present
- * hidden content.
+ * Guards the two rules that decide whether a page looks broken to a buyer:
+ * no page may present hidden content, and every navigation must land at the
+ * top of the page it went to.
  *
  * A version of this site shipped with the scroll-reveal effect keyed on an
  * empty dependency array in the root layout. The layout does not remount on a
@@ -12,12 +13,19 @@
  * src/components/Reveal.tsx only makes it happen sooner. This script proves
  * both halves — including the cases where the bundle never runs at all.
  *
+ * The second rule had its own cause. `scroll-behavior: smooth` on <html> turns
+ * the router's scrollTo(0, 0) into an animation, and anything that touches the
+ * scroller while it runs — the mobile drawer releasing the body, a page growing
+ * as its blocks reveal — interrupts it partway. Tapping through from a scrolled
+ * page landed at y=376 and y=795 on the new page, which reads exactly like a
+ * page that has not loaded until you refresh.
+ *
  * Usage:
  *   npm run build && npx next start -p 3000 &
- *   npm i -D playwright-core        # not a project dependency
- *   node scripts/check-reveal.mjs   # or BASE=http://localhost:4000 node ...
+ *   npm i -D playwright-core            # not a project dependency
+ *   node scripts/check-navigation.mjs   # or BASE=http://localhost:4000 node ...
  *
- * Exits non-zero on the first route that can show a visitor nothing.
+ * Exits non-zero on the first route that can show a visitor a broken page.
  */
 import { chromium } from 'playwright-core';
 
@@ -127,9 +135,56 @@ for (const route of ['/capabilities/printing', '/products']) {
   check(route, await nojs.evaluate(probe));
 }
 await ctx.close();
+
+// 6 — every navigation must land at the top of the page it went to.
+console.log('\nscroll position after navigating (0 is correct)');
+const nav = await browser.newPage({ viewport: { width: 390, height: 844 } });
+const drawerTap = async (route) => {
+  const burger = await nav.$('button[aria-controls="mobile-nav"][aria-expanded="false"]');
+  if (burger) await burger.click();
+  await nav.waitForTimeout(300);
+  await nav.click(`#mobile-nav a[href="${route}"]`);
+  await nav.waitForURL(`**${route}`, { timeout: 15000 });
+};
+for (const [from, to, y] of [
+  ['/', '/capabilities/printing', 2500],
+  ['/', '/contact', 4000],
+  ['/factory', '/products', 6000],
+  ['/products', '/about', 3000],
+  ['/faq', '/lookbook', 5000],
+  ['/compliance', '/quality', 4500],
+  ['/insights', '/process', 2000],
+]) {
+  await nav.goto(BASE + from, { waitUntil: 'networkidle' });
+  await nav.waitForTimeout(700);
+  await nav.evaluate((v) => window.scrollTo(0, v), y);
+  await nav.waitForTimeout(600);
+  await drawerTap(to);
+  await nav.waitForTimeout(1400);
+  const landed = await nav.evaluate(() => Math.round(window.scrollY));
+  const ok = landed === 0;
+  if (!ok) failures++;
+  console.log(`${ok ? 'pass' : 'FAIL'}  ${`${from} → ${to}`.padEnd(46)} landed at y=${landed}`);
+}
+
+// 7 — anchor links must still reach their target, clear of the sticky header.
+console.log('\nanchor links');
+for (const [url, id] of [['/faq#compliance', 'compliance'], ['/faq#capacity', 'capacity']]) {
+  await nav.goto(BASE + url, { waitUntil: 'networkidle' });
+  await nav.waitForTimeout(1200);
+  const top = await nav.evaluate((i) => {
+    const el = document.getElementById(i);
+    return el ? Math.round(el.getBoundingClientRect().top) : null;
+  }, id);
+  // scroll-padding-top is 6rem; allow for the sticky header and rounding.
+  const ok = top !== null && top >= -4 && top <= 140;
+  if (!ok) failures++;
+  console.log(`${ok ? 'pass' : 'FAIL'}  ${url.padEnd(46)} target ${top}px from the top`);
+}
+await nav.close();
 await browser.close();
 
 console.log(failures === 0
-  ? '\nall pass — no route, and no failure mode, presents hidden content'
+  ? '\nall pass — nothing hidden, every navigation lands at the top'
   : `\n${failures} failing checks`);
 process.exit(failures ? 1 : 0);
