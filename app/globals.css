@@ -50,7 +50,16 @@
 
   /* --- Layout ---------------------------------------------------------- */
   --spacing-gutter: clamp(1.25rem, 4vw, 4rem);
-  --radius-soft: 3px;
+
+  /* Radii and shadows. The previous system banned both, which is why every
+     page read as one flat sheet of rectangles. Product surfaces get real
+     material: a soft edge and a shadow that deepens when you reach for it. */
+  --radius-soft: 4px;
+  --radius-card: 14px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 2px rgb(28 23 18 / 0.04), 0 8px 24px -12px rgb(28 23 18 / 0.16);
+  --shadow-lift: 0 2px 4px rgb(28 23 18 / 0.05), 0 28px 48px -20px rgb(28 23 18 / 0.28);
+  --shadow-deep: 0 40px 80px -32px rgb(28 23 18 / 0.4);
 }
 
 /* --------------------------------------------------------------------------
@@ -61,16 +70,16 @@
 
 @utility text-mega {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 1.7rem + 3.4vw, 4.5rem);
-  font-weight: 400;
-  line-height: 1.06;
-  letter-spacing: -0.022em;
+  font-size: clamp(2.6rem, 1.6rem + 4.2vw, 5.25rem);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.028em;
   font-variation-settings: 'SOFT' 0, 'WONK' 0, 'opsz' 144;
 }
 @utility text-d1 {
   font-family: var(--font-display);
-  font-size: clamp(2.125rem, 1.45rem + 3vw, 4rem);
-  font-weight: 400;
+  font-size: clamp(2.125rem, 1.4rem + 3.2vw, 4.25rem);
+  font-weight: 300;
   line-height: 1.08;
   letter-spacing: -0.018em;
   font-variation-settings: 'SOFT' 0, 'WONK' 0, 'opsz' 100;
@@ -90,6 +99,13 @@
   line-height: 1.24;
   letter-spacing: -0.008em;
   font-variation-settings: 'SOFT' 0, 'WONK' 0, 'opsz' 24;
+}
+/* Pairs with the light display weights: drop it on one word of a headline so
+   the line has a stress point instead of an even grey run. */
+@utility text-accentuate {
+  font-weight: 600;
+  color: var(--color-accent);
+  font-style: italic;
 }
 @utility text-lede {
   font-size: clamp(1.0625rem, 0.98rem + 0.4vw, 1.25rem);
@@ -524,6 +540,136 @@
     background: var(--color-sand);
     border-radius: var(--radius-soft);
     padding: 0.15em 0.4em;
+  }
+
+  /* ------------------------------------------------------------------
+     Surfaces with material. A card is a real object: it has an edge, it
+     casts a shadow, and it rises when you reach for it.
+     ------------------------------------------------------------------ */
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-canvas);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition:
+      transform 0.45s var(--ease-industrial),
+      box-shadow 0.45s var(--ease-industrial),
+      border-color 0.45s var(--ease-industrial);
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lift);
+    border-color: transparent;
+  }
+
+  /* Image frame. The child image scales inside a fixed crop, so the picture
+     moves without the layout moving. */
+  .media {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    background: var(--color-sand);
+    isolation: isolate;
+  }
+  .media > img,
+  .media > video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.9s var(--ease-industrial);
+  }
+  .group:hover .media > img,
+  .media:hover > img {
+    transform: scale(1.055);
+  }
+  /* Squared-off variant for full-bleed editorial slabs. */
+  .media-flush {
+    border-radius: 0;
+  }
+
+  /* The caption that slides up over a product image on hover. */
+  .media-veil {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    padding: 3.5rem 1.15rem 1.1rem;
+    background: linear-gradient(to top, rgb(16 13 10 / 0.9), rgb(16 13 10 / 0.45) 55%, transparent);
+    color: #fdfcfa;
+    transform: translateY(0.6rem);
+    opacity: 0;
+    transition:
+      opacity 0.45s var(--ease-industrial),
+      transform 0.45s var(--ease-industrial);
+  }
+  .group:hover .media-veil,
+  .group:focus-within .media-veil {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* A soft accent chip — the one rounded, filled element in the system. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    /* Never let a flex-column parent stretch it to full width. */
+    align-self: start;
+    width: fit-content;
+    gap: 0.4rem;
+    padding: 0.28rem 0.7rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Horizontal collection rail — the shop idiom. Scroll-snaps, and on a phone
+     it is the natural gesture rather than a wall of thumbnails. */
+  .rail {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--spacing-gutter);
+    padding-block: 0.5rem 1.75rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-stone) transparent;
+  }
+  .rail > * {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+  .rail::-webkit-scrollbar {
+    height: 3px;
+  }
+  .rail::-webkit-scrollbar-thumb {
+    background: var(--color-stone);
+    border-radius: var(--radius-pill);
+  }
+
+  /* Oversized section numeral behind the heading — editorial depth, and it
+     breaks the even grey rhythm of a page of equal-weight blocks. */
+  .watermark {
+    position: absolute;
+    top: -0.35em;
+    left: -0.06em;
+    z-index: 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(7rem, 22vw, 17rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--color-accent);
+    opacity: 0.07;
+    pointer-events: none;
+    user-select: none;
   }
 
   .tag {

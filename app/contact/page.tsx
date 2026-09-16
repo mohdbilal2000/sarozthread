@@ -14,8 +14,24 @@ export const metadata: Metadata = {
   alternates: { canonical: '/contact' },
 };
 
-export default function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const pageFaqs = faqsForPage('contact');
+
+  // Selections carried over from the sourcing qualifier on the homepage.
+  // Read as plain strings and capped, so a crafted link can only ever prefill
+  // a field the buyer can see and edit before anything is sent.
+  const q = await searchParams;
+  const one = (v: string | string[] | undefined, max: number) =>
+    (Array.isArray(v) ? v[0] : v)?.slice(0, max) || undefined;
+  const prefill = {
+    category: one(q.category, 120),
+    quantity: one(q.quantity, 120),
+    brief: one(q.brief, 4000),
+  };
 
   return (
     <>
@@ -107,7 +123,7 @@ export default function ContactPage() {
                 range.
               </p>
               <div className="mt-9">
-                <EnquiryForm />
+                <EnquiryForm prefill={prefill} />
               </div>
             </div>
 

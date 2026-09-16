@@ -9,6 +9,8 @@ import { ArrowRight } from './Icons';
 
 const initial: EnquiryState = { status: 'idle' };
 
+export type Prefill = Partial<Record<'category' | 'quantity' | 'brief', string>>;
+
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
@@ -51,12 +53,20 @@ function Field({
 const inputClass =
   'w-full border border-line bg-mist px-4 py-3.5 text-[0.9375rem] text-ink transition-colors placeholder:text-stone focus:border-accent focus:outline-none aria-[invalid=true]:border-accent';
 
-export function EnquiryForm() {
+/**
+ * `prefill` carries the selections a buyer already made in the sourcing
+ * qualifier on the homepage. They told us the category, the decoration and the
+ * quantity once; asking them to type it again is how an enquiry gets abandoned.
+ */
+export function EnquiryForm({ prefill }: { prefill?: Prefill } = {}) {
   const [state, formAction] = useActionState(submitEnquiry, initial);
   const err = state.fieldErrors ?? {};
   // Echo back what was typed so a validation error never costs the buyer their
   // brief. `key` forces React to re-mount the inputs with the new defaults.
-  const val = state.values ?? {};
+  // On the first render there is nothing to echo, so the qualifier's selections
+  // fill in instead; once the form has come back from the server, what the
+  // buyer actually typed always wins.
+  const val = state.status === 'idle' ? { ...prefill, ...state.values } : state.values ?? {};
 
   return (
     <form action={formAction} noValidate key={state.status === 'success' ? 'sent' : 'draft'}>

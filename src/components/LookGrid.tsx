@@ -1,5 +1,7 @@
 import Image from 'next/image';
-import { looks } from '@/data/products';
+import Link from 'next/link';
+import { looks, productCategories } from '@/data/products';
+import { ArrowRight } from './Icons';
 
 import embroideredBlouse from '@/assets/lookbook/embroidered-blouse.jpg';
 import tieredMidiDress from '@/assets/lookbook/tiered-midi-dress.jpg';
@@ -36,15 +38,37 @@ const IMAGES = {
 
 export type LookSlug = keyof typeof IMAGES;
 
+/** Look image by slug, for callers that lay out their own tiles. */
+export const lookImage = (slug: string) => IMAGES[slug as LookSlug];
+
+/** Maps a look's category name back to its product page. */
+const categoryHref = (category: string) => {
+  const match = productCategories.find((c) => c.name === category);
+  return match ? `/products/${match.slug}` : '/products';
+};
+
+/**
+ * The garment grid.
+ *
+ * Each look is a card that does a job rather than a tile that sits there: it
+ * names the construction and fabric a buyer is actually assessing, and it is a
+ * link into the category page where that style can be quoted. A photograph a
+ * sourcing manager cannot act on is decoration.
+ *
+ * `feature` gives the first two looks a double span, so the grid has a focal
+ * point instead of reading as an even wall of thumbnails.
+ */
 export function LookGrid({
   slugs,
   priorityCount = 0,
   columns = 4,
+  feature = false,
   className = '',
 }: {
   slugs: string[];
   priorityCount?: number;
   columns?: 3 | 4;
+  feature?: boolean;
   className?: string;
 }) {
   const cols = columns === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-4';
@@ -55,23 +79,48 @@ export function LookGrid({
     );
 
   return (
-    <ul className={`grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-3 ${cols} ${className}`}>
-      {items.map((item, i) => (
-        <li key={item.slug} className="group relative overflow-hidden bg-mist">
-          <Image
-            src={item.img}
-            alt={`${item.meta.name} — ${item.meta.detail}, manufactured by Saroz Threadz in Jaipur`}
-            sizes={columns === 3 ? '(min-width: 1024px) 33vw, (min-width: 640px) 33vw, 50vw' : '(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw'}
-            placeholder="blur"
-            priority={i < priorityCount}
-            className="aspect-[3/4] w-full object-cover transition-transform duration-[900ms] ease-[var(--ease-industrial)] group-hover:scale-[1.06]"
-          />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 bg-[linear-gradient(to_top,rgb(16_13_10/0.9),rgb(16_13_10/0.5)_55%,transparent)] px-4 pb-4 pt-14 opacity-0 transition-all duration-500 ease-[var(--ease-industrial)] group-hover:translate-y-0 group-hover:opacity-100">
-            <span className="text-label block text-canvas">{item.meta.name}</span>
-            <span className="mt-1 block text-[0.75rem] text-canvas/70">{item.meta.detail}</span>
-          </div>
-        </li>
-      ))}
+    <ul className={`grid grid-cols-2 gap-3 sm:grid-cols-3 lg:gap-5 ${cols} ${className}`}>
+      {items.map((item, i) => {
+        const big = feature && i === 0;
+        return (
+          <li
+            key={item.slug}
+            className={big ? 'sm:col-span-2 sm:row-span-2' : ''}
+            data-reveal
+            data-delay={String(Math.min(i * 60, 300))}
+          >
+            <Link href={categoryHref(item.meta.category)} className="group card h-full">
+              <div className={`media media-flush ${big ? 'aspect-square sm:aspect-auto sm:h-full' : 'aspect-[3/4]'}`}>
+                <Image
+                  src={item.img}
+                  alt={`${item.meta.name} — ${item.meta.detail}, manufactured by Saroz Threadz in Jaipur`}
+                  sizes={
+                    big
+                      ? '(min-width: 640px) 50vw, 100vw'
+                      : columns === 3
+                        ? '(min-width: 640px) 33vw, 50vw'
+                        : '(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw'
+                  }
+                  placeholder="blur"
+                  priority={i < priorityCount}
+                />
+                <div className="media-veil">
+                  <span className="text-label block">{item.meta.category}</span>
+                  <span className="mt-2 inline-flex items-center gap-2 text-[0.8125rem] font-semibold">
+                    Can you make this? <ArrowRight />
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-1 flex-col px-4 py-3.5">
+                <span className={`${big ? 'text-d3' : 'text-[0.9375rem] font-medium'} text-ink`}>
+                  {item.meta.name}
+                </span>
+                <span className="mt-1 text-[0.8125rem] text-muted">{item.meta.detail}</span>
+              </div>
+            </Link>
+          </li>
+        );
+      })}
     </ul>
   );
 }
