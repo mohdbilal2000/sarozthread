@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ArrowRight } from './Icons';
 
 /* --------------------------------------------------------------------------
-   Kicker — the small monospace label above every section heading.
+   Kicker — the small letterspaced label above every section heading.
    -------------------------------------------------------------------------- */
 export function Kicker({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return <p className={`kicker ${className}`}>{children}</p>;
@@ -10,7 +10,7 @@ export function Kicker({ children, className = '' }: { children: React.ReactNode
 
 /* --------------------------------------------------------------------------
    Section — the standard ruled band. `index` prints the section number in the
-   margin, which is what gives long pages their engineering-document feel.
+   margin, which is what gives long pages their editorial rhythm.
    -------------------------------------------------------------------------- */
 export function Section({
   children,
@@ -28,7 +28,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={`ruled border-t border-line ${invert ? 'section-light' : ''} ${
+      className={`ruled border-t border-line ${invert ? 'section-dark' : ''} ${
         tight ? 'py-16 lg:py-20' : 'py-20 lg:py-32'
       } ${className}`}
     >
@@ -56,7 +56,7 @@ export function SectionHead({
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-end lg:gap-16">
       <div data-reveal>
-        {index && <span className="text-label mb-6 block text-ash">{index}</span>}
+        {index && <span className="text-label mb-6 block text-muted">{index}</span>}
         <Kicker>{kicker}</Kicker>
         <h2 className="text-d1 mt-6 max-w-[14ch]">{title}</h2>
       </div>
@@ -95,7 +95,7 @@ export function AnswerBlock({
   children?: React.ReactNode;
 }) {
   return (
-    <div className={`border-l-2 border-signal pl-6 lg:pl-10 ${className}`}>
+    <div className={`border-l-2 border-accent pl-6 lg:pl-10 ${className}`}>
       <Tag className="text-d2">{question}</Tag>
       <p className="answer-lede mt-6">{answer}</p>
       {children}
@@ -124,7 +124,7 @@ export function SpecTable({
       <tbody>
         {rows.map((row) => (
           <tr key={row.label}>
-            <th scope="row" className={valued ? '' : '!w-full !text-chalk'}>
+            <th scope="row" className={valued ? '' : '!w-full !text-ink-soft'}>
               {row.label}
             </th>
             {valued && <td>{row.value || '—'}</td>}
@@ -154,11 +154,11 @@ export function StatRow({
           data-delay={String(i * 70)}
           className="border-b border-r border-line px-5 py-9 last:border-r-0 md:border-b-0 lg:px-8 lg:py-12"
         >
-          <dd className="text-num text-[clamp(2.5rem,5vw,4.5rem)] text-white">
+          <dd className="text-num text-[clamp(2.5rem,5vw,4.5rem)] text-ink">
             {s.value}
-            {s.sup && <span className="align-super text-[0.4em] text-signal">{s.sup}</span>}
+            {s.sup && <span className="align-super text-[0.4em] text-accent">{s.sup}</span>}
           </dd>
-          <dt className="text-label mt-4 text-ash">{s.label}</dt>
+          <dt className="text-label mt-4 text-muted">{s.label}</dt>
         </div>
       ))}
     </dl>
@@ -171,23 +171,23 @@ export function StatRow({
 export function Breadcrumbs({ trail }: { trail: { name: string; href: string }[] }) {
   return (
     <nav aria-label="Breadcrumb">
-      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ash">
+      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8125rem] text-muted">
         <li>
-          <Link href="/" className="transition-colors hover:text-white">
+          <Link href="/" className="transition-colors hover:text-ink">
             Home
           </Link>
         </li>
         {trail.map((item, i) => (
           <li key={item.href} className="flex items-center gap-2">
-            <span aria-hidden className="text-iron">
+            <span aria-hidden className="text-stone">
               /
             </span>
             {i === trail.length - 1 ? (
-              <span aria-current="page" className="text-chalk">
+              <span aria-current="page" className="text-ink-soft">
                 {item.name}
               </span>
             ) : (
-              <Link href={item.href} className="transition-colors hover:text-white">
+              <Link href={item.href} className="transition-colors hover:text-ink">
                 {item.name}
               </Link>
             )}
@@ -215,14 +215,14 @@ export function PageHero({
   aside?: React.ReactNode;
 }) {
   return (
-    <section className="ruled grain relative overflow-hidden border-b border-line pb-14 pt-10 lg:pb-24 lg:pt-16">
+    <section className="ruled grain relative overflow-hidden border-b border-line pb-14 pt-10 lg:pb-20 lg:pt-14">
       <div className="shell">
         {trail && <Breadcrumbs trail={trail} />}
         <Kicker className="mt-10">{kicker}</Kicker>
         <h1 className="text-d1 mt-6 max-w-[18ch]" data-rise>
           <span>{title}</span>
         </h1>
-        <div className="mt-10 grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+        <div className="mt-9 grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-start">
           {lede && (
             <p className="prose text-lede" data-reveal data-delay="120">
               {lede}
@@ -256,12 +256,12 @@ export function NumberedList({
           data-delay={String(Math.min(i * 50, 250))}
           className="group grid gap-3 border-b border-line py-8 md:grid-cols-[5rem_1fr_1.3fr] md:gap-10 md:py-10"
         >
-          <span className="text-label pt-1 text-signal">{String(i + 1).padStart(2, '0')}</span>
-          <Heading className="text-d3 text-white">{item.title}</Heading>
+          <span className="text-label pt-1 text-accent">{String(i + 1).padStart(2, '0')}</span>
+          <Heading className="text-d3 text-ink">{item.title}</Heading>
           <div>
-            <p className="text-[0.9375rem] text-smoke">{item.body}</p>
+            <p className="text-[0.9375rem] text-body">{item.body}</p>
             {item.aside && (
-              <p className="mt-4 border-l border-line pl-4 text-[0.9375rem] italic text-ash">
+              <p className="mt-4 border-l border-line pl-4 text-[0.9375rem] italic text-muted">
                 {item.aside}
               </p>
             )}
@@ -281,14 +281,14 @@ export function Marquee({ items }: { items: string[] }) {
     <ul className="flex shrink-0" aria-hidden={hidden || undefined}>
       {items.map((item, i) => (
         <li key={`${item}-${i}`} className="flex items-center gap-8 whitespace-nowrap px-8">
-          <span className="text-label text-chalk">{item}</span>
-          <span className="h-1.5 w-1.5 shrink-0 bg-signal" />
+          <span className="text-[0.8125rem] font-medium text-ink-soft">{item}</span>
+          <span className="h-1 w-1 shrink-0 rounded-full bg-accent" />
         </li>
       ))}
     </ul>
   );
   return (
-    <div className="overflow-hidden border-y border-line bg-carbon py-4">
+    <div className="overflow-hidden border-y border-line bg-mist py-3.5">
       <div className="marquee">
         <Run />
         <Run hidden />

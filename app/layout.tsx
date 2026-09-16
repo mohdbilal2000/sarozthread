@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { archivo, inter, plexMono } from '@/lib/fonts';
+import { fraunces, inter, plexMono } from '@/lib/fonts';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Reveal } from '@/components/Reveal';
@@ -47,8 +47,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#070708',
-  colorScheme: 'dark',
+  themeColor: '#fdfcfa',
+  colorScheme: 'light',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -58,7 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${inter.variable} ${plexMono.variable}`}
+      className={`${fraunces.variable} ${inter.variable} ${plexMono.variable}`}
       suppressHydrationWarning
     >
       <head>

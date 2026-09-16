@@ -63,12 +63,12 @@ export default function ClientsPage() {
           </h2>
           <ul className="mt-14 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
             {company.markets.map((m, i) => (
-              <li key={m.region} className="bg-[var(--color-void)] p-8 lg:p-10" data-reveal data-delay={String(i * 70)}>
-                <span className="text-num block text-[clamp(2rem,4vw,3rem)] text-signal">
+              <li key={m.region} className="bg-[var(--color-canvas)] p-8 lg:p-10" data-reveal data-delay={String(i * 70)}>
+                <span className="text-num block text-[clamp(2rem,4vw,3rem)] text-accent">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <h3 className="text-d3 mt-6">{m.region}</h3>
-                <p className="text-label mt-3 text-ash">{m.detail}</p>
+                <p className="text-label mt-3 text-muted">{m.detail}</p>
               </li>
             ))}
           </ul>

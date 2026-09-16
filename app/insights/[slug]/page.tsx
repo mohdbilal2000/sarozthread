@@ -68,7 +68,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
             <Breadcrumbs trail={trail} />
             <p className="kicker mt-10">{a.topic}</p>
             <h1 className="text-d1 mt-6">{a.title}</h1>
-            <p className="text-label mt-8 text-ash">
+            <p className="text-label mt-8 text-muted">
               <time dateTime={new Date(a.published).toISOString()}>{formatDate(a.published)}</time>
               {' · '}
               {a.readingMinutes} min read
@@ -90,7 +90,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
           </div>
 
           <footer className="mt-16 border-t border-line pt-10">
-            <p className="text-smoke">
+            <p className="text-body">
               Written by the team at Saroz Threadz, a third-generation womenswear manufacturer in
               Jaipur, India.
             </p>
@@ -109,10 +109,10 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
               {others.map((o) => (
                 <li key={o.slug} className="border-b border-line">
                   <Link href={`/insights/${o.slug}`} className="group block py-6">
-                    <span className="text-d3 !text-[1.2rem] block transition-colors group-hover:text-signal">
+                    <span className="text-d3 !text-[1.2rem] block transition-colors group-hover:text-accent">
                       {o.title}
                     </span>
-                    <span className="mt-2 block text-[0.9375rem] text-smoke">{o.description}</span>
+                    <span className="mt-2 block text-[0.9375rem] text-body">{o.description}</span>
                   </Link>
                 </li>
               ))}

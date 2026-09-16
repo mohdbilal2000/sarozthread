@@ -63,7 +63,7 @@ export default function ProcessPage() {
             <ol className="mt-10 border-t border-line">
               {NEEDS.map((need, i) => (
                 <li key={need} className="flex gap-6 border-b border-line py-5">
-                  <span className="text-label pt-1 text-signal">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="text-label pt-1 text-accent">{String(i + 1).padStart(2, '0')}</span>
                   <span className="text-lede">{need}</span>
                 </li>
               ))}

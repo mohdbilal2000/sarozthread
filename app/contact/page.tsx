@@ -38,31 +38,31 @@ export default function ContactPage() {
 
             <dl className="mt-10 border-t border-line">
               <div className="border-b border-line py-6">
-                <dt className="text-label text-ash">Business contact</dt>
-                <dd className="text-lede mt-3 text-white">{company.contact.primaryName}</dd>
+                <dt className="text-label text-muted">Business contact</dt>
+                <dd className="text-lede mt-3 text-ink">{company.contact.primaryName}</dd>
                 <dd className="mt-2">
-                  <a href={`tel:${company.contact.phoneE164}`} className="font-mono text-[0.9375rem] text-chalk hover:text-signal">
+                  <a href={`tel:${company.contact.phoneE164}`} className="font-sans text-[0.9375rem] text-ink-soft hover:text-accent">
                     {company.contact.phoneDisplay}
                   </a>
                 </dd>
                 <dd className="mt-1">
-                  <a href={`mailto:${company.contact.primaryEmail}`} className="font-mono text-[0.9375rem] text-chalk hover:text-signal">
+                  <a href={`mailto:${company.contact.primaryEmail}`} className="font-sans text-[0.9375rem] text-ink-soft hover:text-accent">
                     {company.contact.primaryEmail}
                   </a>
                 </dd>
               </div>
               <div className="border-b border-line py-6">
-                <dt className="text-label text-ash">Trade &amp; sampling</dt>
+                <dt className="text-label text-muted">Trade &amp; sampling</dt>
                 <dd className="mt-3">
-                  <a href={`mailto:${company.contact.tradeEmail}`} className="font-mono text-[0.9375rem] text-chalk hover:text-signal">
+                  <a href={`mailto:${company.contact.tradeEmail}`} className="font-sans text-[0.9375rem] text-ink-soft hover:text-accent">
                     {company.contact.tradeEmail}
                   </a>
                 </dd>
               </div>
               <div className="border-b border-line py-6">
-                <dt className="text-label text-ash">Factory</dt>
+                <dt className="text-label text-muted">Factory</dt>
                 <dd className="mt-3">
-                  <address className="space-y-0.5 not-italic leading-relaxed text-chalk">
+                  <address className="space-y-0.5 not-italic leading-relaxed text-ink-soft">
                     {formattedAddress.map((line) => (
                       <div key={line}>{line}</div>
                     ))}
@@ -70,8 +70,8 @@ export default function ContactPage() {
                 </dd>
               </div>
               <div className="border-b border-line py-6">
-                <dt className="text-label text-ash">Time zone</dt>
-                <dd className="mt-3 text-chalk">{company.contact.timezone}</dd>
+                <dt className="text-label text-muted">Time zone</dt>
+                <dd className="mt-3 text-ink-soft">{company.contact.timezone}</dd>
               </div>
             </dl>
 
@@ -100,9 +100,9 @@ export default function ContactPage() {
           </div>
 
           <div data-reveal data-delay="80">
-            <div className="border border-line bg-carbon p-7 lg:p-10">
+            <div className="border border-line bg-mist p-7 lg:p-10">
               <h2 className="text-d3">Request a quote</h2>
-              <p className="mt-4 text-[0.9375rem] text-smoke">
+              <p className="mt-4 text-[0.9375rem] text-body">
                 The four required fields are what we need to give you a real number rather than a
                 range.
               </p>

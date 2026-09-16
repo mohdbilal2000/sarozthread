@@ -69,11 +69,11 @@ export default async function CapabilityPage({ params }: { params: Promise<{ slu
 
             <ul className="mt-14 grid gap-px border border-line bg-line" data-reveal data-delay="100">
               {c.bullets.map((b, i) => (
-                <li key={b.title} className="grid gap-3 bg-void p-7 md:grid-cols-[3rem_1fr] md:gap-6 lg:p-9">
-                  <span className="text-label text-signal">{String(i + 1).padStart(2, '0')}</span>
+                <li key={b.title} className="grid gap-3 bg-canvas p-7 md:grid-cols-[3rem_1fr] md:gap-6 lg:p-9">
+                  <span className="text-label text-accent">{String(i + 1).padStart(2, '0')}</span>
                   <div>
-                    <h3 className="text-d3 !text-[1.15rem] text-white">{b.title}</h3>
-                    <p className="mt-3 text-[0.9375rem] text-smoke">{b.detail}</p>
+                    <h3 className="text-d3 !text-[1.15rem] text-ink">{b.title}</h3>
+                    <p className="mt-3 text-[0.9375rem] text-body">{b.detail}</p>
                   </div>
                 </li>
               ))}

@@ -53,14 +53,14 @@ export default function LeadershipPage() {
               {leadership.map((person) => (
                 <li key={person.name} className="border-b border-line py-10">
                   <h2 className="text-d2">{person.name}</h2>
-                  <p className="text-label mt-3 text-signal">{person.role}</p>
-                  <p className="text-label mt-1 text-ash">{person.focus}</p>
+                  <p className="text-label mt-3 text-accent">{person.role}</p>
+                  <p className="text-label mt-1 text-muted">{person.focus}</p>
                   <p className="prose mt-6">{person.bio}</p>
-                  <div className="mt-7 flex flex-wrap gap-x-8 gap-y-2 font-mono text-[0.8125rem]">
-                    <a href={`mailto:${person.email}`} className="text-chalk hover:text-signal">
+                  <div className="mt-7 flex flex-wrap gap-x-8 gap-y-2 font-sans text-[0.8125rem]">
+                    <a href={`mailto:${person.email}`} className="text-ink-soft hover:text-accent">
                       {person.email}
                     </a>
-                    <a href={`tel:${company.contact.phoneE164}`} className="text-chalk hover:text-signal">
+                    <a href={`tel:${company.contact.phoneE164}`} className="text-ink-soft hover:text-accent">
                       {person.phone}
                     </a>
                   </div>

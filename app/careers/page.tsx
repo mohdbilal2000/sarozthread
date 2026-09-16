@@ -34,10 +34,10 @@ export default function CareersPage() {
         <div className="shell">
           <ul className="grid gap-px border border-line bg-line md:grid-cols-2">
             {careerValues.map((v, i) => (
-              <li key={v.title} className="bg-void p-8 lg:p-12" data-reveal data-delay={String(i * 70)}>
-                <span className="text-label text-signal">{String(i + 1).padStart(2, '0')}</span>
+              <li key={v.title} className="bg-canvas p-8 lg:p-12" data-reveal data-delay={String(i * 70)}>
+                <span className="text-label text-accent">{String(i + 1).padStart(2, '0')}</span>
                 <h2 className="text-d3 mt-5">{v.title}</h2>
-                <p className="mt-4 text-[0.9375rem] text-smoke">{v.detail}</p>
+                <p className="mt-4 text-[0.9375rem] text-body">{v.detail}</p>
               </li>
             ))}
           </ul>
@@ -58,7 +58,7 @@ export default function CareersPage() {
               <a href={`mailto:${company.contact.primaryEmail}`}>{company.contact.primaryEmail}</a>{' '}
               with the area you are interested in as the subject line.
             </p>
-            <a href={`mailto:${company.contact.primaryEmail}?subject=${encodeURIComponent('Open application')}`} className="btn btn-solid-light mt-10">
+            <a href={`mailto:${company.contact.primaryEmail}?subject=${encodeURIComponent('Open application')}`} className="btn btn-invert mt-10">
               Send an application <ArrowRight />
             </a>
           </div>

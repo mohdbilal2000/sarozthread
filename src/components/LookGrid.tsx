@@ -57,7 +57,7 @@ export function LookGrid({
   return (
     <ul className={`grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-3 ${cols} ${className}`}>
       {items.map((item, i) => (
-        <li key={item.slug} className="group relative overflow-hidden bg-carbon">
+        <li key={item.slug} className="group relative overflow-hidden bg-mist">
           <Image
             src={item.img}
             alt={`${item.meta.name} — ${item.meta.detail}, manufactured by Saroz Threadz in Jaipur`}
@@ -66,9 +66,9 @@ export function LookGrid({
             priority={i < priorityCount}
             className="aspect-[3/4] w-full object-cover transition-transform duration-[900ms] ease-[var(--ease-industrial)] group-hover:scale-[1.06]"
           />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 bg-gradient-to-t from-void via-void/75 to-transparent px-4 pb-4 pt-14 opacity-0 transition-all duration-500 ease-[var(--ease-industrial)] group-hover:translate-y-0 group-hover:opacity-100">
-            <span className="text-label block text-white">{item.meta.name}</span>
-            <span className="mt-1 block text-[0.75rem] text-smoke">{item.meta.detail}</span>
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 bg-[linear-gradient(to_top,rgb(16_13_10/0.9),rgb(16_13_10/0.5)_55%,transparent)] px-4 pb-4 pt-14 opacity-0 transition-all duration-500 ease-[var(--ease-industrial)] group-hover:translate-y-0 group-hover:opacity-100">
+            <span className="text-label block text-canvas">{item.meta.name}</span>
+            <span className="mt-1 block text-[0.75rem] text-canvas/70">{item.meta.detail}</span>
           </div>
         </li>
       ))}

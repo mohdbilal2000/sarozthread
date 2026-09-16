@@ -33,16 +33,16 @@ export default function FaqPage() {
       <Section>
         <div className="shell grid gap-14 lg:grid-cols-[16rem_1fr] lg:gap-20">
           <nav aria-label="FAQ topics" className="lg:sticky lg:top-28 lg:self-start">
-            <p className="text-label border-b border-line pb-3 text-ash">Topics</p>
+            <p className="text-label border-b border-line pb-3 text-muted">Topics</p>
             <ul className="mt-5 space-y-1">
               {faqTopics.map((t) => (
                 <li key={t.id}>
                   <a
                     href={`#${t.id}`}
-                    className="group flex items-baseline justify-between gap-3 border-l-2 border-transparent py-2 pl-3 text-[0.9375rem] text-smoke transition-all hover:border-signal hover:text-white"
+                    className="group flex items-baseline justify-between gap-3 border-l-2 border-transparent py-2 pl-3 text-[0.9375rem] text-body transition-all hover:border-accent hover:text-ink"
                   >
                     {t.label}
-                    <span className="text-label text-iron">{faqsByTopic(t.id).length}</span>
+                    <span className="text-label text-stone">{faqsByTopic(t.id).length}</span>
                   </a>
                 </li>
               ))}
@@ -56,7 +56,7 @@ export default function FaqPage() {
             {faqTopics.map((topic) => (
               <section key={topic.id} id={topic.id} className="scroll-mt-28">
                 <h2 className="text-d2">{topic.label}</h2>
-                <p className="mt-4 text-smoke">{topic.blurb}</p>
+                <p className="mt-4 text-body">{topic.blurb}</p>
                 <FaqAccordion items={faqsByTopic(topic.id)} className="mt-8" />
               </section>
             ))}

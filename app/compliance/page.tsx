@@ -55,12 +55,12 @@ export default function CompliancePage() {
 
             <ul className="mt-14 grid gap-px border border-line bg-line" data-reveal data-delay="80">
               {certifications.map((c) => (
-                <li key={c.code} className="flex gap-5 bg-void p-7 lg:p-9">
-                  <Check className="mt-1.5 shrink-0 text-signal" />
+                <li key={c.code} className="flex gap-5 bg-canvas p-7 lg:p-9">
+                  <Check className="mt-1.5 shrink-0 text-accent" />
                   <div>
-                    <h3 className="text-d3 !text-[1.15rem] text-white">{c.name}</h3>
-                    <p className="text-label mt-2 text-ash">{c.body}</p>
-                    <p className="mt-3 text-[0.9375rem] text-smoke">{c.what}</p>
+                    <h3 className="text-d3 !text-[1.15rem] text-ink">{c.name}</h3>
+                    <p className="text-label mt-2 text-muted">{c.body}</p>
+                    <p className="mt-3 text-[0.9375rem] text-body">{c.what}</p>
                   </div>
                 </li>
               ))}
@@ -109,10 +109,10 @@ export default function CompliancePage() {
           </div>
           <ul className="mt-14 grid gap-px border border-line bg-line md:grid-cols-2">
             {labourStandards.map((s, i) => (
-              <li key={s.title} className="bg-[var(--color-void)] p-8 lg:p-10" data-reveal data-delay={String(i * 70)}>
-                <span className="text-label text-signal">{String(i + 1).padStart(2, '0')}</span>
+              <li key={s.title} className="bg-[var(--color-canvas)] p-8 lg:p-10" data-reveal data-delay={String(i * 70)}>
+                <span className="text-label text-accent">{String(i + 1).padStart(2, '0')}</span>
                 <h3 className="text-d3 mt-5">{s.title}</h3>
-                <p className="mt-4 text-[0.9375rem] text-smoke">{s.detail}</p>
+                <p className="mt-4 text-[0.9375rem] text-body">{s.detail}</p>
               </li>
             ))}
           </ul>

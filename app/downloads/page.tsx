@@ -39,13 +39,13 @@ export default function DownloadsPage() {
                 data-reveal
                 data-delay={String(i * 60)}
               >
-                <span className="text-label text-signal">{String(i + 1).padStart(2, '0')}</span>
+                <span className="text-label text-accent">{String(i + 1).padStart(2, '0')}</span>
                 <div>
                   <h2 className="text-d3 !text-[1.2rem]">{doc.name}</h2>
-                  <p className="mt-2 text-[0.9375rem] text-smoke">{doc.description}</p>
+                  <p className="mt-2 text-[0.9375rem] text-body">{doc.description}</p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className="text-label text-ash">{doc.kind}</span>
+                  <span className="text-label text-muted">{doc.kind}</span>
                   <a
                     href={`mailto:${company.contact.tradeEmail}?subject=${encodeURIComponent(`Document request — ${doc.name}`)}`}
                     className="btn !px-5 !py-3"

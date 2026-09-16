@@ -74,7 +74,7 @@ export default function FactoryPage() {
               caption="Sewing machinery"
               rows={facility.machines.map((m) => ({ label: m.type, value: String(m.count) }))}
             />
-            <p className="mt-4 font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-ash">
+            <p className="mt-4 font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">
               UBT: under-bed thread trimmer. Overlock covers both four- and five-thread machines.
             </p>
             <div className="mt-12">
@@ -101,7 +101,7 @@ export default function FactoryPage() {
             const img = siteImage(g.name);
             if (!img) return null;
             return (
-              <li key={g.name} className="group relative overflow-hidden bg-carbon" data-reveal data-delay={String(i * 80)}>
+              <li key={g.name} className="group relative overflow-hidden bg-mist" data-reveal data-delay={String(i * 80)}>
                 <Image
                   src={img}
                   alt={g.alt}
@@ -109,8 +109,8 @@ export default function FactoryPage() {
                   placeholder="blur"
                   className="aspect-[4/5] w-full object-cover transition-transform duration-[900ms] ease-[var(--ease-industrial)] group-hover:scale-105"
                 />
-                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-void via-void/70 to-transparent px-5 pb-4 pt-14">
-                  <span className="text-label text-white">{g.cap}</span>
+                <figcaption className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgb(16_13_10/0.88),rgb(16_13_10/0.45)_55%,transparent)] px-5 pb-4 pt-14">
+                  <span className="text-label text-canvas">{g.cap}</span>
                 </figcaption>
               </li>
             );
@@ -147,7 +147,7 @@ export default function FactoryPage() {
         <div className="shell grid gap-14 lg:grid-cols-2 lg:gap-20">
           <div data-reveal>
             <h2 className="text-d2 max-w-[12ch]">Where we are</h2>
-            <address className="text-lede mt-8 space-y-1 not-italic text-chalk">
+            <address className="text-lede mt-8 space-y-1 not-italic text-ink-soft">
               {formattedAddress.map((line) => (
                 <div key={line}>{line}</div>
               ))}

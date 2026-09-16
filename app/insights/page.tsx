@@ -38,18 +38,18 @@ export default async function InsightsPage() {
               <li key={a.slug} data-reveal data-delay={String(Math.min(i * 60, 240))}>
                 <Link
                   href={`/insights/${a.slug}`}
-                  className="group grid gap-5 border-b border-line py-10 transition-colors hover:bg-carbon md:grid-cols-[1fr_2fr] md:gap-16 lg:py-14"
+                  className="group grid gap-5 border-b border-line py-10 transition-colors hover:bg-mist md:grid-cols-[1fr_2fr] md:gap-16 lg:py-14"
                 >
                   <div>
-                    <span className="text-label text-signal">{a.topic}</span>
-                    <p className="text-label mt-3 text-ash">
+                    <span className="text-label text-accent">{a.topic}</span>
+                    <p className="text-label mt-3 text-muted">
                       {formatDate(a.published)} · {a.readingMinutes} min
                     </p>
                   </div>
                   <div>
-                    <h2 className="text-d2 transition-colors group-hover:text-signal">{a.title}</h2>
-                    <p className="mt-5 max-w-[62ch] text-smoke">{a.description}</p>
-                    <span className="link-arrow mt-7 inline-flex !border-0 !pb-0 text-ash transition-colors group-hover:text-signal">
+                    <h2 className="text-d2 transition-colors group-hover:text-accent">{a.title}</h2>
+                    <p className="mt-5 max-w-[62ch] text-body">{a.description}</p>
+                    <span className="link-arrow mt-7 inline-flex !border-0 !pb-0 text-muted transition-colors group-hover:text-accent">
                       Read <ArrowRight />
                     </span>
                   </div>

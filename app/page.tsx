@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { Section, SectionHead, StatRow, Marquee, Kicker, SpecTable } from '@/components/blocks';
 import { FaqAccordion } from '@/components/FaqAccordion';
 import { LookGrid } from '@/components/LookGrid';
-import { ArrowRight, ArrowDown, Check } from '@/components/Icons';
+import { ArrowRight, Check } from '@/components/Icons';
 import { company, facility, certifications } from '@/data/company';
 import { capabilities } from '@/data/capabilities';
 import { productCategories } from '@/data/products';
@@ -43,50 +43,38 @@ export default function HomePage() {
       {/* ================================================================
           HERO
           ================================================================ */}
-      <section className="relative min-h-[92svh] overflow-hidden border-b border-line bg-void">
-        <div className="absolute inset-0">
-          <video
-            src="/video/atelier.mp4"
-            poster="/video/atelier-poster.jpg"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-label="Embroidery being stitched in the Saroz Threadz factory in Jaipur"
-            className="h-full w-full object-cover opacity-60"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(to_top,var(--color-void)_2%,rgb(7_7_8/0.5)_45%,rgb(7_7_8/0.75)_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-void)_0%,rgb(7_7_8/0.55)_45%,transparent_75%)]" />
-        </div>
-
-        <div className="ruled relative flex min-h-[92svh] flex-col justify-end">
-          <div className="shell pb-14 pt-32 lg:pb-20">
-            <div className="flex items-center gap-4">
-              <span className="h-2 w-2 animate-pulse bg-signal" />
-              <p className="text-label text-chalk">
-                Jaipur, India — Sitapura Garment Zone — Est. {company.yearsInBusiness}+ years
+      <section className="border-b border-line bg-canvas">
+        <div className="grid lg:grid-cols-[1.02fr_1fr]">
+          {/* Copy sits on ivory, not on top of the footage. The garment and the
+              floor get their own uncovered half — the whole point of the light
+              direction is that you can actually see the product. */}
+          <div className="order-2 flex flex-col justify-center px-gutter py-14 lg:order-1 lg:min-h-[82svh] lg:py-20">
+            <div className="mx-auto w-full max-w-[38rem] lg:mx-0">
+              <p className="text-label flex items-center gap-3 text-muted">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                Jaipur, India &middot; Est. {company.yearsInBusiness}+ years
               </p>
-            </div>
 
-            <h1 className="text-mega mt-8 max-w-[13ch] text-white">
-              <span className="block overflow-hidden" data-rise>
-                <span>Garments</span>
-              </span>
-              <span className="block overflow-hidden" data-rise data-delay="90">
-                <span>made <span className="text-signal">right</span></span>
-              </span>
-              <span className="block overflow-hidden" data-rise data-delay="180">
-                <span>the first time</span>
-              </span>
-            </h1>
+              <h1 className="text-mega mt-6">
+                <span className="block overflow-hidden" data-rise>
+                  <span>Garments made</span>
+                </span>
+                <span className="block overflow-hidden" data-rise data-delay="90">
+                  <span>right the</span>
+                </span>
+                <span className="block overflow-hidden" data-rise data-delay="180">
+                  <span>
+                    first <em className="not-italic text-accent">time</em>.
+                  </span>
+                </span>
+              </h1>
 
-            <div className="mt-12 grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-end">
-              <p className="text-lede max-w-[46ch] text-chalk" data-reveal data-delay="260">
-                A third-generation, family-run womenswear factory. Embroidery, printing and
+              <p className="text-lede mt-7 max-w-[44ch]" data-reveal data-delay="260">
+                A third-generation, family-run womenswear factory in Jaipur. Embroidery, printing and
                 value-added detailing — from first sample to shipped bulk, under one roof.
               </p>
-              <div className="flex flex-wrap gap-3 lg:justify-end" data-reveal data-delay="320">
+
+              <div className="mt-8 flex flex-wrap gap-3" data-reveal data-delay="320">
                 <Link href="/contact" className="btn">
                   Request a quote <ArrowRight />
                 </Link>
@@ -94,26 +82,56 @@ export default function HomePage() {
                   Factory &amp; capacity
                 </Link>
               </div>
-            </div>
 
-            <div className="mt-16 flex items-center gap-3 text-ash">
-              <ArrowDown className="animate-bounce" />
-              <span className="text-label">Scroll</span>
+              <ul
+                className="mt-10 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-7 sm:grid-cols-4"
+                data-reveal
+                data-delay="380"
+              >
+                {[
+                  { v: '200,000', l: 'sq. ft. floor' },
+                  { v: '655', l: 'machines' },
+                  { v: 'In house', l: 'embroidery' },
+                  { v: 'SMETA', l: 'audited' },
+                ].map((s) => (
+                  <li key={s.l}>
+                    <span className="text-d3 block text-ink">{s.v}</span>
+                    <span className="mt-1 block text-[0.8125rem] text-muted">{s.l}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
+          </div>
+
+          <div className="relative order-1 min-h-[58svh] overflow-hidden border-b border-line lg:order-2 lg:min-h-[82svh] lg:border-b-0 lg:border-l">
+            <video
+              src="/video/atelier.mp4"
+              poster="/video/atelier-poster.jpg"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label="Embroidery being stitched in the Saroz Threadz factory in Jaipur"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <figcaption className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgb(16_13_10/0.8),transparent)] px-6 pb-5 pt-16">
+              <span className="text-label text-canvas">Embroidery floor, Sitapura</span>
+            </figcaption>
           </div>
         </div>
       </section>
 
       <Marquee
         items={[
-          '200,000 SQ. FT.',
-          '655 MACHINES',
-          'EMBROIDERY IN HOUSE',
-          'SMETA AUDITED',
-          'BETTER COTTON APPROVED',
-          'DISNEY LICENSED PROGRAMMES',
-          'GOVT. OF INDIA EXPORT HOUSE',
-          '4 CONTINENTS',
+          'Woven womenswear',
+          'Embroidery in house',
+          'SMETA audited',
+          'Better Cotton approved',
+          'Disney licensed programmes',
+          'Govt. of India export house',
+          'Buyers on four continents',
+          'Third generation, family run',
         ]}
       />
 
@@ -137,7 +155,7 @@ export default function HomePage() {
         <div className="shell">
           <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
             <div data-reveal>
-              <span className="text-label mb-6 block text-ash">01 — Who we are</span>
+              <span className="text-label mb-6 block text-muted">01 — Who we are</span>
               <h2 className="text-d1 max-w-[12ch]">
                 One family. One floor. Forty years.
               </h2>
@@ -166,7 +184,7 @@ export default function HomePage() {
               { img: embroideryImg, alt: 'Close-up of embroidery being stitched onto patterned fabric', cap: 'Embroidery, in house' },
               { img: cadImg, alt: 'Pattern development work in the Saroz Threadz sampling room', cap: 'Pattern room' },
             ].map((item, i) => (
-              <figure key={item.cap} className="group relative overflow-hidden bg-carbon" data-reveal data-delay={String(i * 90)}>
+              <figure key={item.cap} className="group relative overflow-hidden bg-mist" data-reveal data-delay={String(i * 90)}>
                 <Image
                   src={item.img}
                   alt={item.alt}
@@ -174,8 +192,8 @@ export default function HomePage() {
                   placeholder="blur"
                   className="aspect-[4/3] w-full object-cover transition-transform duration-[900ms] ease-[var(--ease-industrial)] group-hover:scale-105"
                 />
-                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-void via-void/70 to-transparent px-5 pb-4 pt-14">
-                  <span className="text-label text-white">{item.cap}</span>
+                <figcaption className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgb(16_13_10/0.88),rgb(16_13_10/0.45)_55%,transparent)] px-5 pb-4 pt-14">
+                  <span className="text-label text-canvas">{item.cap}</span>
                 </figcaption>
               </figure>
             ))}
@@ -201,15 +219,15 @@ export default function HomePage() {
               <li key={c.slug} data-reveal data-delay={String((i % 3) * 70)}>
                 <Link
                   href={`/capabilities/${c.slug}`}
-                  className="group relative flex h-full flex-col bg-void p-8 transition-colors duration-300 hover:bg-carbon lg:p-10"
+                  className="group relative flex h-full flex-col bg-canvas p-8 transition-colors duration-300 hover:bg-mist lg:p-10"
                 >
-                  <span className="absolute left-0 top-0 h-full w-[2px] origin-top scale-y-0 bg-signal transition-transform duration-500 ease-[var(--ease-industrial)] group-hover:scale-y-100" />
-                  <span className="text-label text-signal">{String(i + 1).padStart(2, '0')}</span>
-                  <h3 className="text-d3 mt-5 text-white">{c.name}</h3>
-                  <p className="mt-4 flex-1 text-[0.9375rem] text-smoke">
+                  <span className="absolute left-0 top-0 h-full w-[2px] origin-top scale-y-0 bg-accent transition-transform duration-500 ease-[var(--ease-industrial)] group-hover:scale-y-100" />
+                  <span className="text-label text-accent">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 className="text-d3 mt-5 text-ink">{c.name}</h3>
+                  <p className="mt-4 flex-1 text-[0.9375rem] text-body">
                     {c.answer.split('. ').slice(0, 2).join('. ')}.
                   </p>
-                  <span className="mt-8 inline-flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ash transition-colors group-hover:text-signal">
+                  <span className="mt-8 inline-flex items-center gap-2 font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted transition-colors group-hover:text-accent">
                     Detail <ArrowRight />
                   </span>
                 </Link>
@@ -234,13 +252,13 @@ export default function HomePage() {
 
           <ul className="mt-14 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-5">
             {productCategories.map((p) => (
-              <li key={p.slug} className="bg-void" data-reveal>
-                <Link href={`/products/${p.slug}`} className="group block h-full p-7 transition-colors hover:bg-carbon">
-                  <h3 className="text-d3 !text-[1.1rem] text-white">{p.name}</h3>
-                  <p className="mt-3 text-[0.8125rem] text-ash">
+              <li key={p.slug} className="bg-canvas" data-reveal>
+                <Link href={`/products/${p.slug}`} className="group block h-full p-7 transition-colors hover:bg-mist">
+                  <h3 className="text-d3 !text-[1.1rem] text-ink">{p.name}</h3>
+                  <p className="mt-3 text-[0.8125rem] text-muted">
                     {p.constructions.slice(0, 2).join(' · ')}
                   </p>
-                  <span className="mt-6 inline-flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.13em] text-signal opacity-0 transition-opacity group-hover:opacity-100">
+                  <span className="mt-6 inline-flex items-center gap-2 font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-accent opacity-0 transition-opacity group-hover:opacity-100">
                     View <ArrowRight />
                   </span>
                 </Link>
@@ -275,7 +293,7 @@ export default function HomePage() {
       <Section invert>
         <div className="shell grid gap-14 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
           <div data-reveal>
-            <span className="text-label mb-6 block text-ash">04 — Compliance</span>
+            <span className="text-label mb-6 block text-muted">04 — Compliance</span>
             <h2 className="text-d1 max-w-[11ch]">Audited, not asserted.</h2>
             <p className="prose mt-8">
               Buyers should not have to take a factory&apos;s word for it. Our standards are
@@ -283,10 +301,10 @@ export default function HomePage() {
               your compliance team.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
-              <Link href="/compliance" className="btn btn-solid-light">
+              <Link href="/compliance" className="btn btn-invert">
                 Compliance <ArrowRight />
               </Link>
-              <Link href="/downloads" className="btn btn-outline !text-white !border-line-strong">
+              <Link href="/downloads" className="btn btn-outline">
                 Documents
               </Link>
             </div>
@@ -294,12 +312,12 @@ export default function HomePage() {
 
           <ul className="grid gap-px bg-line" data-reveal data-delay="100">
             {certifications.map((c) => (
-              <li key={c.code} className="flex gap-5 bg-void p-7">
-                <Check className="mt-1.5 shrink-0 text-signal" />
+              <li key={c.code} className="flex gap-5 bg-canvas p-7">
+                <Check className="mt-1.5 shrink-0 text-accent" />
                 <div>
                   <h3 className="text-d3 !text-[1.05rem]">{c.name}</h3>
-                  <p className="text-label mt-1.5 text-ash">{c.body}</p>
-                  <p className="mt-3 text-[0.9375rem] text-smoke">{c.what}</p>
+                  <p className="text-label mt-1.5 text-muted">{c.body}</p>
+                  <p className="mt-3 text-[0.9375rem] text-body">{c.what}</p>
                 </div>
               </li>
             ))}
@@ -313,7 +331,7 @@ export default function HomePage() {
       <Section>
         <div className="shell grid gap-14 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
           <div data-reveal>
-            <span className="text-label mb-6 block text-ash">05 — Where we ship</span>
+            <span className="text-label mb-6 block text-muted">05 — Where we ship</span>
             <h2 className="text-d1 max-w-[12ch]">Brands on four continents.</h2>
             <p className="prose mt-8">
               We export to buyers in North America, South America, Europe and Asia, handling
@@ -328,9 +346,9 @@ export default function HomePage() {
           <div data-reveal data-delay="80">
             <ul className="grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-4">
               {company.markets.map((m) => (
-                <li key={m.region} className="bg-void p-6">
-                  <span className="text-d3 !text-[1rem] block text-white">{m.region}</span>
-                  <span className="text-label mt-2 block text-ash">{m.detail}</span>
+                <li key={m.region} className="bg-canvas p-6">
+                  <span className="text-d3 !text-[1rem] block text-ink">{m.region}</span>
+                  <span className="text-label mt-2 block text-muted">{m.detail}</span>
                 </li>
               ))}
             </ul>

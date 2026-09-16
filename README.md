@@ -26,23 +26,33 @@ a commercial problem, not a cosmetic one.
 
 ## Design system
 
-Bold industrial. The rules are enforced in `app/globals.css` and hold across
-every page:
+Light, photography-led, fashion-corporate. The buyers this site has to win are
+comparing it against Cheer Sagar, Aman Exports and BK Fashion — bright,
+product-forward exporter sites. The rules are enforced in `app/globals.css` and
+hold across every page:
 
-- **Zero border radius.** Nothing is soft.
-- **Structure is drawn with 1px rules, never shadows.** The `.ruled` class bleeds
-  vertical lines through every band so sections sit on a visible grid.
+- **Warm ivory ground, ink instead of black.** Nothing is pure `#fff` or `#000`;
+  the palette is named by role (`canvas`, `mist`, `sand`, `muted`, `ink`) so a
+  band can invert the whole thing by redefining tokens once.
+- **Structure is drawn with hairline rules and tonal panels, never shadows.** The
+  `.ruled` class bleeds vertical lines through a band so sections sit on a
+  visible grid.
+- **Display type is Fraunces, set sentence case.** It is variable on weight with
+  an optical-size axis, so a 4.5rem headline and a 1.2rem card title share one
+  file and are still drawn correctly at both ends. Shouting is not authority —
+  there is no all-caps condensed display type and no monospace in the interface.
 - **Numbers are the loudest thing on the page.** `text-num` and `StatRow` exist
-  for that alone.
-- **Monospace labels, sans prose, heavy condensed Archivo headlines.** Archivo is
-  variable on both weight and width axes, which is what gives the display type
-  its industrial set.
-- **Orange is a signal, not a decoration** — it marks one thing per view.
+  for that alone, now set in the serif.
+- **Madder is a signal, not a decoration** — it marks one thing per view.
+- **Garments and the factory floor carry the page.** Type gets out of the way.
 
-Light sections use `.section-light`, which re-declares the palette tokens rather
-than overriding rules one by one, so any component dropped inside just works.
+Ink sections use `.section-dark`, which re-declares the palette tokens rather
+than overriding rules one by one, so any component dropped inside just works —
+including `.btn-invert`, which is a dark button on ivory and a light button on
+ink without a second class. Use it for one or two bands per page, for contrast
+and pace; the footer is one of them.
 
-> Note: the class is `section-light`, not `invert` — `invert` collides with
+> Note: the class is `section-dark`, not `invert` — `invert` collides with
 > Tailwind's `filter: invert()` utility, which silently darkens the whole band.
 
 ## Architecture

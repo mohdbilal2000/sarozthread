@@ -34,13 +34,13 @@ function Field({
 }) {
   return (
     <div className="mb-6">
-      <label htmlFor={id} className="text-label mb-2.5 block text-ash">
+      <label htmlFor={id} className="text-label mb-2.5 block text-muted">
         {label}
-        {required && <span className="ml-1 text-signal">*</span>}
+        {required && <span className="ml-1 text-accent">*</span>}
       </label>
       {children}
       {error && (
-        <p id={`${id}-error`} className="mt-2 font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-signal">
+        <p id={`${id}-error`} className="mt-2 font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-accent">
           {error}
         </p>
       )}
@@ -49,7 +49,7 @@ function Field({
 }
 
 const inputClass =
-  'w-full border border-line bg-carbon px-4 py-3.5 text-[0.9375rem] text-white transition-colors placeholder:text-iron focus:border-signal focus:outline-none aria-[invalid=true]:border-signal';
+  'w-full border border-line bg-mist px-4 py-3.5 text-[0.9375rem] text-ink transition-colors placeholder:text-stone focus:border-accent focus:outline-none aria-[invalid=true]:border-accent';
 
 export function EnquiryForm() {
   const [state, formAction] = useActionState(submitEnquiry, initial);
@@ -167,15 +167,15 @@ export function EnquiryForm() {
       <p
         role="status"
         aria-live="polite"
-        className={`mt-5 text-[0.9375rem] ${state.status === 'error' ? 'text-signal' : 'text-chalk'}`}
+        className={`mt-5 text-[0.9375rem] ${state.status === 'error' ? 'text-accent' : 'text-ink-soft'}`}
       >
         {state.message}
       </p>
 
-      <p className="mt-6 border-t border-line pt-5 text-[0.8125rem] text-ash">
+      <p className="mt-6 border-t border-line pt-5 text-[0.8125rem] text-muted">
         Submitted straight to our enquiry inbox — no third-party form service holds your tech pack.
         To attach files, email{' '}
-        <a href={`mailto:${company.contact.tradeEmail}`} className="text-chalk hover:text-signal">
+        <a href={`mailto:${company.contact.tradeEmail}`} className="text-ink-soft hover:text-accent">
           {company.contact.tradeEmail}
         </a>{' '}
         directly.

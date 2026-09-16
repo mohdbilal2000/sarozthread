@@ -20,7 +20,7 @@ export function LegalPage({
       <PageHero kicker={kicker} title={title} lede={lede} trail={trail} />
       <Section>
         <div className="shell max-w-[56rem]">
-          <p className="text-label text-ash">Last updated {updated}</p>
+          <p className="text-label text-muted">Last updated {updated}</p>
           <div className="prose mt-10">{children}</div>
         </div>
       </Section>

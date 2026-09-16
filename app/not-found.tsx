@@ -7,9 +7,9 @@ export default function NotFound() {
   return (
     <section className="ruled grid min-h-[70svh] place-items-center py-24">
       <div className="shell max-w-[48rem] text-center">
-        <p className="text-num text-[clamp(5rem,18vw,14rem)] text-signal">404</p>
+        <p className="text-num text-[clamp(5rem,18vw,14rem)] text-accent">404</p>
         <h1 className="text-d1 mt-8">That page has been unpicked</h1>
-        <p className="mx-auto mt-7 max-w-[46ch] text-smoke">
+        <p className="mx-auto mt-7 max-w-[46ch] text-body">
           The page you were looking for is not here. Try the factory, a capability, a product
           category, or get in touch directly.
         </p>

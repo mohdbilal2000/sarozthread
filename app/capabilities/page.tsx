@@ -55,13 +55,13 @@ export default function CapabilitiesPage() {
               <li key={c.slug} data-reveal data-delay={String((i % 2) * 70)}>
                 <Link
                   href={`/capabilities/${c.slug}`}
-                  className="group relative flex h-full flex-col bg-void p-8 transition-colors duration-300 hover:bg-carbon lg:p-12"
+                  className="group relative flex h-full flex-col bg-canvas p-8 transition-colors duration-300 hover:bg-mist lg:p-12"
                 >
-                  <span className="absolute left-0 top-0 h-full w-[2px] origin-top scale-y-0 bg-signal transition-transform duration-500 ease-[var(--ease-industrial)] group-hover:scale-y-100" />
-                  <span className="text-label text-signal">{String(i + 1).padStart(2, '0')}</span>
-                  <h2 className="text-d2 mt-5 text-white">{c.name}</h2>
-                  <p className="mt-6 flex-1 text-smoke">{c.answer}</p>
-                  <span className="link-arrow mt-9 self-start !border-0 !pb-0 text-ash transition-colors group-hover:text-signal">
+                  <span className="absolute left-0 top-0 h-full w-[2px] origin-top scale-y-0 bg-accent transition-transform duration-500 ease-[var(--ease-industrial)] group-hover:scale-y-100" />
+                  <span className="text-label text-accent">{String(i + 1).padStart(2, '0')}</span>
+                  <h2 className="text-d2 mt-5 text-ink">{c.name}</h2>
+                  <p className="mt-6 flex-1 text-body">{c.answer}</p>
+                  <span className="link-arrow mt-9 self-start !border-0 !pb-0 text-muted transition-colors group-hover:text-accent">
                     Read more <ArrowRight />
                   </span>
                 </Link>

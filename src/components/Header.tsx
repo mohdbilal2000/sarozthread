@@ -57,14 +57,14 @@ export function Header() {
   return (
     <header
       className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
-        stuck || openMenu ? 'border-line bg-void/92 backdrop-blur-xl' : 'border-transparent'
+        stuck || openMenu ? 'border-line bg-canvas/92 backdrop-blur-xl' : 'border-transparent'
       }`}
       onMouseLeave={scheduleClose}
     >
       <div className="shell flex min-h-[4.5rem] items-center justify-between gap-6 lg:min-h-[5rem]">
         <Link href="/" className="group flex shrink-0 items-center gap-3" aria-label={`${company.name} — home`}>
-          <span className="block h-6 w-[3px] bg-signal transition-all duration-300 group-hover:h-8" />
-          <span className="text-d3 !text-[1.05rem] leading-none text-white sm:!text-[1.2rem]">
+          <span className="block h-6 w-[3px] bg-accent transition-all duration-300 group-hover:h-8" />
+          <span className="text-d3 !text-[1.05rem] leading-none text-ink sm:!text-[1.2rem]">
             Saroz&nbsp;Threadz
           </span>
         </Link>
@@ -87,8 +87,8 @@ export function Header() {
                   href={group.href}
                   aria-current={active ? 'page' : undefined}
                   aria-expanded={group.columns ? open : undefined}
-                  className={`relative flex items-center gap-1.5 px-4 py-7 font-mono text-[0.6875rem] uppercase tracking-[0.14em] transition-colors ${
-                    active || open ? 'text-white' : 'text-smoke hover:text-white'
+                  className={`relative flex items-center gap-1.5 px-4 py-7 text-[0.875rem] font-medium tracking-[0.005em] transition-colors ${
+                    active || open ? 'text-ink' : 'text-body hover:text-ink'
                   }`}
                 >
                   {group.label}
@@ -96,7 +96,7 @@ export function Header() {
                     <Chevron className={`transition-transform duration-300 ${open ? 'rotate-180' : ''}`} />
                   )}
                   <span
-                    className={`absolute inset-x-4 bottom-5 h-px origin-left bg-signal transition-transform duration-300 ${
+                    className={`absolute inset-x-4 bottom-5 h-px origin-left bg-accent transition-transform duration-300 ${
                       active || open ? 'scale-x-100' : 'scale-x-0'
                     }`}
                   />
@@ -120,11 +120,11 @@ export function Header() {
             className="flex h-11 w-11 flex-col items-center justify-center gap-[6px] border border-line-strong lg:hidden"
           >
             <span
-              className={`block h-px w-5 bg-white transition-transform duration-300 ${mobileOpen ? 'translate-y-[7px] rotate-45' : ''}`}
+              className={`block h-px w-5 bg-ink transition-transform duration-300 ${mobileOpen ? 'translate-y-[7px] rotate-45' : ''}`}
             />
-            <span className={`block h-px w-5 bg-white transition-opacity ${mobileOpen ? 'opacity-0' : ''}`} />
+            <span className={`block h-px w-5 bg-ink transition-opacity ${mobileOpen ? 'opacity-0' : ''}`} />
             <span
-              className={`block h-px w-5 bg-white transition-transform duration-300 ${mobileOpen ? '-translate-y-[7px] -rotate-45' : ''}`}
+              className={`block h-px w-5 bg-ink transition-transform duration-300 ${mobileOpen ? '-translate-y-[7px] -rotate-45' : ''}`}
             />
           </button>
         </div>
@@ -137,12 +137,12 @@ export function Header() {
             key={`panel-${group.label}`}
             hidden={openMenu !== group.label}
             onMouseEnter={cancelClose}
-            className="absolute inset-x-0 top-full hidden border-y border-line bg-carbon lg:block"
+            className="absolute inset-x-0 top-full hidden border-y border-line bg-mist shadow-[0_24px_48px_-32px_rgb(28_23_18/0.35)] lg:block"
           >
             <div className="shell grid gap-10 py-12 lg:grid-cols-[1fr_2.2fr]">
               <div>
                 <p className="kicker">{group.label}</p>
-                <p className="mt-5 max-w-[26ch] font-display text-[1.4rem] font-semibold uppercase leading-[1.05] tracking-[-0.02em] text-white">
+                <p className="text-d2 mt-5 max-w-[26ch] !text-[1.55rem]">
                   {group.summary}
                 </p>
                 <Link href={group.href} className="link-arrow mt-7">
@@ -153,19 +153,19 @@ export function Header() {
               <div className="grid gap-8 sm:grid-cols-3">
                 {group.columns.map((col) => (
                   <div key={col.heading}>
-                    <p className="text-label border-b border-line pb-3 text-ash">{col.heading}</p>
+                    <p className="text-label border-b border-line pb-3 text-muted">{col.heading}</p>
                     <ul className="mt-4 space-y-px">
                       {col.items.map((item) => (
                         <li key={item.href}>
                           <Link
                             href={item.href}
-                            className="group flex items-baseline justify-between gap-4 border-l-2 border-transparent py-2.5 pl-3 transition-all hover:border-signal hover:bg-steel"
+                            className="group flex items-baseline justify-between gap-4 border-l-2 border-transparent py-2.5 pl-3 transition-all hover:border-accent hover:bg-sand"
                           >
-                            <span className="text-[0.9375rem] text-chalk transition-colors group-hover:text-white">
+                            <span className="text-[0.9375rem] text-ink-soft transition-colors group-hover:text-ink">
                               {item.label}
                             </span>
                             {item.note && (
-                              <span className="text-label shrink-0 text-ash">{item.note}</span>
+                              <span className="text-label shrink-0 text-muted">{item.note}</span>
                             )}
                           </Link>
                         </li>
@@ -183,20 +183,20 @@ export function Header() {
       <div
         id="mobile-nav"
         hidden={!mobileOpen}
-        className="fixed inset-x-0 bottom-0 top-[4.5rem] z-40 overflow-y-auto overscroll-contain border-t border-line bg-void lg:hidden"
+        className="fixed inset-x-0 bottom-0 top-[4.5rem] z-40 overflow-y-auto overscroll-contain border-t border-line bg-canvas lg:hidden"
       >
         <nav className="shell py-6" aria-label="Mobile">
           <ul className="divide-y divide-line border-y border-line">
             {primaryNav.map((group) => (
               <li key={group.label} className="py-5">
-                <Link href={group.href} className="text-d3 block text-white">
+                <Link href={group.href} className="text-d3 block text-ink">
                   {group.label}
                 </Link>
                 {group.columns && (
                   <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1">
                     {group.columns.flatMap((c) => c.items).map((item) => (
                       <li key={item.href}>
-                        <Link href={item.href} className="block py-1.5 text-sm text-smoke">
+                        <Link href={item.href} className="block py-1.5 text-sm text-body">
                           {item.label}
                         </Link>
                       </li>
@@ -206,12 +206,12 @@ export function Header() {
               </li>
             ))}
             <li className="py-5">
-              <Link href="/insights" className="text-d3 block text-white">
+              <Link href="/insights" className="text-d3 block text-ink">
                 Insights
               </Link>
             </li>
             <li className="py-5">
-              <Link href="/faq" className="text-d3 block text-white">
+              <Link href="/faq" className="text-d3 block text-ink">
                 FAQ
               </Link>
             </li>
@@ -221,7 +221,7 @@ export function Header() {
             Request a quote <ArrowRight />
           </Link>
 
-          <div className="mt-8 space-y-2 pb-10 font-mono text-xs uppercase tracking-[0.1em] text-ash">
+          <div className="mt-8 space-y-2 pb-10 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-muted">
             <a href={`tel:${company.contact.phoneE164}`} className="block">
               {company.contact.phoneDisplay}
             </a>

@@ -49,9 +49,9 @@ export default function ProductsPage() {
           {productCategories.map((p, i) => (
             <article key={p.slug} className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-20" data-reveal>
               <div className="lg:sticky lg:top-28 lg:self-start">
-                <span className="text-label text-signal">{String(i + 1).padStart(2, '0')}</span>
+                <span className="text-label text-accent">{String(i + 1).padStart(2, '0')}</span>
                 <h2 className="text-d1 mt-4 max-w-[10ch]">
-                  <Link href={`/products/${p.slug}`} className="transition-colors hover:text-signal">
+                  <Link href={`/products/${p.slug}`} className="transition-colors hover:text-accent">
                     {p.name}
                   </Link>
                 </h2>

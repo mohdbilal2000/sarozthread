@@ -1,0 +1,32 @@
+<!-- Source for app/opengraph-image.png and app/twitter-image.png.
+     Re-render at 1200x630 after a brand change, e.g.:
+     chrome --headless --window-size=1200,630 --screenshot=app/opengraph-image.png tools/og-card.html -->
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:InterL;src:url('../public/fonts/inter.woff2') format('woff2');font-weight:400 600;}
+@font-face{font-family:Fraunces;src:url('../public/fonts/fraunces.woff2') format('woff2');font-weight:300 700;}
+*{margin:0;box-sizing:border-box}
+body{width:1200px;height:630px;background:#FDFCFA;color:#1c1712;font-family:InterL,system-ui,sans-serif;display:flex;flex-direction:column;justify-content:space-between;padding:64px 72px;position:relative;overflow:hidden}
+.bar{position:absolute;left:0;top:0;bottom:0;width:10px;background:#A63D22}
+.brand{display:flex;align-items:center;gap:14px;font-family:Fraunces,Georgia,serif;font-size:30px;font-weight:600}
+.brand i{display:block;width:4px;height:30px;background:#A63D22}
+h1{font-family:Fraunces,Georgia,serif;font-size:76px;font-weight:400;line-height:1.05;letter-spacing:-0.02em;max-width:17ch}
+h1 em{font-style:normal;color:#A63D22}
+p{margin-top:22px;font-size:25px;line-height:1.45;color:#5a5245;max-width:36ch}
+ul{list-style:none;padding:0;display:flex;gap:56px;border-top:1px solid rgba(28,23,18,.14);padding-top:26px}
+li b{display:block;font-family:Fraunces,Georgia,serif;font-size:31px;font-weight:500}
+li span{display:block;margin-top:5px;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:#7d7365;font-weight:600}
+</style></head><body>
+<div class="bar"></div>
+<div class="brand"><i></i>Saroz Threadz</div>
+<div>
+  <h1>Garments made right the <em>first time</em>.</h1>
+  <p>Third-generation womenswear manufacturer in Jaipur — embroidery, printing and value-added detailing under one roof.</p>
+</div>
+<ul>
+  <li><b>200,000</b><span>sq. ft. floor</span></li>
+  <li><b>655</b><span>machines</span></li>
+  <li><b>In house</b><span>embroidery</span></li>
+  <li><b>SMETA</b><span>audited</span></li>
+  <li><b>40+</b><span>years</span></li>
+</ul>
+</body></html>

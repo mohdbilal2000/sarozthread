@@ -40,20 +40,20 @@ export default function SustainabilityPage() {
 
           <ul className="mt-16 grid gap-px border border-line bg-line md:grid-cols-2">
             {materialOptions.map((m, i) => (
-              <li key={m.name} className="bg-void p-8 lg:p-10" data-reveal data-delay={String((i % 2) * 70)}>
+              <li key={m.name} className="bg-canvas p-8 lg:p-10" data-reveal data-delay={String((i % 2) * 70)}>
                 <div className="flex items-start justify-between gap-4">
                   <h2 className="text-d3 !text-[1.2rem]">{m.name}</h2>
                   <span
                     className={`text-label shrink-0 border px-2.5 py-1 ${
                       m.status === 'Available'
-                        ? 'border-signal text-signal'
-                        : 'border-line text-ash'
+                        ? 'border-accent text-accent'
+                        : 'border-line text-muted'
                     }`}
                   >
                     {m.status}
                   </span>
                 </div>
-                <p className="mt-5 text-[0.9375rem] text-smoke">{m.detail}</p>
+                <p className="mt-5 text-[0.9375rem] text-body">{m.detail}</p>
               </li>
             ))}
           </ul>
@@ -74,10 +74,10 @@ export default function SustainabilityPage() {
           </div>
           <ul className="mt-14 grid gap-px border border-line bg-line md:grid-cols-2">
             {practices.map((p, i) => (
-              <li key={p.title} className="bg-[var(--color-void)] p-8 lg:p-10" data-reveal data-delay={String(i * 70)}>
-                <span className="text-label text-signal">{String(i + 1).padStart(2, '0')}</span>
+              <li key={p.title} className="bg-[var(--color-canvas)] p-8 lg:p-10" data-reveal data-delay={String(i * 70)}>
+                <span className="text-label text-accent">{String(i + 1).padStart(2, '0')}</span>
                 <h3 className="text-d3 mt-5">{p.title}</h3>
-                <p className="mt-4 text-[0.9375rem] text-smoke">{p.detail}</p>
+                <p className="mt-4 text-[0.9375rem] text-body">{p.detail}</p>
               </li>
             ))}
           </ul>
@@ -101,8 +101,8 @@ export default function SustainabilityPage() {
             <ul className="border-t border-line">
               {inProgress.map((item) => (
                 <li key={item} className="flex gap-5 border-b border-line py-6">
-                  <span className="mt-2.5 h-px w-6 shrink-0 bg-signal" />
-                  <p className="text-[0.9375rem] text-smoke">{item}</p>
+                  <span className="mt-2.5 h-px w-6 shrink-0 bg-accent" />
+                  <p className="text-[0.9375rem] text-body">{item}</p>
                 </li>
               ))}
             </ul>

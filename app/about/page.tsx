@@ -56,7 +56,7 @@ export default function AboutPage() {
                 className="aspect-[4/5] w-full border border-line object-cover"
               />
             )}
-            <p className="text-label mt-4 text-ash">Sitapura Industrial Area · Jaipur</p>
+            <p className="text-label mt-4 text-muted">Sitapura Industrial Area · Jaipur</p>
           </div>
 
           <div className="prose text-lede" data-reveal data-delay="80">
@@ -85,7 +85,7 @@ export default function AboutPage() {
             <blockquote>
               Long-term partnerships built on trust, consistency and reliability.
             </blockquote>
-            <p className="text-label !mt-6 text-ash">
+            <p className="text-label !mt-6 text-muted">
               {company.contact.primaryName} — {company.contact.primaryRole}
             </p>
           </div>
@@ -120,10 +120,10 @@ export default function AboutPage() {
             />
           </div>
           <div className="mt-14 flex flex-wrap gap-3">
-            <Link href="/about/leadership" className="btn btn-solid-light">
+            <Link href="/about/leadership" className="btn btn-invert">
               Leadership <ArrowRight />
             </Link>
-            <Link href="/about/clients" className="btn btn-outline !text-white !border-line-strong">
+            <Link href="/about/clients" className="btn btn-outline">
               Clients &amp; markets
             </Link>
           </div>
