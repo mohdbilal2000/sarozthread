@@ -45,17 +45,18 @@ export default function HomePage() {
           ================================================================ */}
       <section className="border-b border-line bg-canvas">
         <div className="grid lg:grid-cols-[1.02fr_1fr]">
-          {/* Copy sits on ivory, not on top of the footage. The garment and the
-              floor get their own uncovered half — the whole point of the light
-              direction is that you can actually see the product. */}
-          <div className="order-2 flex flex-col justify-center px-gutter py-14 lg:order-1 lg:min-h-[82svh] lg:py-20">
+          {/* Copy first on a phone. A buyer who taps through from WhatsApp gets
+              the proposition and both ways to reach us inside one screen —
+              before any image. On a wide screen the two halves sit side by
+              side, copy on ivory and the floor uncovered beside it. */}
+          <div className="flex flex-col justify-center px-gutter pb-12 pt-10 lg:order-1 lg:min-h-[82svh] lg:py-20">
             <div className="mx-auto w-full max-w-[38rem] lg:mx-0">
-              <p className="text-label flex items-center gap-3 text-muted">
-                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+              <p className="text-label flex items-center gap-2.5 text-muted">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                 Jaipur, India &middot; Est. {company.yearsInBusiness}+ years
               </p>
 
-              <h1 className="text-mega mt-6">
+              <h1 className="text-mega mt-5 lg:mt-6">
                 <span className="block overflow-hidden" data-rise>
                   <span>Garments made</span>
                 </span>
@@ -69,51 +70,40 @@ export default function HomePage() {
                 </span>
               </h1>
 
-              <p className="text-lede mt-7 max-w-[44ch]" data-reveal data-delay="260">
+              <p className="text-lede mt-5 max-w-[44ch] lg:mt-7" data-reveal data-delay="260">
                 A third-generation, family-run womenswear factory in Jaipur. Embroidery, printing and
                 value-added detailing — from first sample to shipped bulk, under one roof.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-3" data-reveal data-delay="320">
-                <Link href="/contact" className="btn">
+              {/* Full-width stacked taps on a phone; side by side from sm up.
+                  A 44px-plus target that does not share a row with another
+                  target is the difference between a tap and a mis-tap. */}
+              <div
+                className="mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3 lg:mt-8"
+                data-reveal
+                data-delay="320"
+              >
+                <Link href="/contact" className="btn w-full sm:w-auto">
                   Send a tech pack <ArrowRight />
                 </Link>
                 <a
                   href={`https://wa.me/${company.contact.whatsapp}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-outline"
+                  className="btn btn-outline w-full sm:w-auto"
                 >
                   <WhatsApp /> WhatsApp {company.contact.primaryName.split(' ')[0]}
                 </a>
               </div>
 
-              <p className="mt-5 text-[0.875rem] text-muted" data-reveal data-delay="360">
+              <p className="mt-4 text-[0.875rem] text-muted lg:mt-5" data-reveal data-delay="360">
                 Enquiries go straight to {company.contact.primaryName}, who runs the floor — not to
                 an agent, and not to a shared inbox.
               </p>
-
-              <ul
-                className="mt-10 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-7 sm:grid-cols-4"
-                data-reveal
-                data-delay="380"
-              >
-                {[
-                  { v: '200,000', l: 'sq. ft. floor' },
-                  { v: '655', l: 'machines' },
-                  { v: 'In house', l: 'embroidery' },
-                  { v: 'SMETA', l: 'audited' },
-                ].map((s) => (
-                  <li key={s.l}>
-                    <span className="text-d3 block text-ink">{s.v}</span>
-                    <span className="mt-1 block text-[0.8125rem] text-muted">{s.l}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
 
-          <div className="relative order-1 min-h-[58svh] overflow-hidden border-b border-line lg:order-2 lg:min-h-[82svh] lg:border-b-0 lg:border-l">
+          <div className="relative aspect-[5/4] overflow-hidden border-y border-line sm:aspect-[16/10] lg:order-2 lg:aspect-auto lg:min-h-[82svh] lg:border-y-0 lg:border-l">
             <video
               src="/video/atelier.mp4"
               poster="/video/atelier-poster.jpg"
@@ -125,10 +115,29 @@ export default function HomePage() {
               aria-label="Embroidery being stitched in the Saroz Threadz factory in Jaipur"
               className="absolute inset-0 h-full w-full object-cover"
             />
-            <figcaption className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgb(16_13_10/0.8),transparent)] px-6 pb-5 pt-16">
+            <figcaption className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgb(16_13_10/0.85),transparent)] px-5 pb-4 pt-16 lg:px-6 lg:pb-5">
               <span className="text-label text-canvas">Embroidery floor, Sitapura</span>
             </figcaption>
           </div>
+        </div>
+
+        {/* Proof, directly under the fold on both layouts. Four figures a
+            sourcing manager screens on, given room to be read rather than
+            squeezed into the corner of the copy column. */}
+        <div className="shell">
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-5 border-t border-line py-6 md:grid-cols-4 lg:py-8">
+            {[
+              { v: '200,000', l: 'sq. ft. floor' },
+              { v: '655', l: 'machines' },
+              { v: 'In house', l: 'embroidery' },
+              { v: 'SMETA', l: 'audited' },
+            ].map((s) => (
+              <li key={s.l}>
+                <span className="text-d3 block text-ink">{s.v}</span>
+                <span className="mt-1 block text-[0.8125rem] text-muted">{s.l}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
