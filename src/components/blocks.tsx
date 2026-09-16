@@ -29,7 +29,7 @@ export function Section({
     <section
       id={id}
       className={`ruled border-t border-line ${invert ? 'section-dark' : ''} ${
-        tight ? 'py-16 lg:py-20' : 'py-20 lg:py-32'
+        tight ? 'py-12 lg:py-20' : 'py-14 lg:py-28'
       } ${className}`}
     >
       {children}

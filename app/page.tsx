@@ -44,45 +44,62 @@ export default function HomePage() {
           HERO
           ================================================================ */}
       <section className="border-b border-line bg-canvas">
-        <div className="grid lg:grid-cols-[1.02fr_1fr]">
-          {/* Copy first on a phone. A buyer who taps through from WhatsApp gets
-              the proposition and both ways to reach us inside one screen —
-              before any image. On a wide screen the two halves sit side by
-              side, copy on ivory and the floor uncovered beside it. */}
-          <div className="flex flex-col justify-center px-gutter pb-12 pt-10 lg:order-1 lg:min-h-[82svh] lg:py-20">
-            <div className="mx-auto w-full max-w-[38rem] lg:mx-0">
-              <p className="text-label flex items-center gap-2.5 text-muted">
+        {/* The floor first, at the size it deserves. A garment buyer decides
+            what kind of factory this is from the picture long before reading a
+            paragraph, so the footage gets the fold and only the headline is
+            laid over it. Everything that needs reading — the lede, both calls
+            to action, the figures — sits underneath on ivory, where it is
+            actually legible. */}
+        <div className="relative h-[68svh] min-h-[26rem] overflow-hidden lg:h-[78svh]">
+          <video
+            src="/video/atelier.mp4"
+            poster="/video/atelier-poster.jpg"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label="Embroidery being stitched in the Saroz Threadz factory in Jaipur"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          {/* Scrim only where the type sits, so the picture stays a picture. */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_top,rgb(16_13_10/0.82)_0%,rgb(16_13_10/0.45)_38%,rgb(16_13_10/0.12)_70%,transparent_100%)]" />
+
+          <div className="absolute inset-x-0 bottom-0">
+            <div className="shell pb-8 lg:pb-12">
+              <p className="text-label flex items-center gap-2.5 text-canvas/75">
                 <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                 Jaipur, India &middot; Est. {company.yearsInBusiness}+ years
               </p>
 
-              <h1 className="text-mega mt-5 lg:mt-6">
+              <h1 className="text-mega mt-4 max-w-[16ch] text-canvas">
                 <span className="block overflow-hidden" data-rise>
                   <span>Garments made</span>
                 </span>
                 <span className="block overflow-hidden" data-rise data-delay="90">
-                  <span>right the</span>
-                </span>
-                <span className="block overflow-hidden" data-rise data-delay="180">
                   <span>
-                    first <em className="not-italic text-accent">time</em>.
+                    right the first <em className="not-italic text-[#f08a63]">time</em>.
                   </span>
                 </span>
               </h1>
+            </div>
+          </div>
 
-              <p className="text-lede mt-5 max-w-[44ch] lg:mt-7" data-reveal data-delay="260">
-                A third-generation, family-run womenswear factory in Jaipur. Embroidery, printing and
-                value-added detailing — from first sample to shipped bulk, under one roof.
-              </p>
+          <figcaption className="absolute right-0 top-0 hidden p-6 lg:block">
+            <span className="text-label text-canvas/70">Embroidery floor, Sitapura</span>
+          </figcaption>
+        </div>
 
-              {/* Full-width stacked taps on a phone; side by side from sm up.
-                  A 44px-plus target that does not share a row with another
-                  target is the difference between a tap and a mis-tap. */}
-              <div
-                className="mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3 lg:mt-8"
-                data-reveal
-                data-delay="320"
-              >
+        {/* Reading matter, on ivory, immediately under the picture. */}
+        <div className="shell border-t border-line pb-7 pt-8 lg:pb-9 lg:pt-10">
+          <div className="grid gap-7 lg:grid-cols-[1.25fr_1fr] lg:items-start lg:gap-16">
+            <p className="text-lede max-w-[52ch]">
+              A third-generation, family-run womenswear factory in Jaipur. Embroidery, printing and
+              value-added detailing — from first sample to shipped bulk, under one roof.
+            </p>
+
+            <div>
+              <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3">
                 <Link href="/contact" className="btn w-full sm:w-auto">
                   Send a tech pack <ArrowRight />
                 </Link>
@@ -95,35 +112,14 @@ export default function HomePage() {
                   <WhatsApp /> WhatsApp {company.contact.primaryName.split(' ')[0]}
                 </a>
               </div>
-
-              <p className="mt-4 text-[0.875rem] text-muted lg:mt-5" data-reveal data-delay="360">
+              <p className="mt-4 text-[0.875rem] text-muted">
                 Enquiries go straight to {company.contact.primaryName}, who runs the floor — not to
                 an agent, and not to a shared inbox.
               </p>
             </div>
           </div>
-
-          <div className="relative aspect-[5/4] overflow-hidden border-y border-line sm:aspect-[16/10] lg:order-2 lg:aspect-auto lg:min-h-[82svh] lg:border-y-0 lg:border-l">
-            <video
-              src="/video/atelier.mp4"
-              poster="/video/atelier-poster.jpg"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-label="Embroidery being stitched in the Saroz Threadz factory in Jaipur"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-            <figcaption className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgb(16_13_10/0.85),transparent)] px-5 pb-4 pt-16 lg:px-6 lg:pb-5">
-              <span className="text-label text-canvas">Embroidery floor, Sitapura</span>
-            </figcaption>
-          </div>
         </div>
 
-        {/* Proof, directly under the fold on both layouts. Four figures a
-            sourcing manager screens on, given room to be read rather than
-            squeezed into the corner of the copy column. */}
         <div className="shell">
           <ul className="grid grid-cols-2 gap-x-6 gap-y-5 border-t border-line py-6 md:grid-cols-4 lg:py-8">
             {[
@@ -153,6 +149,83 @@ export default function HomePage() {
           'Third generation, family run',
         ]}
       />
+
+      {/* ================================================================
+          PRODUCTS
+          ================================================================ */}
+      <Section>
+        <div className="shell">
+          <SectionHead
+            index="01 — What we make"
+            kicker="Products"
+            title="Woven womenswear, built around handwork."
+            lede="Dresses, blouses and shirts, tunics and kaftans, jumpsuits and co-ords, resort. In cotton, rayon and viscose — developed to your tech pack or adapted from our range."
+            action={{ href: '/products', label: 'All categories' }}
+          />
+
+          {/* Category tiles carry the garment, not a paragraph about it. A
+              sourcing manager scanning for "do they make my product" is
+              matching a silhouette, and the first tile is given the weight. */}
+          <ul className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+            {productCategories.map((p, i) => {
+              const img = lookImage(p.hero);
+              return (
+                <li
+                  key={p.slug}
+                  className={i === 0 ? 'lg:col-span-2' : ''}
+                  data-reveal
+                  data-delay={String(Math.min(i * 70, 280))}
+                >
+                  <Link href={`/products/${p.slug}`} className="group card h-full">
+                    <div className={`media media-flush ${i === 0 ? 'aspect-[16/9]' : 'aspect-[4/3]'}`}>
+                      {img && (
+                        <Image
+                          src={img}
+                          alt={`${p.name} manufactured by Saroz Threadz in Jaipur`}
+                          sizes={i === 0 ? '(min-width: 1024px) 66vw, 100vw' : '(min-width: 1024px) 33vw, 50vw'}
+                          placeholder="blur"
+                        />
+                      )}
+                      <div className="media-veil">
+                        <span className="inline-flex items-center gap-2 text-[0.8125rem] font-semibold">
+                          See what we build into it <ArrowRight />
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex flex-1 flex-col p-5 lg:p-6">
+                      <h3 className={i === 0 ? 'text-d2' : 'text-d3'}>{p.name}</h3>
+                      <p className="mt-2.5 text-[0.875rem] text-body">
+                        {p.constructions.slice(0, i === 0 ? 3 : 2).join(' · ')}
+                      </p>
+                    </div>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="mt-4" data-reveal>
+            <LookGrid
+              feature
+              columns={3}
+              slugs={[
+                'hand-embroidered-tunic',
+                'printed-maxi-dress',
+                'oversized-poplin-shirt',
+                'tiered-ruffle-dress',
+                'embroidered-blouse',
+                'printed-jumpsuit',
+                'tiered-midi-dress',
+                'placket-embroidered-shirt',
+              ]}
+            />
+          </div>
+
+          <Link href="/lookbook" className="link-arrow mt-10">
+            Full lookbook <ArrowRight />
+          </Link>
+        </div>
+      </Section>
 
       {/* ================================================================
           QUALIFIER — the first thing a buyer wants answered
@@ -204,7 +277,7 @@ export default function HomePage() {
         <div className="shell">
           <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
             <div data-reveal>
-              <span className="text-label mb-6 block text-muted">01 — Who we are</span>
+              <span className="text-label mb-6 block text-muted">02 — Who we are</span>
               <h2 className="text-d1 max-w-[12ch]">
                 One family. One floor. Forty years.
               </h2>
@@ -227,22 +300,29 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="mt-16 grid gap-px border border-line bg-line md:grid-cols-3">
+          {/* The floor, given room. Three 4:5 frames rather than a strip of
+              small 4:3 crops — a buyer is trying to read the machines and the
+              light in the room, and cannot do that from a thumbnail. */}
+          <div className="mt-14 grid gap-3 sm:grid-cols-3 lg:mt-16 lg:gap-5">
             {[
               { img: factoryFloor, alt: 'A machinist finishing a garment on the Saroz Threadz production floor', cap: 'Sewing floor' },
               { img: embroideryImg, alt: 'Close-up of embroidery being stitched onto patterned fabric', cap: 'Embroidery, in house' },
               { img: cadImg, alt: 'Pattern development work in the Saroz Threadz sampling room', cap: 'Pattern room' },
             ].map((item, i) => (
-              <figure key={item.cap} className="group relative overflow-hidden bg-mist" data-reveal data-delay={String(i * 90)}>
+              <figure
+                key={item.cap}
+                className={`group media aspect-[4/5] ${i === 0 ? 'col-span-2 sm:col-span-1' : ''}`}
+                data-reveal
+                data-delay={String(i * 90)}
+              >
                 <Image
                   src={item.img}
                   alt={item.alt}
-                  sizes="(min-width: 768px) 33vw, 100vw"
+                  sizes="(min-width: 640px) 33vw, 100vw"
                   placeholder="blur"
-                  className="aspect-[4/3] w-full object-cover transition-transform duration-[900ms] ease-[var(--ease-industrial)] group-hover:scale-105"
                 />
-                <figcaption className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgb(16_13_10/0.88),rgb(16_13_10/0.45)_55%,transparent)] px-5 pb-4 pt-14">
-                  <span className="text-label text-canvas">{item.cap}</span>
+                <figcaption className="media-veil !opacity-100 !translate-y-0">
+                  <span className="text-label">{item.cap}</span>
                 </figcaption>
               </figure>
             ))}
@@ -256,7 +336,7 @@ export default function HomePage() {
       <Section>
         <div className="shell">
           <SectionHead
-            index="02 — Why us"
+            index="03 — Why us"
             kicker="The difference"
             title="Embroidery in house is not a detail. It is the whole argument."
             lede="Most Jaipur factories quoting your embroidered dress will send the embroidery out to a job worker. That single decision is what moves your delivery date — and it is the one thing you cannot see on a quote sheet."
@@ -313,82 +393,6 @@ export default function HomePage() {
               Cutting, sewing, embroidery, pattern making, finishing and packing \u2014 one floor, one team.
             </span>
           </div>
-        </div>
-      </Section>
-
-      {/* ================================================================
-          PRODUCTS
-          ================================================================ */}
-      <Section>
-        <div className="shell">
-          <SectionHead
-            index="03 — What we make"
-            kicker="Products"
-            title="Woven womenswear, built around handwork."
-            lede="Dresses, blouses and shirts, tunics and kaftans, jumpsuits and co-ords, resort. In cotton, rayon and viscose — developed to your tech pack or adapted from our range."
-            action={{ href: '/products', label: 'All categories' }}
-          />
-
-          {/* Category tiles carry the garment, not a paragraph about it. A
-              sourcing manager scanning for "do they make my product" is
-              matching a silhouette, and the first tile is given the weight. */}
-          <ul className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-            {productCategories.map((p, i) => {
-              const img = lookImage(p.hero);
-              return (
-                <li
-                  key={p.slug}
-                  className={i === 0 ? 'lg:col-span-2' : ''}
-                  data-reveal
-                  data-delay={String(Math.min(i * 70, 280))}
-                >
-                  <Link href={`/products/${p.slug}`} className="group card h-full">
-                    <div className={`media media-flush ${i === 0 ? 'aspect-[16/9]' : 'aspect-[4/3]'}`}>
-                      {img && (
-                        <Image
-                          src={img}
-                          alt={`${p.name} manufactured by Saroz Threadz in Jaipur`}
-                          sizes={i === 0 ? '(min-width: 1024px) 66vw, 100vw' : '(min-width: 1024px) 33vw, 50vw'}
-                          placeholder="blur"
-                        />
-                      )}
-                      <div className="media-veil">
-                        <span className="inline-flex items-center gap-2 text-[0.8125rem] font-semibold">
-                          See what we build into it <ArrowRight />
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex flex-1 flex-col p-5 lg:p-6">
-                      <h3 className={i === 0 ? 'text-d2' : 'text-d3'}>{p.name}</h3>
-                      <p className="mt-2.5 text-[0.875rem] text-body">
-                        {p.constructions.slice(0, i === 0 ? 3 : 2).join(' · ')}
-                      </p>
-                    </div>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-
-          <div className="mt-4" data-reveal>
-            <LookGrid
-              feature
-              slugs={[
-                'hand-embroidered-tunic',
-                'printed-maxi-dress',
-                'oversized-poplin-shirt',
-                'tiered-ruffle-dress',
-                'embroidered-blouse',
-                'printed-jumpsuit',
-                'tiered-midi-dress',
-                'placket-embroidered-shirt',
-              ]}
-            />
-          </div>
-
-          <Link href="/lookbook" className="link-arrow mt-10">
-            Full lookbook <ArrowRight />
-          </Link>
         </div>
       </Section>
 
