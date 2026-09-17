@@ -4,6 +4,7 @@ import { fraunces, inter, plexMono } from '@/lib/fonts';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Reveal } from '@/components/Reveal';
+import { HashScroll } from '@/components/HashScroll';
 import { StickyEnquiry } from '@/components/StickyEnquiry';
 import { SITE_URL } from '@/lib/site';
 import { company } from '@/data/company';
@@ -82,6 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <StickyEnquiry />
         <Reveal />
+        <HashScroll />
       </body>
     </html>
   );
