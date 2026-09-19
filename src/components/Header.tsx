@@ -55,6 +55,29 @@ export function Header() {
   };
 
   return (
+    <>
+      {/* The contact rail. Cheer Sagar, Aman and BK all carry one, and a buyer
+          who wants the phone number should never have to find a page for it. */}
+      <div className="hidden border-b border-line bg-mist lg:block">
+        <div className="shell flex items-center justify-between gap-6 py-2 text-[0.8125rem] text-body">
+          <p>
+            {company.address.street}, {company.address.locality} {company.address.postalCode},{' '}
+            {company.address.region}, {company.address.country}
+          </p>
+          <div className="flex items-center gap-6">
+            <a href={`mailto:${company.contact.tradeEmail}`} className="hover:text-accent">
+              {company.contact.tradeEmail}
+            </a>
+            <a
+              href={`tel:${company.contact.phoneE164}`}
+              className="font-semibold text-ink hover:text-accent"
+            >
+              {company.contact.phoneDisplay}
+            </a>
+          </div>
+        </div>
+      </div>
+
     <header
       className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
         stuck || openMenu ? 'border-line bg-canvas/92 backdrop-blur-xl' : 'border-transparent'
@@ -232,5 +255,6 @@ export function Header() {
         </nav>
       </div>
     </header>
+    </>
   );
 }

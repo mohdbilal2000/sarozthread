@@ -37,7 +37,31 @@ every page, the FAQ, the schema and `llms.txt` automatically.
 - [ ] **Leadership.** `/about/leadership` lists one person. Add the rest of the
       family and senior team in `src/data/company.ts` → `leadership`.
 
-## 3. Photography — the biggest single gap
+## 3. The concept gap — what Arun ji actually asked for
+
+> *"design mein koi issue nahi hai — concept mein hai"* — 17 Sep, with screenshots
+> of BK Fashions and Cheer Sagar attached.
+
+His competitors lead with the things an Indian exporter is judged on, and the
+site now has a slot for each. Three of them are still empty because only the
+company can fill them:
+
+- [ ] **A photograph of the building.** BK Fashions opens with their corporate
+      block and "Since 1987". Our hero is a close-up of a needle.
+- [ ] **A portrait of Arun.** The promoter's message on the home page currently
+      runs beside a picture of the floor, because a stock photograph under his
+      name would read as him. His own photograph is what the section is for.
+- [ ] **The founding year.** `company.foundingYear` is null. "Since 19xx" under
+      the wordmark is the cheapest standing a manufacturer can show — but it has
+      to be the real year.
+- [ ] **His own words.** `company.promoterMessage` is a draft written for him.
+      One or two sentences in his voice are worth more than anything we write.
+- [ ] **A short company film.** Both competitor sites carry one.
+- [ ] **The remaining certification logos.** `CertificationStrip` shows real
+      artwork for SMETA and Better Cotton and sets the other two as type. Drop a
+      PNG into `src/assets/site/` and add it to `LOGOS` to upgrade one.
+
+## 4. Photography — the biggest single gap
 
 The existing library is entirely lookbook: garments on a model against a dark
 backdrop. There is not one wide shot of the 200,000 sq. ft. floor with the lines
@@ -54,7 +78,7 @@ claims but cannot show. A half-day with a photographer fixes it:
 Drop files into `src/assets/site/`, register them in `src/lib/images.ts`, and
 reference them by name.
 
-## 4. Technical
+## 5. Technical
 
 - [ ] Point `sarozthreadz.com` at Vercel — **the company already owns it**
       (registered 2024, paid through 2034, currently serving nothing).
@@ -71,7 +95,7 @@ reference them by name.
 - [ ] Consider a git-based CMS (Keystatic runs inside this Next app) if the
       client wants to edit copy without a developer.
 
-## 5. Content that compounds
+## 6. Content that compounds
 
 `/insights` is the part that earns citations over time — original, first-hand
 explanation, published consistently. Two articles are live. Good next subjects,

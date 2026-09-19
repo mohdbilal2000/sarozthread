@@ -21,6 +21,25 @@ export const company = {
   yearsInBusiness: 40,
   generation: 3,
 
+  /**
+   * The year on the letterhead. Competitors lead with theirs — BK Fashions
+   * prints "Since 1987" under its name — and a founding year is one of the
+   * cheapest pieces of standing a manufacturer can show. Left null until the
+   * real one is confirmed: "Since 1986" invented to fill a gap is exactly the
+   * kind of claim a buyer's compliance team checks. See TODO.md.
+   */
+  foundingYear: null as Unconfirmed<number>,
+
+  /**
+   * The promoter's own words. Every exporter site this one is measured
+   * against carries a line from the man who owns the floor, next to his
+   * photograph — it is how a family business signals that someone is
+   * personally answerable for the order. Replace with Arun's own sentence.
+   */
+  promoterMessage:
+    'We have made garments on this floor for forty years, under three generations of one family. A buyer who sends us a tech pack deals with us directly, and the same people answer for the garment that leaves the factory.',
+
+
   address: {
     street: 'Sitapura Industrial Area, Garment Zone, Tonk Road',
     locality: 'Jaipur',

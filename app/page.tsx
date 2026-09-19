@@ -10,6 +10,8 @@ import { productCategories } from '@/data/products';
 import { faqs } from '@/data/faq';
 import { graph, faqPage } from '@/lib/schema';
 import { SourcingQualifier } from '@/components/SourcingQualifier';
+import { CertificationStrip } from '@/components/CertificationStrip';
+
 import factoryFloor from '@/assets/site/factory-floor.jpg';
 import embroideryImg from '@/assets/site/embroidery.jpg';
 import cadImg from '@/assets/site/cad.jpg';
@@ -149,6 +151,15 @@ export default function HomePage() {
           'Third generation, family run',
         ]}
       />
+
+      {/* ================================================================
+          THE COMPLIANCE WALL — read before the copy is
+          ================================================================ */}
+      <Section tight>
+        <div className="shell">
+          <CertificationStrip />
+        </div>
+      </Section>
 
       {/* ================================================================
           PRODUCTS
@@ -390,7 +401,7 @@ export default function HomePage() {
               All six capabilities <ArrowRight />
             </Link>
             <span className="text-[0.875rem] text-muted">
-              Cutting, sewing, embroidery, pattern making, finishing and packing \u2014 one floor, one team.
+              Cutting, sewing, embroidery, pattern making, finishing and packing — one floor, one team.
             </span>
           </div>
         </div>
@@ -477,40 +488,47 @@ export default function HomePage() {
       </Section>
 
       {/* ================================================================
-          WHO YOU DEAL WITH — a factory is people, and buyers pick people
+          THE PROMOTER — every exporter site he is compared against carries
+          the owner's photograph and his own words. It is how a family firm
+          says who is personally answerable for the order.
           ================================================================ */}
       <Section tight>
         <div className="shell">
-          <div className="card grid gap-8 p-8 lg:grid-cols-[1fr_1.35fr] lg:items-center lg:gap-14 lg:p-12">
-            <div data-reveal>
-              <Kicker>Who picks up</Kicker>
-              <h2 className="text-d2 mt-6">
-                You will be dealing with{' '}
-                <span className="text-accentuate">{company.contact.primaryName.split(' ')[0]}</span>.
-              </h2>
-              <p className="mt-6 text-[0.9375rem] text-body">
-                {company.contact.primaryName}, {company.contact.primaryRole.toLowerCase()} — third
-                generation of the family that owns the floor. Not a sales agent, not a trading house
-                passing your order on to a factory you never see.
-              </p>
-            </div>
+          <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-14">
+            {/* His floor, not his portrait. A photograph of Arun belongs here
+                — it is what every competitor site carries next to the owner's
+                words — but we do not have one, and the nearest stock image of
+                strangers with a tablet sitting under his name would read as
+                him. Replace with a real portrait; see TODO.md. */}
+            <figure className="media aspect-[4/5]" data-reveal>
+              <Image
+                src={factoryFloor}
+                alt={`The production floor at ${company.legalName} in Jaipur`}
+                sizes="(min-width: 1024px) 38vw, 100vw"
+                placeholder="blur"
+              />
+              <figcaption className="media-veil !translate-y-0 !opacity-100">
+                <span className="text-label">Sitapura, Jaipur</span>
+              </figcaption>
+            </figure>
 
             <div data-reveal data-delay="80">
-              <dl className="grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line sm:grid-cols-2">
-                {[
-                  { k: 'Reaches', v: 'The factory directly' },
-                  { k: 'Working hours', v: company.contact.timezone },
-                  { k: 'Fastest route', v: 'WhatsApp — how our desk runs' },
-                  { k: 'For a costing', v: 'Tech pack, quantity, delivery window' },
-                ].map((row) => (
-                  <div key={row.k} className="bg-canvas p-5">
-                    <dt className="text-label text-muted">{row.k}</dt>
-                    <dd className="mt-2 text-[0.9375rem] text-ink">{row.v}</dd>
+              <Kicker>From the floor</Kicker>
+              <blockquote className="mt-6">
+                <p className="text-d2 !font-[350] text-balance">
+                  &ldquo;{company.promoterMessage}&rdquo;
+                </p>
+                <footer className="mt-7 flex items-center gap-4 border-t border-line pt-6">
+                  <div>
+                    <p className="text-d3 text-ink">{company.contact.primaryName}</p>
+                    <p className="mt-1 text-[0.875rem] text-muted">
+                      {company.contact.primaryRole} &middot; {company.generation}rd generation
+                    </p>
                   </div>
-                ))}
-              </dl>
+                </footer>
+              </blockquote>
 
-              <div className="mt-6 flex flex-wrap gap-3">
+              <div className="mt-8 flex flex-wrap gap-3">
                 <a
                   href={`https://wa.me/${company.contact.whatsapp}`}
                   target="_blank"
@@ -519,9 +537,9 @@ export default function HomePage() {
                 >
                   <WhatsApp /> Message {company.contact.primaryName.split(' ')[0]}
                 </a>
-                <a href={`tel:${company.contact.phoneE164}`} className="btn btn-outline">
-                  {company.contact.phoneDisplay}
-                </a>
+                <Link href="/about/leadership" className="btn btn-outline">
+                  Leadership
+                </Link>
               </div>
             </div>
           </div>

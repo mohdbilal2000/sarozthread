@@ -26,6 +26,36 @@ export type NavGroup = {
 
 export const primaryNav: NavGroup[] = [
   {
+    href: '/factory',
+    label: 'Infrastructure',
+    summary: 'Two hundred thousand square feet, 655 machines, and a machine list we put in writing.',
+    columns: [
+      {
+        heading: 'The plant',
+        items: [
+          { href: '/factory', label: 'Factory & machinery', note: '200,000 sq. ft.' },
+          { href: '/process', label: 'How we work', note: '7 steps' },
+          { href: '/quality', label: 'Quality system', note: 'Inline + AQL' },
+        ],
+      },
+      {
+        heading: 'On our own floor',
+        items: capabilities
+          .filter((c) =>
+            ['embroidery', 'pattern-making-and-cad', 'bulk-production'].includes(c.slug),
+          )
+          .map((c) => ({ href: `/capabilities/${c.slug}`, label: c.name, note: c.short })),
+      },
+      {
+        heading: 'Standards',
+        items: [
+          { href: '/compliance', label: 'Compliance', note: 'SMETA · BCI · Disney' },
+          { href: '/downloads', label: 'Certificates', note: 'Audits & documents' },
+        ],
+      },
+    ],
+  },
+  {
     href: '/capabilities',
     label: 'Capabilities',
     summary: 'Six processes. A clear line between what we own and what we partner on.',
@@ -51,9 +81,8 @@ export const primaryNav: NavGroup[] = [
       {
         heading: 'Go deeper',
         items: [
-          { href: '/factory', label: 'Factory & machinery', note: '200,000 sq. ft.' },
-          { href: '/quality', label: 'Quality system', note: 'Inline + AQL' },
           { href: '/process', label: 'How we work', note: '7 steps' },
+          { href: '/lookbook', label: 'Collection', note: 'Garments off this floor' },
         ],
       },
     ],
@@ -73,7 +102,7 @@ export const primaryNav: NavGroup[] = [
       {
         heading: 'See the work',
         items: [
-          { href: '/lookbook', label: 'Lookbook', note: 'Garments off this floor' },
+          { href: '/lookbook', label: 'Collection', note: 'Garments off this floor' },
           { href: '/products', label: 'All categories' },
         ],
       },
@@ -135,7 +164,7 @@ export const footerNav = [
     heading: 'Products',
     items: [
       ...productCategories.map((p) => ({ href: `/products/${p.slug}`, label: p.name })),
-      { href: '/lookbook', label: 'Lookbook' },
+      { href: '/lookbook', label: 'Collection' },
     ],
   },
   {
