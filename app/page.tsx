@@ -52,7 +52,13 @@ export default function HomePage() {
             laid over it. Everything that needs reading — the lede, both calls
             to action, the figures — sits underneath on ivory, where it is
             actually legible. */}
-        <div className="relative h-[68svh] min-h-[26rem] overflow-hidden lg:h-[78svh]">
+        {/* Full-bleed on a phone, where every pixel of width is the picture.
+            From lg up the footage is inset and given the panel radius, so it
+            reads as a swatch of cloth laid on the page rather than a stock
+            banner butted against both edges. That single edge is most of the
+            difference between "a template" and "someone made this". */}
+        <div className="lg:px-gutter lg:pt-5">
+          <div className="relative h-[68svh] min-h-[26rem] overflow-hidden lg:h-[74svh] lg:rounded-[var(--radius-panel)]">
           <video
             src="/video/atelier.mp4"
             poster="/video/atelier-poster.jpg"
@@ -90,10 +96,11 @@ export default function HomePage() {
           <figcaption className="absolute right-0 top-0 hidden p-6 lg:block">
             <span className="text-label text-canvas/70">Embroidery floor, Sitapura</span>
           </figcaption>
+          </div>
         </div>
 
         {/* Reading matter, on ivory, immediately under the picture. */}
-        <div className="shell border-t border-line pb-7 pt-8 lg:pb-9 lg:pt-10">
+        <div className="shell border-t border-line pb-7 pt-8 lg:border-t-0 lg:pb-9 lg:pt-10">
           <div className="grid gap-7 lg:grid-cols-[1.25fr_1fr] lg:items-start lg:gap-16">
             <p className="text-lede max-w-[52ch]">
               A third-generation, family-run womenswear factory in Jaipur. Embroidery, printing and
@@ -188,7 +195,11 @@ export default function HomePage() {
                   data-delay={String(Math.min(i * 70, 280))}
                 >
                   <Link href={`/products/${p.slug}`} className="group card h-full">
-                    <div className={`media media-flush ${i === 0 ? 'aspect-[16/9]' : 'aspect-[4/3]'}`}>
+                    <div
+                      className={`media media-flush ${
+                        i === 0 ? 'aspect-[16/9]' : 'media-fill aspect-[4/3]'
+                      }`}
+                    >
                       {img && (
                         <Image
                           src={img}
@@ -232,7 +243,7 @@ export default function HomePage() {
             />
           </div>
 
-          <Link href="/lookbook" className="link-arrow mt-10">
+          <Link href="/lookbook" className="link-arrow mt-8">
             Full lookbook <ArrowRight />
           </Link>
         </div>

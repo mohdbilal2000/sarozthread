@@ -56,9 +56,25 @@
 
   /* Radii and shadows. The previous system banned both, which is why every
      page read as one flat sheet of rectangles. Product surfaces get real
-     material: a soft edge and a shadow that deepens when you reach for it. */
+     material: a soft edge and a shadow that deepens when you reach for it.
+
+     The radius is not decoration, it carries meaning, and the rule is one
+     line: the softer the edge, the more human the thing inside.
+
+       panel (28px)  the garment and the floor — hero media, the feature
+                     product tile. Big pictures of cloth and people.
+       card  (14px)  ordinary product surfaces.
+       soft  (4px)   anything a buyer treats as a DOCUMENT — compliance
+                     plates, spec tables, figures. A certificate with
+                     rounded corners looks like a badge someone drew.
+       pill          interactive things the hand reaches for.
+
+     Applied this way the page mixes shapes without looking arbitrary: soft
+     where it is craft, square where it is proof. Do not round the compliance
+     plates to "match" the product cards — the mismatch is the point. */
   --radius-soft: 4px;
   --radius-card: 14px;
+  --radius-panel: 28px;
   --radius-pill: 999px;
   --shadow-card: 0 1px 2px rgb(28 23 18 / 0.04), 0 8px 24px -12px rgb(28 23 18 / 0.16);
   --shadow-lift: 0 2px 4px rgb(28 23 18 / 0.05), 0 28px 48px -20px rgb(28 23 18 / 0.28);
@@ -601,6 +617,15 @@
   /* Squared-off variant for full-bleed editorial slabs. */
   .media-flush {
     border-radius: 0;
+  }
+  /* In a grid row set by a taller neighbour, a fixed aspect leaves dead white
+     under the picture. Let the picture take the slack instead. */
+  @media (min-width: 64rem) {
+    .media-fill {
+      flex: 1 1 auto;
+      aspect-ratio: auto;
+      min-height: 14rem;
+    }
   }
 
   /* The caption that slides up over a product image on hover. */

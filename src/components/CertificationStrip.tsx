@@ -29,6 +29,11 @@ const LOGOS: Record<string, { src: typeof logoSmeta; width: string }> = {
  * their compliance team at all. Ours said the same things in sentences, which
  * is worth less on a first pass however well written.
  *
+ * The plates are deliberately squarer than the product cards around them.
+ * A certificate reads as a document; rounding it to match a garment tile
+ * makes it look like a badge somebody drew. See the radius rule in
+ * globals.css — soft where it is craft, square where it is proof.
+ *
  * A certification without a logo file still appears, set as a typographic
  * badge rather than being dropped — the accreditation is real whether or not
  * we hold the artwork, and a gap in the row reads as a gap in the compliance.
@@ -56,7 +61,7 @@ export function CertificationStrip({
           return (
             <li
               key={c.code}
-              className="flex min-h-[7.5rem] flex-col items-center justify-center gap-3 rounded-[var(--radius-card)] border border-line bg-canvas px-4 py-6 text-center"
+              className="flex min-h-[7.5rem] flex-col items-center justify-center gap-3 rounded-[var(--radius-soft)] border border-line bg-canvas px-4 py-6 text-center"
               data-reveal
             >
               {logo ? (
