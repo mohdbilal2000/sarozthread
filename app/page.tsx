@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { Section, SectionHead, StatRow, Marquee, Kicker, SpecTable } from '@/components/blocks';
 import { FaqAccordion } from '@/components/FaqAccordion';
 import { LookGrid } from '@/components/LookGrid';
+import { CertStrip } from '@/components/CertStrip';
 import { ArrowRight, ArrowDown, Check } from '@/components/Icons';
 import { company, facility, certifications } from '@/data/company';
 import { capabilities } from '@/data/capabilities';
@@ -116,6 +117,8 @@ export default function HomePage() {
           '4 CONTINENTS',
         ]}
       />
+
+      <CertStrip />
 
       {/* ================================================================
           NUMBERS

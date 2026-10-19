@@ -3,6 +3,7 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 import { PageHero, Section, AnswerBlock, SpecTable } from '@/components/blocks';
 import { FaqAccordion } from '@/components/FaqAccordion';
+import { CertStrip } from '@/components/CertStrip';
 import { ArrowRight, Check } from '@/components/Icons';
 import { certifications, labourStandards } from '@/data/company';
 import { faqsForPage } from '@/data/faq';
@@ -42,6 +43,8 @@ export default function CompliancePage() {
           </div>
         }
       />
+
+      <CertStrip />
 
       <Section>
         <div className="shell grid gap-14 lg:grid-cols-[1.15fr_1fr] lg:gap-20">
