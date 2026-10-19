@@ -2,12 +2,22 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { certifications } from '@/data/company';
 import { ArrowRight } from './Icons';
-import logoSmeta from '@/assets/site/logo-smeta.png';
-import logoBci from '@/assets/site/logo-bci.png';
+import logoSmeta from '@/assets/site/logo-smeta-trim.png';
+import logoBci from '@/assets/site/logo-bci-trim.png';
 
-const LOGOS: Record<string, typeof logoSmeta> = {
-  smeta: logoSmeta,
-  bci: logoBci,
+/**
+ * The marks are margin-trimmed copies of the supplied artwork (*-trim.png),
+ * and each carries its own width rather than a shared height.
+ *
+ * Both originals ship with wide blank margins, and the two marks are nothing
+ * alike in shape: SMETA is a 6:1 wordmark, BCI a 2.4:1 block. Sizing them to
+ * a common height meant the box height was spent on SMETA's empty margin, so
+ * its wordmark rendered at roughly half BCI's weight and read as a mistake.
+ * Width per mark is what makes a logo row look level; bounding box does not.
+ */
+const LOGOS: Record<string, { src: typeof logoSmeta; width: string }> = {
+  smeta: { src: logoSmeta, width: 'w-[8.5rem] lg:w-[9.5rem]' },
+  bci: { src: logoBci, width: 'w-[4.25rem] lg:w-[4.75rem]' },
 };
 
 /**
@@ -51,10 +61,10 @@ export function CertificationStrip({
             >
               {logo ? (
                 <Image
-                  src={logo}
+                  src={logo.src}
                   alt={`${c.body} logo`}
-                  height={44}
-                  className="h-11 w-auto object-contain"
+                  sizes="180px"
+                  className={`${logo.width} h-auto object-contain`}
                 />
               ) : (
                 <span className="text-d3 leading-none text-ink">{c.code.replace('_', ' ')}</span>
