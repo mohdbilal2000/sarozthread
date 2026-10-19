@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Admin panel preview</title>
+<!--
+  A mockup, not a build. It exists so the client can see what "you will run it
+  yourself" actually looks like before deciding to commission it, and so the
+  screenshots in the phase plan are drawn in the site's own identity rather
+  than a generic dashboard template.
+
+  Everything here is the real product data and the real palette. Nothing in it
+  is wired to anything. Screenshot it with tools/admin-shots and nothing else
+  depends on it.
+-->
+<style>
+  @font-face { font-family:'Fraunces'; src:url('../public/fonts/fraunces.woff2') format('woff2'); font-weight:400 800; font-display:block; }
+  @font-face { font-family:'InterL';   src:url('../public/fonts/inter.woff2') format('woff2'); font-weight:400 700; font-display:block; }
+  @font-face { font-family:'PlexM';    src:url('../public/fonts/ibm-plex-mono.woff2') format('woff2'); font-weight:400 500; font-display:block; }
+
+  :root{
+    --canvas:#fdfcfa; --mist:#f6f2ec; --sand:#efe9e0; --clay:#e4dcd0; --stone:#c6bbab;
+    --muted:#7d7365; --body:#5a5245; --ink-soft:#3b342b; --ink:#1c1712;
+    --accent:#a63d22; --accent-soft:#f2e4de;
+    --line:rgb(28 23 18 / .13); --line-strong:rgb(28 23 18 / .28);
+    --r-card:14px; --r-soft:4px; --r-pill:999px;
+    --shadow:0 1px 2px rgb(28 23 18/.04), 0 8px 24px -12px rgb(28 23 18/.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--canvas);color:var(--body);font-family:'InterL',system-ui,sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .mono{font-family:'PlexM',monospace;text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--muted)}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;color:var(--ink);font-weight:600;letter-spacing:-.01em}
+
+  /* chrome */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--line);background:var(--canvas)}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand .bar{width:3px;height:20px;background:var(--accent);border-radius:2px}
+  .brand b{font-family:'Fraunces',serif;font-size:17px;color:var(--ink);font-weight:600}
+  .brand span{font-family:'PlexM',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding-left:10px;margin-left:10px;border-left:1px solid var(--line)}
+  .who{display:flex;align-items:center;gap:9px}
+  .av{width:28px;height:28px;border-radius:var(--r-pill);background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:11px;font-weight:700}
+
+  .wrap{display:grid;grid-template-columns:210px 1fr;min-height:calc(100vh - 57px)}
+  .side{border-right:1px solid var(--line);padding:22px 14px;background:var(--mist)}
+  .side .mono{padding:0 10px 10px}
+  .nav a{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border-radius:var(--r-soft);color:var(--ink-soft);text-decoration:none;font-size:13.5px;margin-bottom:2px}
+  .nav a.on{background:var(--accent);color:#fff;font-weight:600}
+  .nav a .n{font-family:'PlexM',monospace;font-size:10px;opacity:.75}
+  .main{padding:26px 30px 40px}
+
+  .head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:22px}
+  .head h1{font-size:28px}
+  .head p{font-size:13px;color:var(--muted);margin-top:5px}
+  .btn{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;border:0;border-radius:var(--r-soft);padding:10px 16px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-strong)}
+
+  .bar{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);border-radius:var(--r-pill);padding:6px 14px;font-size:12.5px;color:var(--body);background:var(--canvas)}
+  .chip.on{background:var(--ink);color:var(--canvas);border-color:var(--ink)}
+
+  /* cards */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .card{border:1px solid var(--line);border-radius:var(--r-card);background:var(--canvas);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+  .card .ph{aspect-ratio:3/4;background:var(--sand) center/cover no-repeat;position:relative}
+  .card .tag{position:absolute;left:9px;top:9px;background:rgb(253 252 250/.92);border-radius:var(--r-pill);padding:3px 9px;font-family:'PlexM',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+  .card .bd{padding:12px 13px 13px;display:flex;flex-direction:column;gap:3px;flex:1}
+  .card h3{font-size:14.5px}
+  .card .sub{font-size:12px;color:var(--muted)}
+  .card .row{display:flex;gap:7px;margin-top:11px}
+  .card .row button{flex:1;border:1px solid var(--line-strong);background:transparent;border-radius:var(--r-soft);padding:7px;font:inherit;font-size:11.5px;color:var(--ink);cursor:pointer}
+  .card .row button.d{border-color:transparent;color:var(--accent)}
+
+  /* form */
+  .form{display:grid;grid-template-columns:1.3fr .9fr;gap:26px;align-items:start}
+  .fld{margin-bottom:15px}
+  label{display:block;font-family:'PlexM',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  input,select,textarea{width:100%;border:1px solid var(--line-strong);border-radius:var(--r-soft);background:var(--canvas);padding:10px 12px;font:inherit;font-size:13.5px;color:var(--ink)}
+  textarea{height:88px;resize:none}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .drop{border:1.5px dashed var(--stone);border-radius:var(--r-card);background:var(--mist);aspect-ratio:3/4;display:grid;place-items:center;text-align:center;padding:20px}
+  .drop .mono{display:block;margin-top:8px}
+  .drop b{font-family:'Fraunces',serif;font-size:15px;color:var(--ink);font-weight:600}
+  .hint{font-size:12px;color:var(--muted);margin-top:9px;line-height:1.45}
+  .actions{display:flex;gap:9px;margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+
+  /* phone */
+  body.phone .wrap{grid-template-columns:1fr}
+  body.phone .side{display:none}
+  body.phone .main{padding:18px 16px 30px}
+  body.phone .grid{grid-template-columns:1fr 1fr;gap:12px}
+  body.phone .head h1{font-size:22px}
+  body.phone .top{padding:12px 16px}
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="brand"><i class="bar"></i><b>Saroz Threadz</b><span>Admin</span></div>
+    <div class="who"><span class="mono">Arun Lashkery</span><div class="av">AL</div></div>
+  </div>
+
+  <div class="wrap">
+    <aside class="side">
+      <p class="mono">Manage</p>
+      <nav class="nav">
+        <a class="on" href="#">Products <span class="n">48</span></a>
+        <a href="#">Lookbook <span class="n">14</span></a>
+        <a href="#">Enquiries <span class="n">6</span></a>
+        <a href="#">Capabilities <span class="n">6</span></a>
+        <a href="#">Certificates <span class="n">4</span></a>
+        <a href="#">Pages <span class="n">43</span></a>
+      </nav>
+    </aside>
+
+    <main class="main" id="view"></main>
+  </div>
+
+<script>
+const ITEMS = [
+  ['Hand-embroidered tunic','Tunics and kaftans','Cotton voile, placement embroidery','hand-embroidered-tunic','Live'],
+  ['Printed maxi dress','Dresses','Rayon, all-over print','printed-maxi-dress','Live'],
+  ['Oversized poplin shirt','Blouses and shirts','Yarn-dyed cotton, drop shoulder','oversized-poplin-shirt','Live'],
+  ['Tiered ruffle dress','Dresses','Viscose georgette, multi-panel','tiered-ruffle-dress','Live'],
+  ['Embroidered blouse','Blouses and shirts','Cotton, tonal thread work','embroidered-blouse','Live'],
+  ['Printed jumpsuit','Jumpsuits and co-ords','Rayon, strappy silhouette','printed-jumpsuit','Draft'],
+  ['Tiered midi dress','Dresses','Cotton dobby, gathered tiers','tiered-midi-dress','Live'],
+  ['Placket embroidery shirt','Blouses and shirts','Cotton, centre-front detail','placket-embroidered-shirt','Live'],
+];
+const img = (s) => `../src/assets/lookbook/${s}.jpg`;
+
+const CARDS = `
+  <div class="head">
+    <div><h1>Products</h1><p>48 styles across five categories. Changes appear on the website straight away.</p></div>
+    <button class="btn">+ Add a style</button>
+  </div>
+  <div class="bar">
+    <span class="chip on">All</span><span class="chip">Dresses</span><span class="chip">Blouses and shirts</span>
+    <span class="chip">Tunics and kaftans</span><span class="chip">Jumpsuits and co-ords</span><span class="chip">Resort</span>
+  </div>
+  <div class="grid">${ITEMS.map(([n,c,f,s,st])=>`
+    <article class="card">
+      <div class="ph" style="background-image:url('${img(s)}')"><span class="tag">${st}</span></div>
+      <div class="bd"><h3>${n}</h3><span class="sub">${c}</span><span class="sub">${f}</span>
+        <div class="row"><button>Edit</button><button class="d">Remove</button></div>
+      </div>
+    </article>`).join('')}</div>`;
+
+const FORM = `
+  <div class="head">
+    <div><h1>Add a style</h1><p>Six fields and a photograph. No code, no developer, no waiting.</p></div>
+    <button class="btn ghost">Cancel</button>
+  </div>
+  <div class="form">
+    <div>
+      <div class="fld"><label>Style name</label><input value="Block-print tiered dress" /></div>
+      <div class="two">
+        <div class="fld"><label>Category</label><select><option>Dresses</option></select></div>
+        <div class="fld"><label>Status</label><select><option>Live on the website</option><option>Draft</option></select></div>
+      </div>
+      <div class="fld"><label>Fabric and construction</label><input value="Cotton voile, hand block print, three tiers" /></div>
+      <div class="fld"><label>What a buyer should know</label><textarea>Printed in our partner house in Sanganer, cut and sewn on our own floor. Placement embroidery available on the yoke.</textarea></div>
+      <div class="actions"><button class="btn">Publish to the website</button><button class="btn ghost">Save as draft</button></div>
+    </div>
+    <div>
+      <label>Photograph</label>
+      <div class="drop"><div><b>Drop a photo here</b><span class="mono">or choose a file</span></div></div>
+      <p class="hint">The panel resizes and compresses it for you, and writes the alt text search engines read. You do not need to prepare anything.</p>
+    </div>
+  </div>`;
+
+document.getElementById('view').innerHTML =
+  location.hash === '#form' ? FORM : CARDS;
+if (location.search.includes('phone')) document.body.classList.add('phone');
+</script>
+</body>
+</html>
